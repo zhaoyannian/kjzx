@@ -1,0 +1,178 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>请假详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>请假详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content"
+  [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <textarea [(ngModel)]="editingEntry.leaveReason" [disabled]="!editable" class="reason"
+          placeholder="请填写请假事由"></textarea>
+        <ion-item>
+          <ion-label class="textcolor" fixed>假期类型</ion-label>
+          <ion-select [disabled]="!editable" [(ngModel)]="editingEntry.leaveType" placeholder="请选择" okText="确定"
+            cancelText="取消" (ngModelChange)="changeLaveType()">
+            <ion-option value="0">请选择</ion-option>
+            <div *ngFor="let item of vacationList">
+              <ion-option value="{{item?.optionValue}}">{{item?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <div class="timeStyle">
+          <div class="leaveTime">
+            <span class="stactime">{{editingEntry.leaveStart | date: 'yyyy'}}</span>
+            <i class="statictext">开始时间</i>
+            <i class="statictext">结束时间</i>
+            <span class="stactime">{{editingEntry.leaveEnd | date: 'yyyy'}}</span>
+          </div>
+          <div class="leaveType">
+            <span *ngIf="!!editingEntry.leaveStart" class="stactime"
+              (click)="openCalendar('leaveStart')">{{editingEntry.leaveStart | date:'MM-dd'}}</span>
+            <span *ngIf="!editingEntry.leaveStart" class="stactime defaultChoose"
+              (click)="openCalendar('leaveStart')">请选择</span>
+            <i class="statictext2" *ngIf="editable">
+              <ion-toggle value="foo" color="secondary" checked="true" [(ngModel)]="startHour"
+                (ionChange)="savestartHour()"></ion-toggle>
+            </i>
+            <i class="statictext" *ngIf="!editable">{{this.editingEntry.startHour =="A" ? "上午" : "下午"}}</i>
+            <span *ngIf="!!editingEntry.leaveEnd" class="stactime"
+              (click)="openCalendar('leaveEnd')">{{editingEntry.leaveEnd | date:'MM-dd'}}</span>
+            <span *ngIf="!editingEntry.leaveEnd" class="stactime defaultChoose"
+              (click)="openCalendar('leaveEnd')">请选择</span>
+            <i class="statictext" *ngIf="!editable">{{this.editingEntry.endHour =="A" ? "上午" : "下午"}}</i>
+            <i class="statictext2" *ngIf="editable">
+              <ion-toggle value="foo" color="secondary" checked="true" [(ngModel)]="endHour"
+                (ionChange)="saveendHour()"></ion-toggle>
+            </i>
+          </div>
+          <div class="leaveWeek">
+            <span class="left" *ngIf="!!weekab">星期{{weekab}}</span>
+            <span class="right" *ngIf="!!weekab2">星期{{weekab2}}</span>
+          </div>
+          <em class="choosedaybg"></em>
+          <!-- <ion-icon class="iconfont icon-arrowright"></ion-icon> -->
+        </div>
+        <!-- <ion-item (click)="openCalendar('leaveStart')" *ngIf="editable">
+                      <ion-label class="textcolor" fixed>开始时间</ion-label>
+                      <ion-label >{{editingEntry.leaveStart | date:'yyyy-MM-dd'}}</ion-label>
+                  </ion-item>
+                  <ion-item *ngIf="editable">
+                      <ion-label class="textcolor" fixed>开始类型</ion-label>
+                      <ion-select [disabled]="!editable" [(ngModel)]="editingEntry.startHour" placeholder="请选择" okText="确定" cancelText="取消" (ngModelChange)="setDays()">
+                        <ion-option value="0">请选择</ion-option>
+                        <div *ngFor="let item of startTypeDict">
+                          <ion-option value="{{item?.optionValue}}">{{item?.optionName}}</ion-option>
+                        </div>
+                      </ion-select>
+                  </ion-item>
+                  <ion-item *ngIf="editable" (click)="openCalendar('leaveEnd')">
+                      <ion-label class="textcolor" fixed>结束时间</ion-label>
+                      <ion-label >{{editingEntry.leaveEnd | date:'yyyy-MM-dd'}}</ion-label>
+                  </ion-item>
+                  <ion-item *ngIf="editable">
+                      <ion-label class="textcolor" fixed>结束类型</ion-label>
+                      <ion-select [disabled]="!editable" [(ngModel)]="editingEntry.endHour" placeholder="请选择" okText="确定" cancelText="取消" (ngModelChange)="setDays()">
+                          <ion-option value="0">请选择</ion-option>
+                        <div *ngFor="let item of startTypeDict">
+                          <ion-option value="{{item?.optionValue}}">{{item?.optionName}}</ion-option>
+                        </div>
+                      </ion-select>
+                  </ion-item> -->
+        <ion-item>
+          <ion-label class="textcolor" fixed>请假总天数</ion-label>
+          <ion-input readonly class="textdirec" type="text" value="" [(ngModel)]="editingEntry.leaveDays"></ion-input>
+        </ion-item>
+      </ion-list>
+      <div class="meeting-details" *ngIf="!collspaed2">
+        <h3 (click)="collspaed2=!collspaed2">
+          更多详情
+          <p>
+            <ion-icon class="iconfont icon-arrowdown"></ion-icon>
+          </p>
+        </h3>
+      </div>
+      <ion-list *ngIf="collspaed2">
+        <ion-item>
+          <ion-label class="textcolor" fixed>外出地点</ion-label>
+          <ion-input class="textdirec" [disabled]="!editable" type='text' value=""
+            [(ngModel)]="editingEntry.outAddress"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>紧急联系人</ion-label>
+          <ion-input class="textdirec" [disabled]="!editable" type="text" value="" [(ngModel)]="editingEntry.jjlxrName">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>紧急联系方式</ion-label>
+          <ion-input class="textdirec" [disabled]="!editable" type="text" value=""
+            [(ngModel)]="editingEntry.jjlxrPhone"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>所属部门</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>请假人</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.userName"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="collspaed2">
+        <button class="file" *ngIf="editable">
+          上传附件
+          <input #uploadImg type="file" [disabled]="!editable" (change)="uploadFile($event)">
+          <!-- <input type="file" id="newUpload" (change)="uploadFile(newUpload, $event)" > -->
+        </button>
+        <div class="fileText" *ngIf="!editable">附件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item of fileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.fileName) == 'excel',
+                      'icon-pdf': fileIcon(item.fileName) == 'pdf','icon-ppt': fileIcon(item.fileName) == 'ppt',
+                      'icon-word': fileIcon(item.fileName) == 'doc','icon-txt': fileIcon(item.fileName) == 'txt',
+                      'icon-tupian': fileIcon(item.fileName) == 'img','icon-qitafujian': fileIcon(item.fileName) == 'file',
+                      'icon-rar': fileIcon(item.fileName) == 'zip'}"></ion-icon>
+            <span>{{item.fileName}}</span>
+            <ion-icon class="iconfont icon-del" (click)="removeFile(item,i)" *ngIf="editable"></ion-icon>
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}"></a>
+          </li>
+        </ul>
+      </ion-list>
+      <div class="meeting-details" *ngIf="collspaed2">
+        <h3 (click)="collspaed2=!collspaed2">
+          <p>
+            <ion-icon class="iconfont icon-arrowup"></ion-icon>
+          </p>
+          收起
+        </h3>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm"
+  [ngStyle]="{'bottom': datamore.btnscollHeight>0 && ismobile? datamore.btnscollHeight+'px' : 0 }">
+  <textarea *ngIf="wfHolderObj.showOpinionArea()" class="optionContent" placeholder="填写办理意见" formControlName="opinion"
+    (click)="blurInput()"></textarea>
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col>
+        <button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button>
+      </ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -1,0 +1,32 @@
+page-swiper-slider {
+    background: #fff;
+    .pageMenuSlides {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        .swiper-container {
+          width: 100%;
+          height: 5rem;
+          line-height: 5rem;
+        }
+    
+        .swiper-slide {
+          background: #fff;
+          color: #333;
+          border-bottom: 2px solid #fff;
+        }
+    
+        .bottomLine {
+            border-radius: 0;
+            background: #fff;
+            border-bottom: 2px solid #007bff;
+            color: #007bff;
+        }
+      }
+    
+      ion-slides {
+        background-color: white;
+        margin-top: 9rem;
+        .slide-zoom {
+          height: 100%;
+        }
+      }
+}

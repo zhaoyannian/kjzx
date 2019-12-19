@@ -1,0 +1,31 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>选择会议室</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()">确定</button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>选择会议室</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()">确定</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <ion-list radio-group [(ngModel)]="selectRadio">
+    <ion-item *ngFor="let item of data">
+      <ion-radio value="{{item.id}}"></ion-radio>
+      <ion-label>
+        <h2>{{item.name}}</h2>
+        <p>{{item.address}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <!-- <button ion-button full (click)="close()">确定</button> -->
+</ion-content>

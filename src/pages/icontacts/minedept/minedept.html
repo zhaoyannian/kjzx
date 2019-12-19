@@ -1,0 +1,41 @@
+<!-- <ion-header> -->
+  <!-- <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar> -->
+  
+<!-- </ion-header> -->
+<div id="Breadcrumbs">
+    <ul>
+      <li *ngFor="let x of mianbao;let i=index;" (click)="retreat(i)">{{x['deptName']}}</li>
+    </ul>
+  </div>
+<ion-content>
+  <!-- <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <ul>
+    <li *ngFor="let x of model;">
+      <button ion-item (click)="goDept(x['orgId'],x['deptName'])">
+        {{x['deptName']}}
+      </button>
+    </li>
+  </ul>
+  <ul class="dept_addlist">
+    <li *ngFor='let x of address;' (click)="goView(x)">
+      <p><img src="{{getImg(x['photo'])}}" width="40" alt=""></p>
+      <div>{{x['userName']}}</div>
+    </li>
+  </ul>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!-- <div class="txl_datanull" *ngIf="model == '' && address.length == 0"><img src="assets/imgs/null.png" alt="">
+  </div> -->
+</ion-content>

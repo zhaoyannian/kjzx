@@ -1,0 +1,179 @@
+page-meetngsedit {
+    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+        color: #999;
+        font-size: 1.7rem;
+      }
+      
+      input:-moz-placeholder, textarea:-moz-placeholder {
+        color: #999;
+        font-size: 1.7rem;
+      }
+      
+      input::-moz-placeholder, textarea::-moz-placeholder {
+        color: #999;
+        font-size: 1.7rem;
+      }
+      
+      input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+        color: #999;
+        font-size: 1.7rem;
+      }
+    .datetime-text{
+        text-indent: 100%;
+    }
+    .sb-info {
+        border-top: 1px solid #ededed-dark;
+        padding-top: 10px;
+        margin-top: 10px;
+        h2 {
+            color: #999;
+        }
+    }
+    .people-list {
+        background: #fff;
+        overflow: hidden;
+        padding: 0 6px;
+    }
+    .item-ios{
+        min-height: 6rem;
+    }
+    .label-ios{
+        font-size: 1.7rem;
+        color: #333;
+    }
+    ion-input, ion-textarea,.select-text,.item-ios [item-right], .item-ios [item-end]{
+        color: #666666;
+    }
+    .select-text{
+        text-align: right;
+    }
+    ion-select{
+        max-width: 100%;
+        flex: 1;
+    }
+    .reason {
+        width: 100%;
+        height: auto;
+        display: flex;
+        min-height: 14.4rem;
+        padding: 0 1.5rem;
+        padding-top: 2rem;
+        color: #666666;
+        font-size: 1.7rem;
+        border: none;
+        border-bottom: 1px solid #e8eaf4;
+        background: #fff;
+        margin-bottom: 5px;
+      }
+      .choosePeopleList{
+        .label-ios{
+            margin: 0;
+            margin-bottom: 11px;
+        }
+    }
+    .people-item {
+        // display: inline-block;
+        float: left;
+        width: 16.6666%;
+        // max-width: 62px;
+        // min-height: 66px;
+        // width: 20%;
+        padding: 12px 4px 0px;
+        text-decoration: none;
+        color: #999;
+        text-align: center;
+        font-size: 1.2rem;
+        position: relative;
+        white-space: normal;
+        min-height: 97px;
+        img {
+            // width: 40px;
+            // height: 40px;
+            width: 4rem;
+            height: 4rem;
+            border-radius: 100%;
+            vertical-align: top;
+        }
+        & .icon.del{
+            // font-size: 1.8rem; position: absolute; top: 5px; right: 5px;
+            font-size: 1.6rem;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: #fff;
+            background: red;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .icon-guanbi{
+                transform: scale(0.6);
+            }
+        }
+        .icon {
+            font-size: 4rem;
+        }
+        .icon-reduce1 {
+            font-size: 4.7rem;
+            margin-top: -3px;
+        }
+        span {
+            margin-top: 3px;
+            min-height: 18px;
+            // overflow: hidden;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -o-box;
+            display: box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // -webkit-line-clamp: 2;
+            // -webkit-box-orient: vertical;
+            // white-space: nowrap;
+        }
+    }
+
+    & .duan{ margin-bottom: 5px;}
+    & .duan2{ margin-top: 5px;}
+    
+    .item-ios [item-end]{
+        margin: 13px;
+    }
+    .item-ios{
+        padding-left: 0px;
+    }
+    .list-ios .item-block .item-inner{
+        padding-left: 16px;
+        padding-right: 16px;
+        border-color: #e8eaf4;
+    }
+
+
+
+    // & #DateSelect ion-label.label-ios{margin: 0px auto!important;}
+    // & #DateSelect{ display: flex; margin-bottom: 0px;}
+    // & #DateSelect ion-item{padding-left:0; width: 50%; flex: 2; align-items: flex-end; border: none!important;
+        
+    // }
+    // & #DateSelect ion-item.jiantou{
+    //     flex: 0 0 20px;
+    //     align-items:center;
+    //     .item-inner{
+    //         padding-left: 0px;
+    //         padding-right: 0px;
+    //     }
+    // }
+    // & #DateSelect ion-item .label-ios{ margin-right: 0;}
+    // & #DateSelect ion-item ul{padding-left:0; clear: both; overflow: hidden;
+        
+    // }
+    // & #DateSelect ion-item ul li{ float: left; width: 50%; height: 30px; line-height: 30px; vertical-align: middle;}
+    // & #DateSelect ion-item ul li:nth-child(even){text-align: right;}
+    // // #DateSelect ion-item ul li.dateselect_year{font-size: 1.2rem;}
+    // & #DateSelect ion-item ul li.dateselect_zh{color: #bbbbbb;}
+    // & #DateSelect ion-item ul li.week-color{color: #a9b2b9;}
+    // & #DateSelect ion-item ul li:nth-child(3),#DateSelect ion-item ul li:nth-child(4){font-size: 2.2rem; color: #000000;}
+}

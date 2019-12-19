@@ -1,0 +1,20 @@
+datetime {
+    & #DateSelect .list-ios .item-block .item-inner{ border-bottom: none;}
+    & #DateSelect .item-ios.item-block .item-inner{border-bottom: none;}
+    & #DateSelect ion-label.label-ios{margin: 0px auto!important;}
+    & #DateSelect{ display: flex; margin-bottom: 0px;}
+    & #DateSelect ion-item{padding-left:0; width: 50%; flex: 2; align-items: flex-end; border: none!important;
+        
+    }
+    & #DateSelect ion-item.jiantou{flex: 0 0 20px;align-items:center;}
+    & #DateSelect ion-item .label-ios{ margin-right: 0;}
+    & #DateSelect ion-item ul{padding-left:0; clear: both; overflow: hidden;
+        
+    }
+    & #DateSelect ion-item ul li{ float: left; width: 50%; height: 30px; line-height: 30px; vertical-align: middle;}
+    & #DateSelect ion-item ul li:nth-child(even){text-align: right;}
+    // #DateSelect ion-item ul li.dateselect_year{font-size: 1.2rem;}
+    & #DateSelect ion-item ul li.dateselect_zh{color: #bbbbbb;}
+    & #DateSelect ion-item ul li:nth-child(3),#DateSelect ion-item ul li:nth-child(4){font-size: 2.2rem; color: #000000;}
+    & #DateSelect ion-item ul li{font-size: 1.2rem; color: #d2d8dd;}
+}

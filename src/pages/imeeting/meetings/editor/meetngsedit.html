@@ -1,0 +1,237 @@
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>创建会议</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>创建会议</ion-title>
+    <ion-buttons end class="contactbtn">
+      <button ion-button icon-only (click)="saveEntry(objModel)">完成</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-datetime *ngIf="ishsowtime" #startDateTime displayFormat="YYYY年MM月DD日 HH:mm" pickerFormat="YYYY MM DD HH:mm"
+  hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20,21,22" cancelText="取消" doneText="确定" [(ngModel)]="startDate"
+  (ionChange)="start(startDate)"></ion-datetime>
+<ion-datetime *ngIf="ishsowtime" #endDateTime displayFormat="YYYY年MM月DD日 HH:mm" pickerFormat="YYYY MM DD HH:mm"
+  hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20,21,22" cancelText="取消" doneText="确定" [(ngModel)]="endDate"
+  (ionChange)="end(endDate)"></ion-datetime>
+<ion-content class="layout-content">
+  <ion-list>
+    <!-- <ion-item class="duan" no-lines> -->
+    <!-- <ion-input type="text" placeholder="请填写会议标题" [(ngModel)]="objModel.meetingName"></ion-input> -->
+    <textarea rows="2" class="reason" placeholder="请输入会议内容" autoresize="200" [(ngModel)]="objModel.meetingName">
+        </textarea>
+    <!-- </ion-item> -->
+    <!-- <ion-item class="duan" no-lines>
+        <ion-textarea rows="4" placeholder="请填写会议内容" autoresize="500" [(ngModel)]="objModel.meetingContent"></ion-textarea>
+      </ion-item> -->
+    <!-- <div id="DateSelect" class="duan">
+        <ion-item detail-none no-border>
+          <ul>
+            <li>2018</li>
+            <li class="dateselect_zh">开始时间</li>
+            <li>11</li>
+            <li>26</li>
+            <li class="week-color">星期一</li>
+          </ul>
+        </ion-item>
+        <ion-item class="jiantou">
+            >
+        </ion-item>
+        <ion-item detail-none>
+          <ul>
+            <li class="dateselect_zh">结束时间</li>
+            <li>2018</li>
+            <li>26</li>
+            <li>11</li>
+            <li></li>
+            <li class="week-color">星期一</li>
+          </ul>
+        </ion-item>
+      </div> -->
+    <!-- <div class="timeStyle">
+      <div class="leaveTime">
+        <span class="stactime">{{editingEntry.leaveStart | date: 'yyyy'}}</span>
+        <i class="statictext">开始时间</i>
+        <i class="statictext">结束时间</i>
+        <span class="stactime">{{editingEntry.leaveEnd | date: 'yyyy'}}</span>
+      </div>
+      <div class="leaveType">
+        <span class="stactime defaultChoose" (click)="openCalendar('leaveStart')">请选择</span>
+        <i class="statictext2" *ngIf="editable">
+          <ion-toggle value="foo" color="secondary" checked="true" [(ngModel)]="startHour"
+            (ionChange)="savestartHour()"></ion-toggle>
+        </i>
+        <span class="stactime defaultChoose" (click)="openCalendar('leaveEnd')">请选择</span>
+        <i class="statictext2" *ngIf="editable">
+          <ion-toggle value="foo" color="secondary" checked="true" [(ngModel)]="endHour" (ionChange)="saveendHour()">
+          </ion-toggle>
+        </i>
+      </div>
+      <div class="leaveWeek">
+        <span class="left" *ngIf="!!weekab">星期{{weekab}}</span>
+        <span class="right" *ngIf="!!weekab2">星期{{weekab2}}</span>
+      </div>
+      <em class="choosedaybg"></em>
+    </div> -->
+    <div class="timeStyle">
+      <div class="leaveTime">
+        <span class="stactime">{{startDate | date: 'yyyy'}}</span>
+        <i class="statictext">开始时间</i>
+        <i class="statictext">结束时间</i>
+        <span class="stactime">{{endDate | date: 'yyyy'}}</span>
+      </div>
+      <div class="leaveType">
+        <span class="stactime" (click)="openTime('startDate')">{{startDate2 | date:'MM-dd'}}</span>
+        <i class="statictext2" (click)="openTime('startDate')">
+          {{objModel.beginTime}}
+        </i>
+        <span class="stactime" (click)="openTime('endDate')">{{endDate2 | date:'MM-dd'}}</span>
+        <i class="statictext2" (click)="openTime('endDate')">
+          {{objModel.endTime}}
+        </i>
+      </div>
+      <div class="leaveWeek">
+        <span class="left">{{weekDay}}</span>
+        <span class="right">{{weekDay1}}</span>
+      </div>
+      <em class="choosedaybg"></em>
+    </div>
+    <!-- <ion-item>
+      <ion-label>开始时间</ion-label>
+      <ion-datetime displayFormat="YYYY年MM月DD日 HH:mm" pickerFormat="YYYY MM DD HH:mm"
+        hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23" cancelText="取消" doneText="确定" [(ngModel)]="startDate"
+        (ngModelChange)="start(startDate)"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>结束时间</ion-label>
+      <ion-datetime displayFormat="YYYY年MM月DD日 HH:mm" pickerFormat="YYYY MM DD HH:mm"
+        hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23" cancelText="取消" doneText="确定" [(ngModel)]="endDate"
+        (ngModelChange)="end(endDate)"></ion-datetime>
+    </ion-item> -->
+    <ion-item>
+      <ion-label>会议类型</ion-label>
+      <ion-select [(ngModel)]="objModel.meetingType" placeholder="请选择" okText="确定" cancelText="取消">
+        <!-- <ion-option value="0">请选择</ion-option> -->
+        <div *ngFor="let typeData of meetingTypes">
+          <ion-option value="{{typeData?.id}}">{{typeData?.typeName}}</ion-option>
+        </div>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="objModel.meetingType == 'firm_outside'">
+      <ion-label fixed>会议室名称</ion-label>
+      <ion-input type='text' text-right placeholder="请填写" [(ngModel)]="objModel.outRoomname"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="objModel.meetingType == 'firm_outside'">
+      <ion-label fixed>会议室地址</ion-label>
+      <ion-input type='text' text-right placeholder="请填写" [(ngModel)]="objModel.outRoomaddress"></ion-input>
+    </ion-item>
+    <button ion-item  no-lines (click)="selectMeeting()" *ngIf="objModel.meetingType == 'firm_inside'">
+      <ion-label>会议室选择</ion-label>
+      <span item-end>{{selectedMRInfo.length>0 ? selectedMRInfo[0].name:''}}</span>
+    </button>
+    <ion-item *ngIf="deviceList.length>0" class="duan" style="border-top: 1px solid #e8eaf4;">
+        <ion-label class="textcolor" fixed>服务需求</ion-label>
+        <ion-select  [(ngModel)]="deviceLAll" placeholder="请选择" okText="确定" cancelText="取消"  multiple>
+          <div *ngFor="let item of deviceList">
+            <ion-option value="{{item?.id}}">{{item?.deviceName}}</ion-option>
+          </div>
+        </ion-select>
+    </ion-item>
+    <!-- <div class="sw-toggle-box">
+          <ion-card *ngIf="selectedMRInfo.length>0">
+              <ion-card-content>
+                <div class="card-text">
+                    <p><span>会议室：</span><em>{{selectedMRInfo[0].name}}</em></p>
+                    <p><span>会议地点：</span><em>{{selectedMRInfo[0].address}}</em></p>
+                    <p><span>容纳人数：</span><em>{{selectedMRInfo[0].galleryful}}</em></p>
+                </div>
+                <div class="sb-info">
+                  <h2>服务需求</h2>
+                  <ion-item *ngFor="let item of selectedMRInfo[0].devices">
+                    <ion-label>{{item.deviceName}}</ion-label>
+                    <ion-checkbox [(ngModel)]="item.checked"></ion-checkbox>
+                  </ion-item>
+                  <ion-item *ngIf="selectedMRInfo[0].devices.length <=0">
+                    无设备信息
+                  </ion-item>
+                </div>
+              </ion-card-content>
+          </ion-card>
+        </div> -->
+    <button ion-item no-lines
+      *ngIf="(objModel.meetingType == 'firm_inside' && selectedMRInfo.length>0) || objModel.meetingType == 'firm_outside'"
+      (click)="selectPerson()">
+      <ion-label>参会人员</ion-label>
+      <span item-end *ngIf="meetingStaff.length > 0">{{meetingStaff.length}}人</span>
+    </button>
+    <!-- <button ion-item no-lines
+      *ngIf="(objModel.meetingType == 'firm_inside') || objModel.meetingType == 'firm_outside'"
+      (click)="selectPerson()">
+      <ion-label>参会人员</ion-label>
+      <span item-end *ngIf="meetingStaff.length > 0">{{meetingStaff.length}}人</span>
+    </button> -->
+    <ion-item no-lines
+      *ngIf="((objModel.meetingType == 'firm_inside' && selectedMRInfo.length>0)|| objModel.meetingType == 'firm_outside')&& meetingStaff.length > 0" class="choosePeopleList">
+      <div class="people-item" (click)="deletePeer2(i)" *ngFor="let item of meetingStaff;let i=index;">
+        <ion-icon class="del"><i class="iconfont icon-guanbi "></i></ion-icon>
+        <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photo}}" *ngIf="!!item.photo">
+        <img src="assets/imgs/people-head.png" *ngIf="!item.photo">
+        <span>{{item.userName}}</span>
+      </div>
+    </ion-item>
+ 
+    <ion-item class="duan2">
+      <ion-label>外部参会人员</ion-label>
+      <ion-input type="text" text-right placeholder="请填写" [(ngModel)]="objModel.outMeetStaff"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>联系方式</ion-label>
+      <ion-input type="number" text-right placeholder="请输入11位手机号码（必填）" [(ngModel)]="objModel.phone"
+        (ngModelChange)="checkPhone(objModel.phone)"></ion-input>
+    </ion-item>
+    <div class="meeting-details" *ngIf="!objModel.collspaed2">
+      <h3 (click)="objModel.collspaed2=!objModel.collspaed2">
+        更多详情
+        <p>
+          <ion-icon class="iconfont icon-arrowdown"></ion-icon>
+        </p>
+      </h3>
+    </div>
+    <div *ngIf="objModel.collspaed2">
+      <ion-item>
+        <ion-label>召集人</ion-label>
+        <ion-input type="text" text-right placeholder="请填写" [(ngModel)]="objModel.convenorId"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>记录人</ion-label>
+        <ion-input type="text" text-right placeholder="请填写" [(ngModel)]="objModel.recorderId"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>主持人</ion-label>
+        <ion-input type="text" text-right placeholder="请填写" [(ngModel)]="objModel.compereId"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>备注</ion-label>
+        <ion-input type="text" text-right placeholder='请填写"果盘"等备注信息' [(ngModel)]="objModel.info"></ion-input>
+      </ion-item>
+    </div>
+    <div class="meeting-details" *ngIf="objModel.collspaed2">
+      <h3 (click)="objModel.collspaed2=!objModel.collspaed2">
+        <p>
+          <ion-icon class="iconfont icon-arrowup"></ion-icon>
+        </p>
+        收起
+      </h3>
+    </div>
+  </ion-list>
+</ion-content>
+<!-- <ion-footer class="footer-btnRow">
+  <button ion-button full (click)="saveEntry(objModel)">保存</button>
+</ion-footer> -->

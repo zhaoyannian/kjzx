@@ -1,0 +1,43 @@
+page-project{
+    .projecttotle{
+        height: 6rem;
+        line-height: 6rem;
+        padding: 0 1.5rem;
+        font-size: 1.7rem;
+        color: #333;
+        background: #fff;
+    }
+    .projectcontent{
+        padding: 0;
+        overflow: hidden;
+        li{
+            min-height: 6rem;
+            line-height: 2.2rem;
+            padding: 1.8rem 1.5rem;
+            background: #fff;
+            font-size: 1.7rem;
+            color: #666666;
+            border-top: 1px solid #e8eaf4;
+            display: flex;
+            align-items: center;
+        }
+    }
+    .toolbar .searchbar-ios .searchbar-input{
+        background: #fff!important;
+    }
+    .searchbar-ios .searchbar-input{
+        color: #333!important;
+    }
+    .button-clear-ios{
+        color: #fff!important;
+    }
+    .checked{
+        background: #61adff !important;
+        color: #fff!important;
+    }
+    .btnsStyle{
+        button{
+            background: #007bff!important;
+        }
+    }
+}

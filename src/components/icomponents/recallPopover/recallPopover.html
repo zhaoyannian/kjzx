@@ -1,0 +1,13 @@
+<h4 class="recall_title">撤回</h4>
+
+<div class="recall_content">
+  <ion-textarea class="optionContent" rows="3" placeholder="请填写撤回理由" [(ngModel)]="opinion">
+  </ion-textarea>
+</div>
+
+<div class="recall_footer">
+  <ion-row>
+    <ion-col><button ion-button class="color-callBack" outline (click)="callBack()">取消</button></ion-col>
+    <ion-col><button ion-button class="color-submit" outline (click)="recall()">确定</button></ion-col>
+  </ion-row>
+</div>

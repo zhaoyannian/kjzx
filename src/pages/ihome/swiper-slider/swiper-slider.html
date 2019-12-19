@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="aliasMold=='ProjectDaily'">工时填报</ion-title>
+    <ion-title
+      *ngIf="aliasMold.indexOf('SHIJIA')>-1 || aliasMold.indexOf('otherLeave3')>-1 || aliasMold.indexOf('Annual1')>-1">
+      请假管理</ion-title>
+    <ion-title *ngIf="aliasMold.indexOf('SealApply')>-1">印章申请</ion-title>
+    <ion-title *ngIf="aliasMold.indexOf('ICCard')>-1">身份卡管理</ion-title>
+    <ion-title *ngIf="this.aliasMold.indexOf('networkResource') > -1">网络资源管理</ion-title>
+    <ion-title *ngIf="aliasMold=='webService'">网络服务管理</ion-title>
+    <ion-title *ngIf="aliasMold=='goOutFlow'">外出报备</ion-title>
+    <ion-title *ngIf="aliasMold=='ItemFile'">事项文件</ion-title>
+    <ion-title *ngIf="aliasMold=='evection'">出差申请</ion-title>
+    <ion-title *ngIf="aliasMold=='ReserveCarWF'">用车申请</ion-title>
+    <ion-buttons end *ngIf="typeMold == 1">
+      <button ion-button (click)="addWorkhoursFn()">
+        <i class="iconfont icon-xinzeng"></i>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <div class="pageMenuSlides">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide {{i==0?'bottomLine':''}}" *ngFor="let item of menus;let i=index;" tappable
+          (click)="selectPageMenu($event,i)">{{item}}</div>
+      </div>
+    </div>
+  </div>
+</ion-header>
+<ion-content>
+  <ion-slides #contentSlides (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <!-- <tab-slide *ngIf="typeMold && aliasMold" [typeMold]="typeMold" [aliasMold]="aliasMold" [toggle]="toggle">
+      </tab-slide> -->
+      1
+      <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+          <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新..."></ion-refresher-content>
+      </ion-refresher>
+    </ion-slide>
+    <ion-slide>
+      <!-- <tab-slide *ngIf="typeMold && aliasMold" [typeMold]="typeMold" [aliasMold]="aliasMold" [toggle]="toggle">
+      </tab-slide> -->
+      1
+    </ion-slide>
+    <ion-slide>
+      <!-- <page-workhours [typeMold]="typeMold" [aliasMold]="aliasMold" [toggle]="toggle"></page-workhours> -->
+      <!-- <tab-slide *ngIf="typeMold && aliasMold" [typeMold]="typeMold" [aliasMold]="aliasMold" [toggle]="toggle">
+      </tab-slide> -->
+      1
+    </ion-slide>
+  </ion-slides>
+</ion-content>

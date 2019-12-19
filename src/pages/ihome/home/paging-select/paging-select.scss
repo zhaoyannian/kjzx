@@ -1,0 +1,27 @@
+page-paging-select {
+    .radio-checked{
+        background-color: #488aff;
+        border: none!important;
+        .radio-inner{
+          border-color: #ffffff!important;
+        }
+      }
+      .radio-icon{
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        width: 25px!important;
+        height: 25px!important;
+        display: flex!important;
+        justify-content: center;
+        align-items: center;
+      }
+      .radio-inner{
+        left: 0!important;
+        top: 0!important;
+        bottom: 0!important;
+        right: 0!important;
+        margin: auto;
+        border-color: #ffffff!important;
+      }
+
+}

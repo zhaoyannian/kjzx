@@ -1,0 +1,62 @@
+page-istaffadvise-slide3 {
+
+  .fixed-content,
+  .scroll-content {
+    margin-bottom: 0 !important;
+  }
+
+  .assets-list {
+
+    ul {
+      padding-left: 0;
+    }
+
+    // 状态
+    .state {
+      color: #666;
+
+      &.red {
+        color: #f30;
+      }
+
+      &.green {
+        color: #6bcb6b;
+      }
+
+      &.blue {
+        color: #4990e2;
+      }
+
+      &.gray {
+        color: #666;
+      }
+    }
+
+    // 按钮
+    .btnBox {
+      text-align: center;
+      color: #666;
+
+      .state {
+        &.red {
+          color: #f30;
+        }
+
+        &.green {
+          color: #6bcb6b;
+        }
+
+        &.blue {
+          color: #4990e2;
+        }
+
+        &.gray {
+          color: #666;
+        }
+      }
+
+    }
+  }
+
+
+}

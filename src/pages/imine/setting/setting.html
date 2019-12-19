@@ -1,0 +1,74 @@
+<ion-header>
+    <!-- <ion-navbar>
+    <ion-title>个人中心</ion-title>
+  </ion-navbar> -->
+    <ion-toolbar>
+        <ion-buttons>
+            <button ion-button (click)="goback()">
+                <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+            </button>
+        </ion-buttons>
+        <ion-title>个人中心</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list inset>
+        <div class="userinfo">
+            <img src="{{httpurl}}/api/fileinfo/downloadFile/{{userinfo.picture}}" *ngIf="!!userinfo.picture">
+            <!-- <ion-icon class="iconfont icon-morentouxiang" *ngIf="!!!userinfo.picture"></ion-icon> -->
+            <img src="assets/imgs/people-head.png" *ngIf="!userinfo.picture">
+            <h2>
+                <ion-icon *ngIf="gender == 'M'" class="iconfont icon-nan" item-start></ion-icon>
+                <ion-icon *ngIf="gender == 'F'" class="iconfont icon-nv1" item-start></ion-icon>
+                {{userinfo.username}}
+            </h2>
+            <p>账号：{{userinfo.userId}}</p>
+        </div>
+        <!-- <ion-item class="born" (click)="viewAvatar()">
+            <ion-avatar item-start>
+              <img src="{{httpurl}}/api/fileinfo/downloadFile/{{userinfo.picture}}">
+            </ion-avatar>
+            <h2 class="usename">{{userinfo.username}}</h2>
+            <p>账号：{{userinfo.userId}}</p>
+        </ion-item> -->
+        <ion-item (click)="openNavDetailsPage('个人信息')">
+            <ion-icon class="iconfont icon-icon-userhead" item-start></ion-icon>
+            个人信息
+            <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click)="openNavDetailsPage('修改密码')">
+            <ion-icon class="iconfont icon-lock" item-start></ion-icon>
+            修改密码
+            <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+        </ion-item>
+        <ion-item (click)="openNavDetailsPage('通知设置')">
+            <ion-icon class="iconfont icon-tongzhi" item-start></ion-icon>
+            通知设置
+            <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+        </ion-item>
+        <!-- <ion-item (click)="openNavDetailsPage('意见反馈')">
+            <ion-icon  class="iconfont icon-tongzhi"item-start></ion-icon>
+            意见反馈
+            <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+        </ion-item> -->
+        <ion-item>
+            <ion-icon class="iconfont icon-lock" item-start></ion-icon>
+            <ion-label>版本号</ion-label>
+            <ion-label class="vsersion">
+                {{version}}
+            </ion-label>
+        </ion-item>
+        <ion-item (click)="drop()">
+            <ion-icon class="iconfont icon-quit" item-start></ion-icon>
+            退出账户
+        </ion-item>
+        <!-- <button ion-item *ngFor="let item of items" (click)="openNavDetailsPage(item)" icon-start>
+          <ion-icon [name]="item.icon" item-start></ion-icon>
+          {{ item.title }}
+        </button>
+        <button ion-item  (click)="drop()" icon-start class="born drop">
+            <ion-icon class="iconfont icon-quit" item-start></ion-icon>
+            退出账户
+        </button> -->
+    </ion-list>
+</ion-content>

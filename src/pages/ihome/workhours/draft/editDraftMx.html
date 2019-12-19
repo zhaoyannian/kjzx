@@ -1,0 +1,71 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>工时明细</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="selectProjectFn()">
+        <ion-icon name="xinzeng"></ion-icon>选择项目
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="dismiss()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>工时明细</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button (click)="selectProjectFn()">
+        <ion-icon name="xinzeng"></ion-icon>选择项目
+      </button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-list *ngIf="!item.projectName">
+    <div class="projectTime">
+      <span>项目用时（天）</span>
+    </div>
+    <textarea class="textcontent" type="text" placeholder="请填写工作内容 "></textarea>
+  </ion-list> -->
+  <!-- <ion-list *ngIf="!!item.projectName"> -->
+  <ion-list>
+    <ion-item-sliding *ngIf="!!item.projectName">
+      <ion-item (click)="selectProjectFn()">
+        <div class="projectName">{{item.projectName}}</div>
+        <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="danger" (click)="removeItem(0)">
+          <ion-icon name="delete"></ion-icon>
+          删除
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+    <ion-item-sliding *ngIf="!item.projectName">
+      <ion-item (click)="selectProjectFn()">
+        <div class="projectName">请选择项目</div>
+        <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+      </ion-item>
+    </ion-item-sliding>
+    <!-- <button ion-item class="duan" no-lines (click)="selectProjectFn()" *ngIf="!item.projectName" [disabled]="disabled">
+      <ion-label>请选择项目</ion-label>
+    </button> -->
+    <div class="projectTime">
+      <span>项目用时（天）</span>
+      <button class="iconfont icon-xinzeng start" [disabled]="item.projectDate>=1" (click)="addItem(item)"></button>
+      <ion-input type="number" value="" [(ngModel)]="item.projectDate" (ionBlur)="blurInput()"
+        (ionFocus)="focusInput()"></ion-input>
+      <button class="iconfont icon-jianhao end" [disabled]="item.projectDate<=0" (click)="reduceItem(item)"></button>
+    </div>
+    <textarea class="textcontent" type="text" placeholder="请填写工作内容 " value="" [(ngModel)]="item.jobContent"></textarea>
+  </ion-list>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col><button [disabled]="!item.projectName" ion-button full (click)="saveWorkhoursMxFn()">保存</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

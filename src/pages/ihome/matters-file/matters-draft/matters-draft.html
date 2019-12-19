@@ -1,0 +1,87 @@
+<ion-header>
+  <!-- <ion-navbar>
+      <ion-title>事项及文件详情</ion-title>
+    </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>事项及文件详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content"
+  [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor">文件名称</ion-label>
+          <ion-input class="textdirec" type="text" value="" [disabled]="!editable" [ngModel]="editingEntry.fileName">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">文件编号</ion-label>
+          <ion-input class="textdirec" type="text" value="" [disabled]="!editable" [ngModel]="editingEntry.fileNum">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">备注</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.remark">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <button class="file" *ngIf="editable">
+          上传附件
+          <input #uploadImg type="file" [disabled]="!editable" (change)="uploadFile($event)">
+        </button>
+        <div class="fileText" *ngIf="!editable">附件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item of fileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.fileName) == 'excel',
+                        'icon-pdf': fileIcon(item.fileName) == 'pdf','icon-ppt': fileIcon(item.fileName) == 'ppt',
+                        'icon-word': fileIcon(item.fileName) == 'doc','icon-txt': fileIcon(item.fileName) == 'txt',
+                        'icon-tupian': fileIcon(item.fileName) == 'img','icon-qitafujian': fileIcon(item.fileName) == 'file',
+                        'icon-rar': fileIcon(item.fileName) == 'zip'}"></ion-icon>
+            <span>{{item.fileName}}</span>
+            <ion-icon class="iconfont icon-del" (click)="removeFile(item,i)" *ngIf="editable"></ion-icon>
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}"></a>
+          </li>
+        </ul>
+      </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>起草人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>起草部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-input class="textdirec" type='text' value="{{editingEntry.applyDate | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col>
+        <button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button>
+      </ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                  'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

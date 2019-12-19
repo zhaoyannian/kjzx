@@ -1,0 +1,118 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>项目工时</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="dismiss()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>项目工时</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>填报人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>所在部门</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>填报日期</ion-label>
+          <ion-datetime cancelText="取消" doneText="确认" [disabled]="editable == false" displayFormat='YYYY-MM-DD'
+            (ionChange)="onChange($event)" pickerFormat='YYYY-MM-DD' [(ngModel)]="editingEntry.startDate">
+          </ion-datetime>
+          <ion-label class="week">星期{{weekab}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>总用时</ion-label>
+          <ion-input class="txtgs" type="text" value="" readonly [(ngModel)]="totalDate"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>备注</ion-label>
+          <ion-input class="textdirec" type="text" value="" [disabled]="editable == false" [(ngModel)]="editingEntry.remark"
+            placeholder="请填写备注"></ion-input>
+        </ion-item>
+        <!-- <div class="remark">
+          <span>备注</span>
+          <textarea class="optionContent textdirec" placeholder="请填写备注" [disabled]="editable == false"
+            [(ngModel)]="editingEntry.remark"></textarea>
+        </div> -->
+
+      </ion-list>
+    </div>
+  </div>
+  <!-- 带展开收起的 -->
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="collspaed=!collspaed">
+      项目用时明细
+      <a href="javascript:void(0);" class="lc-toggle-btn"  *ngIf="editingEntry && editingEntry.devices && editingEntry.devices.length>0">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed">
+      <ion-card *ngFor="let item of editingEntry.devices;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>名称</span><em>{{item.projectName}}</em></p>
+            <p><span>用时</span><em>{{item.projectDate}}</em><i>(天)</i></p>
+            <p><span>内容</span><em>{{item.jobContent}}</em></p>
+          </div>
+        </ion-card-content>
+        <ion-grid class="card-bottom" *ngIf="editable">
+          <ion-row>
+            <ion-col (click)="edit(item,i)"><button type="button" class="editColor">编辑</button></ion-col>
+            <ion-col (click)="delete(item,i)"><button type="button" class="deleteColor">删除</button></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+    </div>
+    <div *ngIf="editable" class="addStyle">
+      <button ion-button (click)="addWorkhoursMxFn()">
+        <i class="iconfont icon-xinzeng"></i>
+      </button>
+    </div>
+  </div>
+</ion-content>
+<!-- <ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm"
+  [ngStyle]="{'bottom': btnScroll && ismobile ? btnscollHeight+'px' : 0 }">
+  <ion-textarea *ngIf="wfHolderObj.showOpinionArea()" class="optionContent" placeholder="填写办理意见" formControlName="opinion"
+    (ionBlur)="blurInput()" (ionFocus)="focusInput()"></ion-textarea>
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col><button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button></ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer> -->
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" 
+  [ngStyle]="{'bottom': btnScroll && ismobile ? btnscollHeight+'px' : 0 }">
+  <ion-textarea *ngIf="wfHolderObj.showOpinionArea()" class="optionContent" placeholder="填写办理意见" [(ngModel)]="opinion"
+    (ionBlur)="blurInput()" (ionFocus)="focusInput()"></ion-textarea>
+  <!-- <textarea   (click)="blurInput()"  class="optionContent" placeholder="填写办理意见" formControlName="opinion" ></textarea> -->
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col><button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button></ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button  (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -1,0 +1,62 @@
+<ion-header>
+  <!-- <ion-toolbar> -->
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+
+    <ion-title>选择项目</ion-title>
+    <!-- <ion-searchbar placeholder="搜索项目"cancelButtonText="取消" showCancelButton="true" (ionInput)="getItems($event)"  (ionCancel)="onCancel($event)"></ion-searchbar> -->
+  </ion-navbar>
+  <!-- </ion-toolbar> -->
+</ion-header>
+<ion-content class="layout-content">
+  <!-- <ion-searchbar placeholder="搜索项目" (ionInput)="getItems($event)"></ion-searchbar> -->
+  <ion-searchbar #searchBox id="search-box" (ionInput)="search(searchBox.value)" (ionClear)="onClearFilter($event)"
+    placeholder="搜索"></ion-searchbar>
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)" *ngIf="!isFilter">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <div *ngIf="!isFilter">
+    <ul *ngFor="let item of allList" class="projectcontent">
+      <li (click)="chooseItem(item)" [ngClass]="{'checked':item.checked==true}">
+        {{item.projectName}}
+      </li>
+    </ul>
+  </div> -->
+  <ion-list radio-group [(ngModel)]="selectRadio" *ngIf="!isFilter">
+    <ion-item *ngFor="let item of allList">
+      <ion-radio value="{{item.id}}"></ion-radio>
+      <ion-label>
+        <h2>{{item.projectName}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)" *ngIf="!isFilter">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-list radio-group [(ngModel)]="selectRadio">
+    <ion-item *ngFor="let item of heroes$ | async">
+      <ion-radio value="{{item.id}}"></ion-radio>
+      <ion-label>
+        <h2>{{item.projectName}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <!-- <ul *ngFor="let item of heroes$ | async" class="projectcontent">
+    <li (click)="chooseItem(item)" [ngClass]="{'checked':item.checked==true}">
+      {{item.projectName}}
+    </li>
+  </ul> -->
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col><button [disabled]="selectRadio == null || selectRadio==''" ion-button full (click)="chooseItemList()">保存</button></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

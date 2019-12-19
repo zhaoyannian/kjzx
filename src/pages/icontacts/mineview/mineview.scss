@@ -1,0 +1,82 @@
+page-mineview {
+
+  & ion-content,
+  .content-ios {
+    background: #efefef;
+  }
+
+  & .back-button-icon {
+    font-size: 3.4rem;
+  }
+
+  & #mine_view_head {
+    padding: 30px 0 15px 0;
+    background: #FFF;
+  }
+
+  & #mine_view_head .photo img {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 50px;
+    border: 2px solid #FFFFFF;
+  }
+
+  & #mine_view_head p {
+    text-align: center;
+    font-size: 1.6rem;
+    padding: 10px 0;
+  }
+
+  & .icon-nv1 {
+    color: #ff06ff;
+  }
+
+  & .icon-nan {
+    color: #008ad8;
+  }
+
+  & {
+    .mineview_list {
+      background: #FFF;
+      padding: 5px 0 0 10px;
+      margin-top: 10px;
+    }
+
+    .mineview_list li {
+      display: flex;
+      margin: 10px 0;
+    }
+
+    .mineview_list li:nth-child(1) div:nth-child(2) {
+      border-bottom: 1px solid #ededed;
+    }
+
+    .mineview_list li strong {
+      font-size: 3.6rem;
+      font-weight: normal;
+      color: #0181e4;
+      margin-right: 10px;
+      width: 3.6rem;
+    }
+
+    .mineview_list li div:nth-child(2) {
+      flex: 1;
+      padding-bottom: 10px;
+    }
+
+    .mineview_list li div a {
+      color: #0181e4;
+    }
+
+    .mineview_list li div .icon-duanxin {
+      float: right;
+      font-size: 3rem;
+      color: #999999;
+      margin-right: 15px;
+      padding-top: 5px;
+    }
+  }
+
+}

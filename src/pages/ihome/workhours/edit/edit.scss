@@ -1,0 +1,138 @@
+page-edit {
+    .has-footer{
+        .scroll-content{
+            margin-bottom: 16rem;
+        }
+    }
+    .header .bar-button-default{
+        // font-size: 1.8rem;
+    }
+    .item-ios{
+        padding-left:0;
+        height: 6rem;
+        min-height: 6rem;
+    }
+    .datetime-ios{
+        margin-right: 3rem;
+    }
+    .item-ios.item-block .item-inner{
+        padding: 0 1.5rem;
+        border-color: #e8eaf4;
+        font-size: 1.7rem;
+    }
+    .card-bottom button{
+        font-size: 1.5rem;
+    }
+    .editColor{
+        color: #007bff;
+    }
+    .deleteColor{
+        color: #e60012;
+    }
+    .card-bottom .col{
+        border-right: 1px solid #ededed;
+    }
+    .addStyle{
+        height: 6rem;
+        background: #fff;
+        margin: .5rem 0;
+        display: flex;
+        .button-ios{
+            height: 100%;
+            border-radius: 0;
+            color: #007bff;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            .icon-xinzeng{
+                font-size: 3.2rem;
+            }
+        }
+    }
+    .week{
+        position: absolute;
+        right: 0;
+        display: flex;
+        color: #d2d8dd!important;
+        font-size: 1.2rem;
+        transform: translate(-50%);
+        margin: 0;
+    }
+    .list-ios{
+        margin-bottom: 0;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border: none;
+    }
+    .list-ios > .item-block:first-child{
+        border: none;
+        overflow: hidden;
+    }
+    .textcolor{
+        color: #333;
+    }
+    .text-input-ios{
+        text-align: right;
+    }
+    .datetime-text{
+        text-align: right;
+        margin-right: 1.5rem;
+    }
+    .textdirec{
+        color:#666666!important;
+        background: #ffffff;
+    }
+    .txtgs{
+        color: #cccccc!important;
+        background: #ffffff;
+    }
+    .datetime-disabled, .item-datetime-disabled ion-label{
+        opacity: 1;
+    }
+    .datetime{
+        align-items: flex-end;
+        flex: 1;
+        color: #333;
+        font-size: 2.1rem;
+    }
+    .card-ios{
+        width: 100%;
+        border: none;
+        margin: 0;
+        margin-bottom: .5rem;
+    }
+    .remark{
+        display: flex;
+        padding: 0 1.5rem;
+        font-size: 1.7rem;
+        background: #fff;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        min-height: 6rem;
+        span{
+            font-size: 1.7rem;
+            color: #333;
+            min-width: 100px;
+            max-width: 200px;
+            display: flex;
+        }
+        .optionContent{
+            height: auto;
+            display: flex;
+            flex: 1;
+            color: #999999;
+            font-size: 1.7rem;
+            border: none;
+            margin: auto;
+            padding-top: 18px;
+            padding-bottom: 18px;
+            // height: 100%;
+        }
+    }
+    
+}

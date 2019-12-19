@@ -1,0 +1,38 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>选择车辆</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()" [disabled]="!isShow">确定</button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>选择车辆</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()" [disabled]="!isShow">确定</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-searchbar (ionInput)="getItems($event)" placeholder=""></ion-searchbar>
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-list>
+    <ul *ngFor="let item of data" class="projectcontent">
+      <li (click)="chooseItem(item)" [ngClass]="{'checked':item.checked==true}">
+        {{item.type}}{{item.numberPlate}}
+        {{item.status}}{{item.limit}}
+      </li>
+    </ul>
+    <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+
+</ion-content>

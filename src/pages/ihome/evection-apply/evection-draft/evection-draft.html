@@ -1,0 +1,90 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>出差详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>出差详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content"
+  [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <textarea [(ngModel)]="editingEntry.evReason" [disabled]="!editable" class="reason"
+          placeholder="请填写出差事由"></textarea>
+      </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-input class="textdirec" type='text' value="{{editingEntry.evApplyDate | date: 'yyyy-MM-dd'}}"
+            (click)="openCalendar('evApplyDate')"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <div class="timeStyle">
+          <div class="leaveTime">
+            <span class="stactime">{{editingEntry.evOutDate | date: 'yyyy'}}</span>
+            <i class="statictext">出差日期</i>
+            <i class="statictext">结束日期</i>
+            <span class="stactime">{{editingEntry.evBackDate | date: 'yyyy'}}</span>
+          </div>
+          <div class="leaveType">
+            <span *ngIf="!!editingEntry.evOutDate" class="stactime"
+              (click)="openCalendar('evOutDate')">{{editingEntry.evOutDate | date:'MM-dd'}}</span>
+            <span *ngIf="!editingEntry.evOutDate" class="stactime defaultChoose"
+              (click)="openCalendar('evOutDate')">请选择</span>
+            <span *ngIf="!!editingEntry.evBackDate" class="stactime"
+              (click)="openCalendar('evBackDate')">{{editingEntry.evBackDate | date:'MM-dd'}}</span>
+            <span *ngIf="!editingEntry.evBackDate" class="stactime defaultChoose"
+              (click)="openCalendar('evBackDate')">请选择</span>
+          </div>
+          <div class="leaveWeek">
+            <span class="left" *ngIf="!!weekab">星期{{weekab}}</span>
+            <span class="right" *ngIf="!!weekab2">星期{{weekab2}}</span>
+          </div>
+          <em class="choosedaybg"></em>
+        </div>
+        <ion-item>
+          <ion-label class="textcolor" fixed>计划天数</ion-label>
+          <ion-input readonly class="textdirec" type="text" value="" [(ngModel)]="editingEntry.evNum"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>出差地点</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.ecAddress">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col>
+        <button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button>
+      </ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

@@ -1,0 +1,142 @@
+<ion-header>
+  <!-- <ion-navbar center>
+    <ion-title>待办列表</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>待办列表</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="layout-content">
+  <ion-list class="home-list">
+    <ion-item class="waitlist-item" (click)="cgsh(1)" *ngIf="cslist.equPurCount > 0">
+      <ion-thumbnail item-start>
+        <span class="cur">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="cslist.equPurCount>0">{{cslist.equPurCount>99?'99+':cslist.equPurCount}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>仪器设备采购申请</h2>
+      <p>
+        您有{{cslist.equPurCount}}条仪器设备采购申请，请查收办理。
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" (click)="cgsh(2)" *ngIf="cslist.icaCount > 0">
+      <ion-thumbnail item-start>
+        <span class="cur">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="cslist.icaCount>0">{{cslist.icaCount>99?'99+':cslist.icaCount}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>仪器设备合同审批</h2>
+      <p>
+        您有{{cslist.icaCount}}条仪器设备合同审批，请查收办理。
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" (click)="cgsh(3)" *ngIf="cslist.compoCount > 0">
+      <ion-thumbnail item-start>
+        <span class="cur">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="cslist.compoCount>0">{{cslist.compoCount>99?'99+':cslist.compoCount}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>元器件材料采购申请</h2>
+      <p>
+        您有{{cslist.compoCount}}条元器件材料采购申请，请查收办理。
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" (click)="cgsh(4)" *ngIf="cslist.mcCount > 0">
+      <ion-thumbnail item-start>
+        <span class="cur">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="cslist.mcCount>0">{{cslist.mcCount>99?'99+':cslist.mcCount}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>元器件材料合同审批</h2>
+      <p>
+        您有{{cslist.mcCount}}条元器件材料合同审批，请查收办理。
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" (click)="yqj()" *ngIf="cslist.zyCount > 0">
+      <ion-thumbnail item-start>
+        <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="cslist.zyCount>0">{{cslist.zyCount>99?'99+':cslist.zyCount}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>正样器件材料采购</h2>
+      <p>
+        您有{{cslist.zyCount}}条正样器件材料采购，请查收办理。
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" (click)="cgsh(5)" *ngIf="cslist.quCount > 0">
+      <ion-thumbnail item-start>
+        <span class="cur">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="cslist.quCount>0">{{cslist.quCount>99?'99+':cslist.quCount}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>元器件材料正样合同管理</h2>
+      <p>
+        您有{{cslist.quCount}}条元器件材料正样合同管理，请查收办理。
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" (click)="cgsh(6)" *ngIf="cslist.enCount > 0">
+      <ion-thumbnail item-start>
+        <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="cslist.enCount>0">{{cslist.enCount>99?'99+':cslist.enCount}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>项目委托申请管理</h2>
+      <p>
+        您有{{cslist.enCount}}条项目委托申请管理，请查收办理。
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" *ngIf="meetApproval.length > 0" (click)="meetAppro()">
+      <ion-thumbnail item-start>
+        <span>
+          <img src="assets/imgs/icon-homePro-1.png" alt="">
+          <i class="orange-num">{{meetApproval.length > 0 ? (meetApproval.length > 99?'99+':meetApproval.length):0}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>会议审批</h2>
+      <p>
+        您有会议审批申请，请查收处理
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" *ngIf="AllMesage > 0" (click)="dataAppro()">
+      <ion-thumbnail item-start>
+        <span>
+          <img src="assets/imgs/icon-homePro-1.png" alt="">
+          <i class="orange-num">{{AllMesage > 0 ? (AllMesage > 99?'99+':AllMesage):0}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>数据上报</h2>
+      <p>
+        您有新的数据需要上报，请查收处理
+      </p>
+    </ion-item>
+    <ion-item class="waitlist-item" *ngFor="let item of list" (click)="dbAppro(item)">
+      <ion-thumbnail item-start>
+        <span *ngIf="!!item.icon">
+          <img src="{{state + item.icon}}" alt="">
+          <i class="orange-num" *ngIf="item.count>0">{{item.count}}</i>
+        </span>
+        <span class="cur" *ngIf="!item.icon">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="item.count>0">{{item.count}}</i>
+        </span>
+      </ion-thumbnail>
+      <h2>{{item.name}}</h2>
+      <p>
+        {{item.firstContent}}
+      </p>
+    </ion-item>
+  </ion-list>
+</ion-content>

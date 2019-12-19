@@ -1,0 +1,173 @@
+<ion-content class="layout-content">
+  <div class="workflowlist">
+    <ion-list *ngFor="let entity of allList" class="opinoiolist">
+      <ion-item *ngIf="flowType ==1">
+        <ion-label class="textcolor">申请编码：</ion-label>
+        <ion-label class="textdirec">{{entity.title.detail.paCode}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==1">
+        <ion-label class="textcolor">资产名称：</ion-label>
+        <ion-label class="textdirec">{{entity.title.detail.equipmentName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==1">
+        <ion-label class="textcolor">预测总额（元）：</ion-label>
+        <ion-label class="textdirec">{{entity.title.amount}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==1 ">
+        <ion-label class="textcolor">申请日期：</ion-label>
+        <ion-label class="textdirec">{{entity.title.applicationDate}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==1 ">
+        <ion-label class="textcolor">使用人：</ion-label>
+        <ion-label class="textdirec">{{entity.title.userName}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="flowType ==1 ">
+        <ion-label class="textcolor">填写人：</ion-label>
+        <ion-label class="textdirec">{{entity.title.userFillName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==1">
+        <ion-label class="textcolor">申请部门：</ion-label>
+        <ion-label class="textdirec">{{entity.title.deptName}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="flowType ==1">
+        <ion-label class="textcolor">采购类型：</ion-label>
+        <ion-label class="textdirec">{{entity.title.purchaseTypeName?entity.title.purchaseTypeName:"暂未指定"}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==3">
+        <ion-label class="textcolor">申请编码：</ion-label>
+        <ion-label class="textdirec">{{entity.title.paCode}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==3">
+        <ion-label class="textcolor">标题：</ion-label>
+        <ion-label class="textdirec">{{entity.title.materialTypeName}}采购申请</ion-label>
+      </ion-item>
+      <ion-item *ngIf=" flowType ==3">
+        <ion-label class="textcolor">申请日期：</ion-label>
+        <ion-label class="textdirec">{{entity.title.applicationDate}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf=" flowType ==3">
+        <ion-label class="textcolor">使用人：</ion-label>
+        <ion-label class="textdirec">{{entity.title.userName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf=" flowType ==3">
+        <ion-label class="textcolor">填写人：</ion-label>
+        <ion-label class="textdirec">{{entity.title.userFillName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==3">
+        <ion-label class="textcolor">申请部门：</ion-label>
+        <ion-label class="textdirec">{{entity.title.orgName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==3">
+        <ion-label class="textcolor">电话号码：</ion-label>
+        <ion-label class="textdirec">{{entity.title.mobile}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf=" flowType ==3">
+        <ion-label class="textcolor">预测总额（元）：</ion-label>
+        <ion-label class="textdirec">{{entity.title.amount}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==3">
+        <ion-label class="textcolor">采购类型：</ion-label>
+        <ion-label class="textdirec">{{entity.title.purchaseTypeName?entity.title.purchaseTypeName:"暂未指定"}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==3">
+        <ion-label class="textcolor">采购种类：</ion-label>
+        <ion-label class="textdirec">{{entity.title.materialTypeName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==2 || flowType ==4 || flowType ==5">
+        <ion-label class="textcolor">申请编号：</ion-label>
+        <ion-label class="textdirec">{{entity.title.caCode}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==2 || flowType ==4 || flowType ==5">
+        <ion-label class="textcolor">合同信息：</ion-label>
+        <ion-label class="textdirec">{{entity.title.contractName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==2 || flowType ==4 || flowType ==5">
+        <ion-label class="textcolor">合同金额（元）：</ion-label>
+        <ion-label class="textdirec">{{entity.title.contractPrice}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==2 || flowType ==4 || flowType ==5">
+        <ion-label class="textcolor">供方合同号：</ion-label>
+        <ion-label class="textdirec">{{entity.title.supplierContractNo}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==2 || flowType ==4 || flowType ==5">
+        <ion-label class="textcolor">申请部门：</ion-label>
+        <ion-label class="textdirec">{{entity.title.orgCodeName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==2 || flowType ==4 || flowType ==5">
+        <ion-label class="textcolor">办理时间：</ion-label>
+        <ion-label class="textdirec">{{entity.title.applicationDate | date: 'yyyy-MM-dd'}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==2 || flowType ==4 || flowType ==5">
+        <ion-label class="textcolor">使用人：</ion-label>
+        <ion-label class="textdirec">{{entity.title.applicantName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==4 ">
+        <ion-label class="textcolor">采购类型：</ion-label>
+        <ion-label class="textdirec">{{entity.title.materialTypeName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==5 ">
+        <ion-label class="textcolor">采购类型：</ion-label>
+        <ion-label class="textdirec">{{entity.title.technologyAgreementName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="flowType ==4">
+        <ion-label class="textcolor">采购分类：</ion-label>
+        <ion-label class="textdirec">{{entity.title.contractTypeName?entity.title.contractTypeName:'暂未指定'}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="flowType ==6">
+        <ion-label class="textcolor">申请编码：</ion-label>
+        <ion-label class="textdirec">{{entity.title.paCode}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="flowType ==6">
+        <ion-label class="textcolor">委托人：</ion-label>
+        <ion-label class="textdirec">{{entity.title.userName}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="flowType ==6">
+        <ion-label class="textcolor">委托部门：</ion-label>
+        <ion-label class="textdirec">{{entity.title.deptName}}</ion-label>
+      </ion-item>  
+      
+      <ion-item *ngIf="flowType ==6">
+        <ion-label class="textcolor">所属项目：</ion-label>
+        <ion-label class="textdirec">{{entity.title.projectName}}</ion-label>
+      </ion-item> 
+
+       <ion-item *ngIf="flowType ==6">
+        <ion-label class="textcolor">采购项目名称：</ion-label>
+        <ion-label class="textdirec">{{entity.title.title}}</ion-label>
+      </ion-item>  
+      
+      <ion-item *ngIf="flowType ==6">
+        <ion-label class="textcolor">申请日期：</ion-label>
+        <ion-label class="textdirec">{{entity.title.applicationDate}}</ion-label>
+      </ion-item>  
+
+      <ion-item *ngIf=" flowType ==6">
+        <ion-label class="textcolor">预算金额：</ion-label>
+        <ion-label class="textdirec">{{entity.title.amount}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf=" flowType ==6">
+        <ion-label class="textcolor">建议采购方式：</ion-label>
+        <ion-label class="textdirec">{{entity.title.purchaseWayName}}</ion-label>
+      </ion-item>
+      <ion-grid class="btns">
+        <ion-row>
+          <ion-col (click)="dealEntity(entity,status === '1')" *ngIf="status != '1'"><button type="button">查看</button></ion-col>
+          <ion-col (click)="dealEntity(entity,status === '1')" *ngIf="status === '1'"><button type="button">办理</button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+    <div class="myorder-item-notdata" *ngIf="allList.length<=0">
+      <img src="assets/imgs/notdata.png" alt="">
+    </div>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

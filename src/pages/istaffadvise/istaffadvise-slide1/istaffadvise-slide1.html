@@ -1,0 +1,46 @@
+<ion-content>
+
+  <!-- 意见反馈 -->
+  <div class="inventory-content">
+    <div class="inventory-main">
+      <ion-list class="assets-list" *ngFor="let item of allList;let i =index;" tappable>
+        <ul>
+          <li class="number">
+            <span>状态</span>
+            <em class="state"
+              [ngClass]="{'red':item.communicateStatus=='DFP','green':item.communicateStatus=='QBHF','blue':item.communicateStatus=='DHF','gray':item.communicateStatus=='YHF'}">{{status[item.communicateStatus]}}</em>
+          </li>
+          <li>
+            <span>编号</span>{{item.code}}
+          </li>
+          <li>
+            <span>标题</span>{{item.title}}
+          </li>
+          <li>
+            <span>创建时间</span>{{item.createTime | date: 'yyyy-MM-dd HH:mm'}}
+          </li>
+          <li>
+            <span>互动内容</span>{{item.communicateContent}}
+          </li>
+        </ul>
+        <div class="btnBox">
+          <ion-row>
+            <ion-col class="state blue" (click)="goDetail(item,'appReply')">查看</ion-col>
+            <ion-col class="state blue" (click)="goDetail(item,'ansure')" *ngIf="item.communicateStatus ==='YZFHF'">
+              办理情况
+            </ion-col>
+          </ion-row>
+        </div>
+      </ion-list>
+    </div>
+  </div>
+
+  <div class="myorder-item-notdata" *ngIf="allList.length<=0">
+    <img src="assets/imgs/notdata.png" alt="">
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

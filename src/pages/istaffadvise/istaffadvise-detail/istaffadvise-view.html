@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>意见反馈情况</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="collspaed1=!collspaed1">
+      基本信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="!collspaed1"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="collspaed1"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="!collspaed1">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>姓名</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.createUserName">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>是否公开申请人姓名</ion-label>
+          <ion-toggle class="back_style" value="foo" color="secondary" checked="true" [(ngModel)]="isShow"
+            [disabled]="true" (ionChange)="changeIsShow()"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>邮箱</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.userMail">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>联系电话</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.userPhone">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>建议回复部门</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.recommendDept">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>互动标题</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.title">
+          </ion-input>
+        </ion-item>
+        <ion-item class="hudongTit">
+          <ion-label>互动内容</ion-label>
+        </ion-item>
+        <div class="hudongCont">
+          <textarea [(ngModel)]="editingEntry.communicateContent" readonly class="reason" placeholder=""></textarea>
+        </div>
+      </ion-list>
+      <ion-list>
+        <div class="fileText" *ngIf="!editable">附件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item of fileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.fileName) == 'excel',
+                        'icon-pdf': fileIcon(item.fileName) == 'pdf','icon-ppt': fileIcon(item.fileName) == 'ppt',
+                        'icon-word': fileIcon(item.fileName) == 'doc','icon-txt': fileIcon(item.fileName) == 'txt',
+                        'icon-tupian': fileIcon(item.fileName) == 'img','icon-qitafujian': fileIcon(item.fileName) == 'file',
+                        'icon-rar': fileIcon(item.fileName) == 'zip'}"></ion-icon>
+            <span>{{item.fileName}}</span>
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}"></a>
+          </li>
+        </ul>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="collspaed3=!collspaed3">
+      互动跟进反馈内容区
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed3"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed3"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed3">
+      <div>
+        <ion-list class="assets-list" *ngFor="let item of replyInfoList;let i =index;" tappable>
+          <ul>
+            <li><span>姓名</span>{{item.createUser}}</li>
+            <li>
+              <span>创建时间</span>{{item.createTime | date: 'yyyy-MM-dd
+              HH:mm'}}
+            </li>
+            <li><span>互动内容</span>{{item.options}}</li>
+          </ul>
+        </ion-list>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+  </div>
+</ion-content>

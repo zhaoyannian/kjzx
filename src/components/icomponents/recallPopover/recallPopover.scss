@@ -1,0 +1,46 @@
+page-recallPopover {
+
+  .recall_title {
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 16px;
+  }
+
+  .recall_content {
+    padding: 0 10px 10px;
+
+    .optionContent {
+      height: 65px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  }
+
+  .recall_footer {
+    .col {
+      padding: 0;
+
+      button {
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+        border-color: transparent;
+      }
+
+      .color-submit {
+        background: #22ac38;
+        color: #fff;
+      }
+
+      .color-callBack {
+        background: #f39800;
+        color: #fff;
+      }
+    }
+  }
+
+
+
+}

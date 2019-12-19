@@ -1,0 +1,69 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>车辆详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>车辆详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list *ngIf="!!entry">
+    <ion-item>
+      <ion-label>车牌号</ion-label>
+      <ion-label class="text-right">{{entry.numberPlate}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>型号</ion-label>
+      <ion-label class="text-right">{{entry.type}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>购买时间</ion-label>
+      <ion-label class="text-right">{{entry.purchaseTime | date: 'yyyy-MM-dd'}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>专职司机</ion-label>
+      <ion-label class="text-right">{{entry.fulltimeDriver}}</ion-label>
+    </ion-item>
+    <ion-item class="duan" no-lines>
+      <ion-label>可乘坐人数</ion-label>
+      <ion-label class="text-right">{{entry.numberPassengers}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>车钥匙</ion-label>
+      <ion-label class="text-right">{{entry.carKey}}</ion-label>
+    </ion-item>
+    <!-- <ion-item>
+      <ion-label>是否启用车辆</ion-label>
+      <ion-label class="text-right">{{entry.ifEnableVehicle === 'FALSE' ?'否':'是'}}</ion-label>
+    </ion-item> -->
+    <ion-item>
+      <ion-label>行车证</ion-label>
+      <ion-label class="text-right">
+        <!-- {{entry.drivinglicense}} -->
+        <div class="image-style">
+          <img src="{{state +'/base/fileinfo/getFileImage?id='+ entry.drivinglicense}}" *ngIf="!!entry.drivinglicense">
+          <img src="assets/imgs/video-img.jpg" *ngIf="!entry.drivinglicense">
+        </div>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>车辆照片</ion-label>
+      <ion-label class="text-right">
+        <div class="image-style">
+          <img src="{{state +'/base/fileinfo/getFileImage?id='+ entry.vehiclePhoto}}" *ngIf="!!entry.vehiclePhoto">
+          <img src="assets/imgs/video-img.jpg" *ngIf="!entry.vehiclePhoto">
+        </div>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>备注</ion-label>
+      <ion-label class="text-right">{{entry.remarks}}</ion-label>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

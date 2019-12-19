@@ -1,0 +1,323 @@
+page-istaffadvise-detail {
+
+  ul {
+    padding-left: 0;
+  }
+
+  .list-ios {
+    margin-bottom: .5rem;
+  }
+
+  .list-ios>.item-block:last-child,
+  .list-ios>.item-wrapper:last-child .item-block {
+    border: none;
+  }
+
+  .list-ios>.item-block:first-child {
+    border: none;
+    overflow: hidden;
+  }
+
+  .textcolor {
+    color: #333;
+  }
+
+  .textdirec {
+    color: #666666;
+  }
+
+  ion-label[fixed] {
+    min-width: 100px;
+    text-align: left;
+    text-overflow: inherit;
+    white-space: inherit;
+  }
+
+  ion-label {
+    // text-align: right;
+    color: #666666;
+  }
+
+  .has-footer2 {
+    .scroll-content {
+      margin-bottom: 6rem;
+    }
+  }
+
+  .textcolorNew {
+    text-align: right;
+    text-overflow: inherit;
+    white-space: normal;
+  }
+
+  .datetime-ios {
+    padding: 11px 8px 11px 12px !important;
+    width: 100%;
+    text-align: right;
+  }
+
+  .text-input[disabled] {
+    opacity: 1;
+  }
+
+  .datetime-disabled,
+  .item-datetime-disabled ion-label {
+    opacity: 1;
+  }
+
+  .select-disabled,
+  .item-select-disabled ion-label {
+    opacity: 1;
+  }
+
+  .text-input-ios {
+    text-align: right;
+  }
+
+  .header .bar-button-default {
+    // font-size: 1.8rem;
+  }
+
+  .item-ios {
+    padding-left: 0;
+    // height: 6rem;
+    min-height: 6rem;
+  }
+
+  .item-ios.item-block .item-inner {
+    padding: 0 1.5rem;
+    border-color: #e8eaf4;
+    font-size: 1.7rem;
+  }
+
+  .datetime-text {
+    font-size: 17px !important;
+    color: #666666;
+  }
+
+  .toggle-ios {
+    width: 5.9rem;
+  }
+
+  .toggle-checked .toggle-inner {
+    right: 20px !important;
+    left: initial !important;
+  }
+
+  .toggle-ios .toggle-inner {
+    right: initial;
+    left: 1px;
+  }
+
+  .toggle-inner::before {
+    padding-left: 0px;
+  }
+
+  .toggle-ios .toggle-icon {
+    &::before {
+      content: "否";
+      background-color: #00c4ff;
+      left: 0;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 14px;
+      font-size: 1rem;
+      color: #fff;
+      align-items: center;
+    }
+  }
+
+  .toggle-checked .button-inner {
+    justify-content: flex-start;
+
+    &::before {
+      content: "是";
+      right: 0;
+      align-items: center;
+      justify-content: end;
+      font-size: 1rem;
+      color: #fff;
+      padding-left: 25px;
+    }
+  }
+
+  .toggle-ios-secondary.toggle-checked .toggle-icon {
+    background-color: #0081e4 !important;
+  }
+
+  .toggle-ios .toggle-icon {
+    background-color: #00c4ff !important;
+  }
+
+  .toggle-ios .toggle-icon {
+    background-color: #00c4ff !important;
+  }
+
+  .toggle-ios .toggle-icon::before {
+    background-color: #00c4ff;
+  }
+
+  .file {
+    height: 6rem;
+    line-height: 6rem;
+    text-align: center;
+    background: #fff;
+    font-size: 1.7rem;
+    color: #007bff;
+    width: 100%;
+    padding: 0 1.5rem;
+    position: relative;
+
+    input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      z-index: 11;
+      opacity: 0;
+    }
+  }
+
+  .fileText {
+    height: 6rem;
+    line-height: 6rem;
+    text-align: left;
+    background: #fff;
+    font-size: 1.7rem;
+    color: #333;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .button-outline-ios-gray {
+    color: #333;
+  }
+
+  .select-text {
+    text-align: right;
+    color: #666666;
+  }
+
+  ion-select {
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .has-footer {
+    .scroll-content {
+      margin-bottom: 16rem;
+    }
+  }
+
+  .has-footer2 {
+    .scroll-content {
+      margin-bottom: 6rem;
+    }
+  }
+
+  .defaultChoose {
+    color: #bbbbbb !important;
+  }
+
+  .lc-form-row .lc-toggle-box {
+    padding: 0rem !important
+  }
+
+  .checkbox-ios .checkbox-icon {
+    border-radius: 0 !important;
+  }
+
+  // 这块样式表单不需要就删了
+  .form-item-content {
+    width: 100%;
+    margin: 11px 0 11px 16px;
+
+    .form-checkbox {
+      margin-right: 8px;
+      display: inline-block;
+    }
+  }
+
+  .btn-type .alert-ios .alert-checkbox-icon {
+    border-radius: 50% !important;
+  }
+
+
+  .hudongTit .item-inner {
+    border-color: transparent !important;
+  }
+
+  .hudongCont {
+    padding: 0 10px 10px;
+    background: #fff;
+
+    textarea {
+      background: #f5f5f5;
+    }
+  }
+
+  .item-toggle-disabled ion-label {
+    opacity: 1 !important;
+  }
+
+  .assets-list {
+
+    ul {
+      padding-left: 0;
+    }
+
+    // 状态
+    .state {
+      color: #666;
+
+      &.red {
+        color: #f30;
+      }
+
+      &.green {
+        color: #6bcb6b;
+      }
+
+      &.blue {
+        color: #4990e2;
+      }
+
+      &.gray {
+        color: #666;
+      }
+    }
+
+    // 按钮
+    .btnBox {
+      text-align: center;
+      color: #666;
+
+      .state {
+        &.red {
+          color: #f30;
+        }
+
+        &.green {
+          color: #6bcb6b;
+        }
+
+        &.blue {
+          color: #4990e2;
+        }
+
+        &.gray {
+          color: #666;
+        }
+      }
+
+    }
+  }
+
+  .addApply {
+    float: right;
+    color: #488aff;
+    font-size: 16px;
+    margin-right: 15px;
+    font-weight: normal;
+  }
+}

@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>外出报备详情</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="layout-content">
+  <div class="sw-form-row">
+    <!-- <h2 class="sw-toggle-title">标题</h2> -->
+    <div class="sw-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label fixed>
+            <em class="red">*</em>填报人</ion-label>
+          <ion-input type='text' value="" [(ngModel)]="newEntity.userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>所在部门</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="newEntity.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>填报日期</ion-label>
+          <ion-datetime displayFormat='YYYY-MM-DD' pickerFormat='YYYY-MM-DD' [(ngModel)]="newEntity.fillDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>备注</ion-label>
+          <ion-input type="text" value="" [ngModel]="newEntity.remark"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>总用时</ion-label>
+          <ion-input type="text" value="" [ngModel]="newEntity.total"></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRow">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button color="gray" outline>暂存</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button>提交</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

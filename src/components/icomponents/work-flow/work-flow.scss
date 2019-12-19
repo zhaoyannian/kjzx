@@ -1,0 +1,56 @@
+work-flow {
+    .sw-toggle-title{
+        height: 6rem;
+        line-height: 6rem;
+        font-size: 1.7rem;
+        text-align: left;
+        padding: 0 8px;
+        color: #333;
+        background-color: #fff;
+        border-bottom: 1px solid #e8eaf4;
+        margin: 0 auto;
+    }
+    .workflowlist{
+        background: #e8eaf4;
+        overflow: hidden;
+        border-top: 1px solid #e8eaf4;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border: none;
+    }
+    .list-ios > .item-block:first-child{
+        border: none;
+    }
+    .list-ios{
+        margin: -1px 0 .5rem!important;
+        background: #fff;
+        overflow: hidden;
+        &:first-child{
+            border-top: 1px solid #e8eaf4;
+        }
+        
+    }
+    .list-ios > .item-block:first-child{
+        border: none;
+        margin-top: 1rem;
+        overflow: hidden;
+    }
+    .item-ios{
+        padding-left: 0!important;
+        max-height: 2.5rem!important;
+        height: 2.5rem!important;
+        min-height: 2.5rem!important;
+    }
+    .list-ios .item-block .item-inner{
+        border-color: #e8eaf4!important;
+        padding-left: 1.5rem!important;
+        font-size: 1.5rem!important;
+    }
+    .textcolor{
+        color: #999999 !important;
+    }
+    .textdirec{
+        text-align: right;
+        color: #333!important;
+    }
+}

@@ -1,0 +1,352 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>正样元器件合同申请</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>正样元器件合同申请</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer': (editable)}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list *ngIf="editingEntry.bizEntity">
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请部门</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.orgCodeName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.orgCodeName"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.applicationDate |date: 'yyyy-MM-dd' }}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.applicationDate "></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.applicantName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" readonly value="" [(ngModel)]="editingEntry.bizEntity.applicantName"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>合同编号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.caCode}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.caCode"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>工程型号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.engineerModel}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.engineerModel"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>采购来源</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.purchaseSourceName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.purchaseSourceName"></ion-input> -->
+        </ion-item>
+        <ion-item
+          *ngIf="editingEntry.bizEntity.purchaseSource == 'DirectImport' || editingEntry.bizEntity.purchaseSource == 'indirectImport'">
+          <ion-label class="textcolor" fixed>采购类型</ion-label>
+          <ion-label class="textdirec">
+            {{editingEntry.bizEntity.technologyAgreementName || editingEntry.bizEntity.contractTypeName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.technologyAgreementName"></ion-input> -->
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="conInfo=!conInfo">
+      合同信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="conInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!conInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box">
+      <ion-list *ngIf="editingEntry.bizEntity && conInfo">
+        <ion-item>
+          <ion-label class="textcolor" fixed>供方合同号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.supplierContractNo}}</ion-label>
+          <!-- <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.bizEntity.supplierContractNo"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>签定日期</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.supplierSignDate| date: 'yyyy-MM-dd'}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>主要材料名称</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.contractName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.contractName"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>人民币预估金额（元）</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.contractPrice}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" readonly value="" [(ngModel)]="editingEntry.bizEntity.contractPrice"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>预付款金额（元）</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.prepaymentAmount}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" readonly value="" [(ngModel)]="editingEntry.bizEntity.prepaymentAmount"></ion-input> -->
+        </ion-item>
+        <ion-item
+          *ngIf="editingEntry.bizEntity.technologyAgreement == 'outer'&&(editingEntry.bizEntity.purchaseSource == 'DirectImport' || editingEntry.bizEntity.purchaseSource == 'indirectImport')">
+          <ion-label class="textcolor" fixed>外贸代理费收取比例(%)</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.agencyfeesProportion}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.agencyfeesProportion"></ion-input> -->
+        </ion-item>
+        <ion-item
+          *ngIf="editingEntry.bizEntity.technologyAgreement == 'outer'&&(editingEntry.bizEntity.purchaseSource == 'DirectImport' || editingEntry.bizEntity.purchaseSource == 'indirectImport')">
+          <ion-label class="textcolor" fixed>免税方式</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.freeWayName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.freeWayName"></ion-input> -->
+        </ion-item>
+        <ion-item
+          *ngIf="editingEntry.bizEntity.technologyAgreement == 'outer'&&(editingEntry.bizEntity.purchaseSource == 'DirectImport' || editingEntry.bizEntity.purchaseSource == 'indirectImport')">
+          <ion-label class="textcolor" fixed>货币种类</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.currency}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.currency"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>合同金额</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.contractPriceNew}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.contractPriceNew"></ion-input> -->
+        </ion-item>
+        <ion-item
+          *ngIf="false && editingEntry.bizEntity.contractType === 'outer' && editingEntry.bizEntity.materiaType === 'material'">
+          <ion-label class="textcolor" fixed>无税原币金额</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.amount}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.amount"></ion-input> -->
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractPrice > 50000">
+          <ion-label class="textcolor" fixed>主管部门经办人</ion-label>
+          <ion-label class="textdirec">{{cdUserName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="cdUserName"></ion-input> -->
+        </ion-item>
+        <ion-item
+          *ngIf="(this.point.sequence == 3 && this.editable) && ((!!this.editingEntry.bizEntity.chargeBusinessUserID )||(this.editingEntry.bizEntity.contractPrice > 100000 &&!!this.editingEntry.flowSaveParDto.flowInstName && this.editingEntry.flowSaveParDto.flowInstName == '主管部门经办人'))">
+          <ion-label class="textcolor" fixed>分管业务中心所领导</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="chargeBusinessUserName" (click)="selectStaffType('chargeBusinessUserName')"></ion-input> -->
+          <ion-label style=" text-align: right;" (click)="selectStaffType('chargeBusinessUserName')">{{fgUserName}}
+            <ion-icon class="iconfont icon-arrowdown item-end" style="padding-left: 1rem;"></ion-icon>
+          </ion-label>
+        </ion-item>
+
+        <ion-item
+          *ngIf="(point.sequence > 3 || (point.sequence == 3 && !editable)) && ((!!editingEntry.bizEntity.chargeBusinessUserID) ||(editingEntry.bizEntity.contractPrice > 100000 &&!!editingEntry.flowSaveParDto.flowInstName && editingEntry.flowSaveParDto.flowInstName == '主管部门经办人'))">
+          <ion-label class="textcolor" fixed>分管业务中心所领导</ion-label>
+          <ion-label class="textdirec">{{fgUserName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="fgUserName"></ion-input> -->
+          <ion-icon class="iconfont icon-arrowdown"></ion-icon>
+        </ion-item>
+        <!-- 
+        <label class="item" ng-if="!!editingEntry.bizEntity.chargeBusinessUserID||(editingEntry.bizEntity.contractPrice > 100000 &&!!editingEntry.flowSaveParDto.flowInstName && editingEntry.flowSaveParDto.flowInstName == '主管部门经办人')">
+            <span class="input-label" on-tap="selectStaff('chargeBusinessUserName')" ng-if="point.sequence == 3 && editable"><em>*</em>分管业务中心所领导</span>
+            <input class="select-input" type="text" placeholder="请选择" on-tap="selectStaff('chargeBusinessUserName')" ng-if="point.sequence == 3 && editable" ng-model="fgUserName" readonly required name="fgUserName"/>
+            <span class="input-label" ng-if="point.sequence > 3 || (point.sequence == 3 && !editable)">分管业务中心所领导</span>
+            <div class="text" placeholder="分管业务中心所领导" ng-if="point.sequence > 3 || (point.sequence == 3 && !editable)">{{fgUserName}}</div>                            
+        </label> -->
+      </ion-list>
+    </div>
+  </div>
+
+  <div class="lc-form-row" *ngIf="editingEntry.bizEntity   && editingEntry.bizEntity.extraInfo">
+    <h2 class="lc-toggle-title" (click)="extraInfo=!extraInfo">
+      额外信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="extraInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!extraInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box">
+      <ion-list *ngIf=" extraInfo">
+        <ion-item>
+          <ion-label class="textcolor" fixed>额外信息</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.extraInfo}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.extraInfo"></ion-input> -->
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="conInfomations ">
+    <h2 class="lc-toggle-title" (click)="conInfos=!conInfos">
+      合同明细
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="conInfos"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!conInfos"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="conInfos">
+      <ion-card *ngFor="let item of conInfomations;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>名称：</span><em>{{item.title}}</em></p>
+            <p><span>规格型号：</span><em>{{item.model}}</em></p>
+            <p><span>标准：</span><em>{{item.standard}}</em></p>
+            <p><span>厂家：</span><em>{{item.manufac}}</em></p>
+            <p><span>数量：</span><em>{{item.quantity}}</em></p>
+            <p><span>最高单价：</span><em>{{item.maxUnitPrice}}</em></p>
+            <p><span>其他参数说明：</span><em>{{item.otherRemark}}</em></p>
+            <p><span>备注：</span><em>{{item.remark}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div class="lc-form-row" *ngIf="payInformations">
+    <h2 class="lc-toggle-title" (click)="payInfo=!payInfo">
+      付款信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="payInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!payInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="payInfo">
+      <ion-card *ngFor="let item of payInformations;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>描述：</span><em>{{item.title}}</em></p>
+            <p><span>付款金额（元）：</span><em>{{item.paymentAmount}}</em></p>
+            <p><span>付款比例（%）：</span><em>{{item.paymentProporl}}</em></p>
+            <p><span>付款时间：</span><em>{{item.paymentDate | date: 'yyyy-MM-dd'}}</em></p>
+            <p><span>备注：</span><em>{{item.remark}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div class="lc-form-row" *ngIf="dataInformations ">
+    <h2 class="lc-toggle-title" (click)="collspaed=!collspaed">
+      课题分摊
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed">
+      <ion-card *ngFor="let item of dataInformations;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>子课题号：</span><em>{{item.subjectCode}}</em></p>
+            <p><span>子课题名称：</span><em>{{item.subjectName}}</em></p>
+            <p><span>课题资金（元）：</span><em>{{item.amount}}</em></p>
+            <p><span>备注：</span><em>{{item.remark}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div class="lc-form-row" *ngIf="editingEntry.bizEntity  ">
+    <h2 class="lc-toggle-title" (click)="conParInfo=!conParInfo">
+      合同相关方
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="conParInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!conParInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf=" conParInfo">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>销售渠道</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.channelName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.ps.channelName"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>供应商名称</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.supplierName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.ps.supplierName"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>销售员</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.seller}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.ps.seller"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>联系电话</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.telephone}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.ps.telephone"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>电子邮箱</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.email}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.ps.email"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>开户银行</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.bankName}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.ps.bankName"></ion-input> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>银行账户</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.account}}</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.ps.account"></ion-input> -->
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <div class="lc-form-row"
+    *ngIf=" deliveryPlanInfos.length>0 || ( editingEntry.bizEntity && editingEntry.bizEntity.deliveryTypeName)">
+    <h2 class="lc-toggle-title" (click)="delInfo=!delInfo">
+      交货信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="delInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!delInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf=" delInfo">
+      <div class="lc-toggle-box">
+        <ion-list>
+          <ion-item>
+            <ion-label class="textcolor" fixed>交货方式：</ion-label>
+            <ion-label class="textdirec">{{editingEntry.bizEntity.deliveryTypeName}}</ion-label>
+            <!-- <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.deliveryTypeName"></ion-input> -->
+          </ion-item>
+        </ion-list>
+      </div>
+      <ion-card *ngFor="let item of deliveryPlanInfos;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>交货名称：</span><em>{{item.title}}</em></p>
+            <p><span>交货数量：</span><em>{{item.deliveryAmount}}</em></p>
+            <p><span>交货地点：</span><em>{{item.deliveryPlace}}</em></p>
+            <p><span>预计交货日期：</span><em>{{item.deliveryDate | date: 'yyyy-MM-dd'}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <ion-list *ngIf="fileList.length>0" class="lc-form-row">
+    <div class="fileText">附件</div>
+    <ul class="fileStyle">
+      <li *ngFor="let item of fileList;let i =index">
+        <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.name) == 'excel',
+                      'icon-pdf': fileIcon(item.name) == 'pdf','icon-ppt': fileIcon(item.name) == 'ppt',
+                      'icon-word': fileIcon(item.name) == 'doc','icon-txt': fileIcon(item.name) == 'txt',
+                      'icon-tupian': fileIcon(item.name) == 'img','icon-qitafujian': fileIcon(item.name) == 'file',
+                      'icon-rar': fileIcon(item.name) == 'zip'}"></ion-icon>
+        <span>{{item.name}}</span>
+        <a class="iconfont icon-xiazai" href="{{httpurl}}{{item.uri}}"></a>
+      </li>
+    </ul>
+  </ion-list>
+
+  <purchase-flow [opinionList]="opinionList"></purchase-flow>
+</ion-content>
+<purchase-button *ngIf="editable && buttons && editingEntry" [buttons]="buttons" [OPINION_TITLE]="OPINION_TITLE"
+  [editingEntry]="editingEntry" [hjenty]="hjenty" [currentPoint]="currentPoint" [points]="points" [flowType]="flowType"
+  [currAmounts]="currAmounts" [editable]="editable" [lockfileds]="lockfileds" [point]="point" [toggle]="toggle">
+</purchase-button>

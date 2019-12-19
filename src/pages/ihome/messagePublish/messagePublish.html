@@ -1,0 +1,89 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>信息发布</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="addMessagePublish()">
+          <ion-icon name="xinzeng"></ion-icon>新增
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-segment [(ngModel)]="toggle">
+    <ion-segment-button value="todo" (ionSelect)="selectData('todo')">
+      待办
+    </ion-segment-button>
+    <ion-segment-button value="hasDone" (ionSelect)="selectData('hasDone')">
+      已办
+    </ion-segment-button>
+    <ion-segment-button value="allList" (ionSelect)="selectData('allList')">
+      办结
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+
+<ion-content class="layout-content">
+  <ion-refresher (ionRefresh)="orderRefreshFn($event)">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新..."></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="toggle == 'todo'||toggle == 'hasDone'|| toggle == 'allList'">
+    <div class="goout-item" *ngFor="let item of data">
+      <p>申请人：{{item.bizData.userName}}</p>
+      <p>申请部门：{{item.bizData.deptName}}</p>
+      <p>申请时间：{{item.bizData.applyDate | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+      <p>流程实例状态：{{wfInstStatuss[item.wfInstStatus]}}
+      </p>
+      <p>环节名称：{{item.pointName}}</p>
+      <p>阅读时间：{{item.readTime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+      <div class="btn-box">
+        <button ion-button outline (click)="goEditor(item)" *ngIf="toggle == 'todo'">办理</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="toggle == 'hasDone'">查看</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="item.procedureStatus !== 'draft'&& !!item.wfInst && toggle == 'allList'">查看</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="(item.procedureStatus === 'draft'|| !item.wfInst) && toggle == 'allList'">查看</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="item.procedureStatus === 'draft' && toggle == 'allList'">编辑</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="item.procedureStatus === 'draft' && toggle == 'allList'">删除</button>
+      </div>
+    </div>
+    <div class="goout-item-notdata" *ngIf="data.length<=0">
+        <img src="assets/imgs/notdata.png" alt="">
+      </div>
+  </div>
+  <!-- <div *ngIf="toggle == 'hasDone'">
+    <div class="goout-item" *ngFor="let item of data">
+      <p>申请人：{{item.bizData.userName}}</p>
+      <p>申请部门：{{item.bizData.deptName}}</p>
+      <p>申请时间：{{item.bizData.applyDate | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+      <p>流程实例状态：{{wfInstStatuss[item.wfInstStatus]}}
+      </p>
+      <p>环节名称：{{item.pointName}}</p>
+      <p>阅读时间：{{item.readTime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+      <p>办理时间：{{item.allocateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+      <div class="btn-box">
+        
+      </div>
+    </div>
+    <div class="goout-item" *ngIf="data.length<=0">
+        没有数据！
+      </div>
+  </div>
+  <div *ngIf="toggle == 'allList'">
+    <div class="goout-item" *ngFor="let item of data">
+      <p>申请人：{{item.bizData.userName}}</p>
+      <p>申请部门：{{item.bizData.deptName}}</p>
+      <p>申请时间：{{item.bizData.applyDate | date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+      <p>状态：{{item.procedureStatusName}}</p>
+      <div class="btn-box">
+        <button ion-button outline (click)="goEditor(item)" *ngIf="item.procedureStatus !== 'draft'&& !!item.wfInst">查看</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="item.procedureStatus === 'draft'|| !item.wfInst">查看</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="item.procedureStatus === 'draft'">编辑</button>
+        <button ion-button outline (click)="goEditor(item)" *ngIf="item.procedureStatus === 'draft'">删除</button>
+      </div>
+    </div>
+    <div class="goout-item" *ngIf="data.length<=0">
+      没有数据！
+    </div>
+  </div> -->
+  <ion-infinite-scroll (ionInfinite)="orderNextRefreshFn($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

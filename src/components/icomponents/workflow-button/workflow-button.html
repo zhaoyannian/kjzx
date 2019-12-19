@@ -1,0 +1,42 @@
+<ion-footer class="footer-btnRowLiucheng" *ngIf="(editable && wfHolderObj.isTodo()) || procedureStatus=='waiting'"
+[ngStyle]="{'bottom': datascroll.btnscollHeight>0 && ismobile ? datascroll.btnscollHeight+'px' : 0 }">
+    <ion-textarea (click)="blurInput()" *ngIf="editable && wfHolderObj.isTodo() && wfHolderObj.showOpinionArea()"
+        class="optionContent" placeholder="填写办理意见" [(ngModel)]="opinion_title"></ion-textarea>
+    <ion-grid class="btnsStyle">
+        <ion-row *ngIf="editable && wfHolderObj.isTodo()">
+            <ion-col *ngFor="let btn of wfHolderObj.btns()">
+                <button  (click)="manage(btn ,opinion_title)"
+                    [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                'color-back': btn.type == 'rollback'}">
+                    {{ btn.title }}
+                </button>
+            </ion-col>
+            <ion-col *ngIf="procedureStatus=='waiting'"><button ion-button class="color-callBack" outline (click)="callBack()">召回</button></ion-col>
+        </ion-row>
+        <ion-row *ngIf="!editable && !(wfHolderObj.isTodo())">
+            <ion-col *ngIf="procedureStatus=='waiting'"><button ion-button class="color-callBack" outline (click)="callBack()">召回</button></ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>
+
+<!-- <ion-footer class="footer-btnRowLiucheng" *ngIf="(editable && wfHolderObj.isTodo()) || procedureStatus=='waiting'"
+    [formGroup]="myForm" [ngStyle]="{'bottom': btnScroll && ismobile ? btnscollHeight+'px' : 0 }">
+    <ion-textarea (ionBlur)="blurInput()" (ionFocus)="focusInput()" *ngIf="editable && wfHolderObj.isTodo() && wfHolderObj.showOpinionArea()"
+        class="optionContent" placeholder="填写办理意见" formControlName="opinion"></ion-textarea>
+    <ion-grid class="btnsStyle">
+        <ion-row *ngIf="editable && wfHolderObj.isTodo()">
+            <ion-col *ngFor="let btn of wfHolderObj.btns()">
+                <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+                    [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                'color-back': btn.type == 'rollback'}">
+                    {{ btn.title }}
+                </button>
+            </ion-col>
+            <ion-col *ngIf="procedureStatus=='waiting'"><button ion-button class="color-callBack" outline (click)="callBack()">召回</button></ion-col>
+        </ion-row>
+        <ion-row *ngIf="!editable && !(wfHolderObj.isTodo())">
+            <ion-col *ngIf="procedureStatus=='waiting'"><button ion-button class="color-callBack" outline (click)="callBack()">召回</button></ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer> -->
+

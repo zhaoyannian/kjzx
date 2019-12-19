@@ -1,0 +1,42 @@
+<ion-header>
+  <!-- <ion-toolbar>
+    <ion-searchbar #searchBox id="search-box" (ionInput)="search(searchBox.value)" (ionClear)="onClearFilter($event)"
+    placeholder="搜索"></ion-searchbar>
+  </ion-toolbar> -->
+  <!-- <ion-navbar> -->
+  <ion-searchbar #searchBox id="search-box" (ionInput)="search(searchBox.value)" (ionClear)="onClearFilter($event)"
+    placeholder="搜索"></ion-searchbar>
+  <!-- </ion-navbar> -->
+</ion-header>
+<ion-content>
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)" *ngIf="!isFilter">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!isFilter">
+    <div class="mine_list_li">
+      <ul>
+        <li (click)="goView(contact)" *ngFor="let contact of data;">
+          <img src="{{httpurl}}/base/fileinfo/getFileImage?id={{contact.photo}}" *ngIf="!!contact.photo">
+          <img src="assets/imgs/people-head.png" *ngIf="!contact.photo">
+          <div>{{contact['userName']}}</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <p class="txl-count" *ngIf="!isFilter && showcount">{{totalCount}}位联系人</p>
+  <div class="mine_list_li" >
+    <ul>
+      <li (click)="goView(contact)" *ngFor="let contact of heroes$ | async">
+        <img src="{{httpurl}}/base/fileinfo/getFileImage?id={{contact.photo}}" *ngIf="!!contact.photo">
+        <img src="assets/imgs/people-head.png" *ngIf="!contact.photo">
+        <div>{{contact['userName']}}</div>
+      </li>
+    </ul>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)" *ngIf="!isFilter">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

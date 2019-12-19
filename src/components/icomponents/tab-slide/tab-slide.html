@@ -1,0 +1,73 @@
+<ion-content class="layout-content">
+    <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+      <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+      </ion-refresher-content>
+    </ion-refresher>
+    <div *ngIf="toggle == 'AllData' || toggle == 'awiatData' || toggle == 'complateData'" class="workflowlist">
+      <ion-list *ngFor="let item of allList">
+        <ion-item>
+          <ion-label class="textcolor">申请人</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.userName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">
+            {{item.bizData.userName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请部门</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.deptName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">
+            {{item.bizData.deptName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请时间</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}
+          </ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">
+            {{item.bizData.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf=" toggle == 'AllData'">
+          <ion-label class="textcolor">状态</ion-label>
+          <ion-label class="textdirec">{{item.procedureStatusName}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+          <ion-label class="textcolor">流程状态</ion-label>
+          <ion-label class="textdirec">{{wfInstStatuss[item.wfInstStatus]}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+          <ion-label class="textcolor">环节名称</ion-label>
+          <ion-label class="textdirec">{{item.pointName}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+          <ion-label class="textcolor">阅读时间</ion-label>
+          <ion-label class="textdirec">{{item.readTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+          <ion-label class="textcolor">办理时间</ion-label>
+          <ion-label class="textdirec">{{item.allocateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+        </ion-item>
+        <ion-grid class="btns">
+          <ion-row>
+            <ion-col (click)="toEditor2(item, 'view')" *ngIf="item.procedureStatus != 'draft' && toggle == 'AllData'">
+              <button type="button">查看</button></ion-col>
+            <ion-col (click)="toCreate(item, 'view')" *ngIf="item.procedureStatus == 'draft'  && toggle == 'AllData'">
+              <button type="button">查看</button></ion-col>
+            <ion-col (click)="toCreate(item, 'update')" *ngIf="item.procedureStatus == 'draft'  && toggle == 'AllData'">
+              <button type="button" class="editColor">编辑</button></ion-col>
+            <ion-col (click)="delete(item)" *ngIf="item.procedureStatus == 'draft'  && toggle == 'AllData'"><button
+                type="button" class="deleteColor">删除</button></ion-col>
+            <ion-col (click)="toEditor(item, 'update')" *ngIf="toggle == 'awiatData'"><button type="button">办理</button>
+            </ion-col>
+            <ion-col (click)="toEditor(item, 'view')" *ngIf="toggle == 'complateData'"><button type="button">查看</button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+      <div class="myorder-item-notdata" *ngIf="allList.length<=0">
+        <img src="assets/imgs/notdata.png" alt="">
+      </div>
+    </div>
+    <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+      <ion-infinite-scroll-content>
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-content>
+  

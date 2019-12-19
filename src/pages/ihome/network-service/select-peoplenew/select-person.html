@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>选择人员</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="save()">确定</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-searchbar (ionInput)="getItems($event)" placeholder=""></ion-searchbar> -->
+  <ion-searchbar #searchBar id="search-bar" (ionInput)="getItems(searchBar.value)" (ionClear)="onClearFilter($event)"
+    placeholder="搜索人员" debounce="600"></ion-searchbar>
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)" *ngIf="!isFilter">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <ion-list *ngIf="!isFilter">
+    <ul *ngFor="let item of data" class="projectcontent">
+      <li class="pro_list" (click)="chooseItem(item)" [ngClass]="{'checked':item.checked==true}">
+        <span class="name">{{item.userName}}</span> 　
+        <span class="deptment">{{item.deptName}}</span>
+      </li>
+    </ul>
+    <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list> -->
+  <ion-list radio-group [(ngModel)]="selectRadio" *ngIf="!isFilter">
+    <ion-item *ngFor="let item of data ">
+      <ion-radio value="{{item.userId}}"></ion-radio>
+      <ion-label>
+        <h2>{{item.userName}}</h2>
+        <p>{{item.deptName}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)" *ngIf="!isFilter">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-list radio-group [(ngModel)]="selectRadio">
+    <ion-item *ngFor="let item of heroes$ | async">
+      <ion-radio value="{{item.userId}}"></ion-radio>
+      <ion-label>
+        <h2>{{item.userName}}</h2>
+        <p>{{item.deptName}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,361 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>网络资源管理详情</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        <ion-icon name="xinzeng"></ion-icon>办理意见
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{!editable ? "查看网络服务申请":"审核网络服务申请"}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content class="layout-content"
+  [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.operatorName">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.operatorDeptName">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>联系电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.phoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.applyUsername">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.applyDeptname">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人手机号码</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.applyPhoneNumber">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-input class="textdirec" type='text' value="{{editingEntry.applyDate | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>网络服务类型</ion-label>
+          <ion-select [(ngModel)]="editingEntry.webServiceName" placeholder="请选择" okText="确定" cancelText="取消" disabled
+            multiple>
+            <div *ngFor="let typeData of webServiceTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="checkShow('fhq')">
+    <h2 class="lc-toggle-title" (click)="collspaed=!collspaed">
+      防火墙端口服务
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed">
+      <ion-list *ngFor="let firewalls of editingEntry.firewallPortServices">
+        <ion-item>
+          <ion-label class="textcolor" fixed>源地址</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="firewalls.sourceAddress"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>源端口</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="firewalls.sourcePort"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>目的地址</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="firewalls.destinationAddress">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>目的端口</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="firewalls.destinationPort">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>用途</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="firewalls.sourceAddress"></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="checkShow('wifi')">
+    <h2 class="lc-toggle-title" (click)="collspaed2=!collspaed2">
+      无线网公共帐号服务
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed2"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed2"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed2">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>开始时间</ion-label>
+          <!--<ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.wifiTime"></ion-input>-->
+          <ion-input class="textdirec" type='text' value="{{editingEntry.wifiTime | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>结束时间</ion-label>
+          <!--<ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.wifiEndTime"></ion-input>-->
+          <ion-input class="textdirec" type='text' value="{{editingEntry.wifiEndTime | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>会议主题</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.wifiMeeting"></ion-input>
+        </ion-item>
+
+        <!--<ion-item>
+          <ion-label class="textcolor" fixed>会议通知文件</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.filesId"></ion-input>
+        </ion-item>-->
+      </ion-list>
+      <ion-list>
+        <!--<button class="file" *ngIf="!!editable&& entry.pointId==0">
+            上传会议通知文件
+            <input #uploadImg type="file"  (change)="uploadFile($event,wift)">
+          </button>-->
+        <div class="fileText" *ngIf="wffileList.length>0">会议通知文件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item of wffileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.fileName) == 'excel',
+                'icon-pdf': fileIcon(item.fileName) == 'pdf','icon-ppt': fileIcon(item.fileName) == 'ppt',
+                'icon-word': fileIcon(item.fileName) == 'doc','icon-txt': fileIcon(item.fileName) == 'txt',
+                'icon-tupian': fileIcon(item.fileName) == 'img','icon-qitafujian': fileIcon(item.fileName) == 'file',
+                'icon-rar': fileIcon(item.fileName) == 'zip'}"></ion-icon>
+            <span>{{item.fileName}}</span>
+            <!--<ion-icon class="iconfont icon-del" (click)="removeFile(item,i,'wift')" *ngIf="!!editable&& entry.pointId==0"></ion-icon>-->
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}"></a>
+          </li>
+        </ul>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="checkShow('video')">
+    <h2 class="lc-toggle-title" (click)="collspaed3=!collspaed3">
+      视频会议服务
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed3"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed3"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed3">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>会议时间</ion-label>
+          <!--<ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.videoTime"></ion-input>-->
+          <ion-input class="textdirec" type='text' value="{{editingEntry.videoTime | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>会议测试时间</ion-label>
+          <!--<ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.testTime"></ion-input>-->
+          <ion-input class="textdirec" type='text' value="{{editingEntry.testTime | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>会议主题</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.videoMeeting">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>会议测试联系人</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.testPeople"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>测试联系人电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.testTel"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>主会场</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.mainMeetingPlace">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>分会场</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.branchMeetingPlace">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>是否需要双流</ion-label>
+          <ion-select [(ngModel)]="editingEntry.isDoubleFlowName" placeholder="请选择" okText="确定" cancelText="取消"
+            disabled>
+            <div *ngFor="let typeData of isDoubleFlows">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed style="max-width: 200px;flex: 0 0 100px;">注</ion-label>
+          <ion-label fixed class="textdirec"
+            style="width: initial;max-width: inherit;min-width: initial;display: flex;flex: 1;">
+            1.双流功能是让主会场电脑的演示文档共享到分会场显示。
+            2.会场须申请人自行联系，该申请只包含视频会议服务，请提前预定会议室。</ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <div class="fileText" *ngIf="videofileList.length>0">视频会议文件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item2 of videofileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item2.fileName) == 'excel',
+                'icon-pdf': fileIcon(item2.fileName) == 'pdf','icon-ppt': fileIcon(item2.fileName) == 'ppt',
+                'icon-word': fileIcon(item2.fileName) == 'doc','icon-txt': fileIcon(item2.fileName) == 'txt',
+                'icon-tupian': fileIcon(item2.fileName) == 'img','icon-qitafujian': fileIcon(item2.fileName) == 'file',
+                'icon-rar': fileIcon(item2.fileName) == 'zip'}"></ion-icon>
+            <span>{{item2.fileName}}</span>
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item2.id}}"></a>
+          </li>
+        </ul>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="checkShow('kd')">
+    <h2 class="lc-toggle-title" (click)="collspaed2=!collspaed2">
+      网络带宽保障
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed2"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed2"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed2">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>开始日期</ion-label>
+          <!--<ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.kdTime"></ion-input>-->
+          <ion-input class="textdirec" type='text' value="{{editingEntry.kdTime | date: 'yyyy-MM-dd HH:mm'}}" readonly>
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>结束日期</ion-label>
+          <!--<ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.kdEndTime"></ion-input>-->
+          <ion-input class="textdirec" type='text' value="{{editingEntry.kdEndTime | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>保障原因</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.reason"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>保障IP或者服务</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.service"></ion-input>
+        </ion-item>
+
+        <!--<ion-item>
+          <ion-label class="textcolor" fixed>网络带宽保障</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.kdFilesId"></ion-input>
+        </ion-item>-->
+
+      </ion-list>
+
+      <ion-list>
+        <!--<button class="file" *ngIf="!!editable&& entry.pointId==0">
+            上传网络带宽保障文件
+            <input #uploadImg type="file"  (change)="uploadFile($event,'kd')">
+          </button>-->
+        <div class="fileText" *ngIf="kdfileList.length>0">网络带宽保障文件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item1 of kdfileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item1.fileName) == 'excel',
+                'icon-pdf': fileIcon(item1.fileName) == 'pdf','icon-ppt': fileIcon(item1.fileName) == 'ppt',
+                'icon-word': fileIcon(item1.fileName) == 'doc','icon-txt': fileIcon(item1.fileName) == 'txt',
+                'icon-tupian': fileIcon(item1.fileName) == 'img','icon-qitafujian': fileIcon(item1.fileName) == 'file',
+                'icon-rar': fileIcon(item1.fileName) == 'zip'}"></ion-icon>
+            <span>{{item1.fileName}}</span>
+            <!--<ion-icon class="iconfont icon-del" (click)="removeFile(item1,i,'kd')" *ngIf="!!editable&& entry.pointId==0"></ion-icon>-->
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item1.id}}"></a>
+          </li>
+        </ul>
+      </ion-list>
+
+
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="checkShow('qt')">
+    <h2 class="lc-toggle-title" (click)="collspaed4=!collspaed4">
+      其它
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed4"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed4"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed4">
+      <ion-list>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label>备注</ion-label>
+          <ion-input class="textdirec" type='text' value="" disabled [(ngModel)]="editingEntry.remarks"></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <work-flow [opinionList]="opinionList"></work-flow>
+</ion-content>
+<!-- <workflow-button *ngIf="editingEntry && wfHolderObj" [editable]="editable" [wfHolderObj]="wfHolderObj" [EditingEntry]="editingEntry" [datamore]="datamore"></workflow-button> -->
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && !!wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm"
+  [ngStyle]="{'bottom': datamore.btnscollHeight>0 && ismobile? datamore.btnscollHeight+'px' : 0 }">
+  <textarea *ngIf="wfHolderObj.showOpinionArea()" class="optionContent" placeholder="填写办理意见" formControlName="opinion"
+    (click)="blurInput()"></textarea>
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'),'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

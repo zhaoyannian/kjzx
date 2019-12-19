@@ -1,0 +1,47 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-buttons start class="contactbtn">
+      <button ion-button icon-only>
+        {{title}}
+      </button>
+    </ion-buttons>
+    <ion-title>
+    </ion-title>
+    <ion-buttons end class="contactbtn">
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+      <ion-buttons>
+        <button ion-button (click)="goback()">
+          <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+        </button>
+      </ion-buttons>
+      <ion-title>{{title}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <div class="peerCal-list">
+      <div class="peerCal-group" *ngFor="let item of myResultDate" (click)="showStatus ? viewCal(item):''">
+          <div class="peerCal-left">
+            <span class="peerCal-imgbox">
+              <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photo}}" *ngIf="!!item.photo">
+              <img src="assets/imgs/people-head.png" *ngIf="!!!item.photo">
+            </span>
+            <span>{{item.userName}}</span>
+          </div>
+          <div class="peerCal-right">
+            <ion-list>
+              <ion-item class="mycalendar-item">
+                  <div item-start class="time-box">
+                      <span *ngIf="item.allDay === 'false'">{{item.detailBeginTime}}</span>
+                      <span *ngIf="item.allDay === 'false'" class="endTime">{{item.detailEndTime}}</span>
+                      <span *ngIf="item.allDay === 'true'">全天</span>
+                  </div>
+                  <p>{{item.title}}</p>
+              </ion-item>
+            </ion-list>
+          </div>
+      </div>
+    </div>
+  <div class="tips-Nodata" *ngIf="myResultDate.length<=0">暂无日程</div>
+</ion-content>

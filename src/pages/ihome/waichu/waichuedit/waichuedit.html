@@ -1,0 +1,68 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>外出报备</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>外出报备</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list [formGroup]="myForm">
+    <ion-item class="duan" no-lines>
+      <ion-textarea rows="4" placeholder="请填写外出原因内容" autoresize="500" formControlName="outInfo"></ion-textarea>
+    </ion-item>
+    <ion-item class="duan" no-lines>
+      <ion-label>地点</ion-label>
+      <ion-input type="text" value="" text-right clearInput formControlName="address"></ion-input>
+      <!-- <ion-icon item-end class="iconfont icon-site"></ion-icon> -->
+    </ion-item>
+    <ion-item class="duan" no-lines>
+      <ion-label fixed>是否返回</ion-label>
+      <ion-toggle formControlName="isBack"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label>开始时间</ion-label>
+      <ion-datetime displayFormat="YYYY年MM月DD日" pickerFormat="YYYY MMMM DD HH"
+        monthNames="一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月" cancelText="取消" doneText="确定" (ionChange)="getState($event)"
+        formControlName="startDate"></ion-datetime>
+      <span item-end>{{myForm.get('startType').value}}</span>
+    </ion-item>
+    <ion-item class="duan" no-lines>
+      <ion-label>结束时间</ion-label>
+      <ion-datetime displayFormat="YYYY年MM月DD日" pickerFormat="YYYY MMMM DD HH"
+        monthNames="一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月" cancelText="取消" doneText="确定" (ionChange)="getEnd($event)"
+        formControlName="endDate"></ion-datetime>
+      <span item-end>{{myForm.get('endType').value}}</span>
+    </ion-item>
+    <!-- <ion-item class="duan" no-lines>
+            时间
+        </ion-item> -->
+    <ion-item>
+      <ion-label fixed>申请人</ion-label>
+      <ion-label class="text-right">{{userinfo.staff['userName']}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>所在部门</ion-label>
+      <ion-label class="text-right">{{userinfo.deptTo['deptName']}}</ion-label>
+    </ion-item>
+    <ion-item no-lines>
+      <ion-label fixed>申请日期</ion-label>
+      <ion-label class="text-right">{{myForm.value.applyDate | date:'yyyy-MM-dd'}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer class="foot-btn-2">
+  <ion-toolbar>
+    <button ion-button item-start color="gray" outline (click)="submit('draft')">暂存</button><button ion-button item-end
+      (click)="submit()">{{btnTitle}}</button>
+  </ion-toolbar>
+</ion-footer>
+<!-- <workflow-button
+(click)="valids($event)"
+[formValid]="myForm.valid"
+></workflow-button> -->

@@ -1,0 +1,91 @@
+page-groupList{
+    .myorder-item-notdata{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background-size: 80%;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border: none;
+    }
+    .list-ios > .item-block:first-child{
+        border: none;
+        margin-top: 1rem;
+        overflow: hidden;
+    }
+    .list-ios{
+        margin: -1px 0 .5rem;
+        background: #fff;
+        overflow: hidden;
+    }
+    .item-ios{
+        padding-left:0;
+            max-height: 2.5rem;
+            height: 2.5rem;
+            min-height: 2.5rem;
+    }
+    .list-ios .item-block .item-inner{
+        border-color: #e8eaf4;
+        padding-left: 1.5rem;
+        font-size: 1.5rem;
+    }
+    .btns{
+        height: 5rem;
+        line-height: 5rem;
+        text-align: center;
+        background: #fff;
+        
+        padding: 0;
+        .col{
+            padding: 0;
+        }
+        button{
+            border: none;
+            background: none;
+            color: #007bff;
+            font-size: 1.5rem;
+        }
+        .editColor{
+            color: #f39800;
+        }
+        .deleteColor{
+            color: #e60012;
+        }
+    }
+    .textcolor{
+        color: #999999;
+    }
+    .textsize{
+        font-size: 18px;
+        color: #333;
+    }
+    .textdirec{
+        text-align: right;
+    }
+    .item-ios{
+        padding-left: 0px;
+    }
+    .list-ios .item-block .item-inner{
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .tips-Nodata {
+        padding: 20px 10px;
+        text-align: center;
+        font-size: 14px;
+        color: #333;
+        img{
+          padding-top: 25%;
+        }
+      }
+      .buttoncolor{
+        color: #b68657;
+      }
+      button{
+        border: none;
+        background: none;
+        color: #007bff;
+        font-size: 1.5rem;
+    }
+}

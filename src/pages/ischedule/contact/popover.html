@@ -1,0 +1,11 @@
+    <ion-content>
+      <ul class="list popover-slist">
+        <li><a href="javascript:void(0);" (click)="goCalendar('my');">我的日程</a></li>
+        <li *ngIf="isDeptManager"><a href="javascript:void(0);" (click)="goCalendar('dept');">部门日程</a></li>
+        <li *ngIf="isManager"><a href="javascript:void(0);" (click)="goCalendar('leader')">领导日程</a></li>
+        <li><a href="javascript:void(0);" (click)="goCalendar('group');">群组日程</a></li>
+        <li><a href="javascript:void(0);" (click)="goCalendar('colleague');">同事日程</a></li>
+        <li *ngIf="isLeader"><a href="javascript:void(0);" (click)="goCalendar('all');">全部日程</a></li>
+      </ul>
+    </ion-content>
+ 

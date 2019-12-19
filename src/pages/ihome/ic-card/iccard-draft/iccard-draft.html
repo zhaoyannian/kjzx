@@ -1,0 +1,154 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>身份卡管理详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{!editable ? "查看身份卡管理":"新增身份卡管理"}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content"
+  [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-datetime displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH:mm" max="2069" cancelText="取消"
+            doneText="确定" [(ngModel)]="editingEntry.applyDateNew" [disabled]="!editable"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-input class="textdirec" type='text' value="" [(ngModel)]="editingEntry.applyICUsername"></ion-input>
+          <ion-icon item-end class="iconfont icon1 icon-xinzeng" (click)="selectPerson()" *ngIf="editable"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" [(ngModel)]="editingEntry.applyICDeptname"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>国籍类型</ion-label>
+          <ion-select [(ngModel)]="editingEntry.nativePlace" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable" (ngModelChange)="getWfHolder()">
+            <div *ngFor="let typeData of nativePlaceTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人办公地点</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.officeAddress"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人办公电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.teleNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人手机</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.phoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人邮箱</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.email">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人办公地点</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.applyOfficeAddress"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人办公电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.applyTeleNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人手机</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.applyPhoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人邮箱</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.applyEmail"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>业务类型</ion-label>
+          <ion-select [(ngModel)]="editingEntry.businessType" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable">
+            <div *ngFor="let typeData of businessTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>卡片类型</ion-label>
+          <ion-select [(ngModel)]="editingEntry.cardType" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable" (ngModelChange)="getWfHolder()">
+            <div *ngFor="let typeData of cardTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <textarea [(ngModel)]="editingEntry.remarks" [disabled]="!editable" class="reason"
+          placeholder="请填写申请事由"></textarea>
+      </ion-list>
+      <ion-list>
+        <button class="file" *ngIf="editable">
+          上传附件
+          <input #uploadImg type="file" [disabled]="!editable" (change)="uploadFile($event)">
+        </button>
+        <div class="fileText" *ngIf="!editable">附件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item of fileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.fileName) == 'excel',
+                        'icon-pdf': fileIcon(item.fileName) == 'pdf','icon-ppt': fileIcon(item.fileName) == 'ppt',
+                        'icon-word': fileIcon(item.fileName) == 'doc','icon-txt': fileIcon(item.fileName) == 'txt',
+                        'icon-tupian': fileIcon(item.fileName) == 'img','icon-qitafujian': fileIcon(item.fileName) == 'file',
+                        'icon-rar': fileIcon(item.fileName) == 'zip'}"></ion-icon>
+            <span>{{item.fileName}}</span>
+            <ion-icon class="iconfont icon-del" (click)="removeFile(item,i)" *ngIf="editable"></ion-icon>
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}"></a>
+          </li>
+        </ul>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col>
+        <button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button>
+      </ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                      'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

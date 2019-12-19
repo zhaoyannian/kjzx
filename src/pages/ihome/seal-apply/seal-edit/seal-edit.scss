@@ -1,0 +1,152 @@
+page-seal-edit{
+    .toggle-ios{
+        width: 5.9rem;
+    }
+
+    .toggle-checked .toggle-inner{
+        right: 23px!important;
+        left: initial!important;
+    }
+    .toggle-ios .toggle-inner{
+        right: initial;
+        left: 5px;
+    }
+    .toggle-inner::before{
+        padding-left: 0px;
+    }
+    .toggle-ios .toggle-icon{
+        &::before{
+            content: "否";
+            background-color: #00c4ff;
+            left: 0;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 20%;
+            font-size: 1rem;
+            color: #fff;
+            align-items: center;
+        }
+    }
+    .toggle-checked .button-inner{
+        justify-content: flex-start;
+        &::before{
+            content: "是";
+            right: 0;
+            align-items: center;
+            justify-content: end;
+            font-size: 1rem;
+            color: #fff;
+            padding-left: 32%;
+        }
+        
+    }
+    .toggle-ios-secondary.toggle-checked .toggle-icon{
+        background-color: #0081e4!important;
+    }
+    .toggle-ios .toggle-icon{
+        background-color: #00c4ff!important;
+    }
+    .toggle-ios .toggle-icon{
+        background-color: #00c4ff!important;
+    }
+    .toggle-ios .toggle-icon::before{
+        background-color: #00c4ff;
+    }
+    .list-ios{
+        margin-bottom: .5rem;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border: none;
+    }
+    .list-ios > .item-block:first-child{
+        border: none;
+        overflow: hidden;
+    }
+    .textcolor{
+        color: #333;
+    }
+    .textdirec{
+        color:#666666;
+    }
+    ion-label[fixed]{
+        min-width: 120px;
+        white-space: inherit;
+    }
+    .text-input-ios{
+        text-align: right;
+    }
+    .file{
+        height: 6rem;
+        line-height: 6rem;
+        text-align: center;
+        background: #fff;
+        font-size: 1.7rem;
+        color: #007bff;
+        width: 100%;
+        padding: 0 1.5rem;
+        position: relative;
+        margin-bottom: .5rem;
+        input{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: 11;
+            opacity: 0;
+        }
+
+    }
+    
+    .fileText{
+        height: 6rem;
+        line-height: 6rem;
+        text-align: left;
+        background: #fff;
+        font-size: 1.7rem;
+        color: #333;
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+    .header .bar-button-default{
+        // font-size: 1.8rem;
+    }
+    .item-ios{
+        padding-left:0;
+        height: 6rem;
+        min-height: 6rem;
+    }
+    .item-ios.item-block .item-inner{
+        padding: 0 1.5rem;
+        border-color: #e8eaf4;
+        font-size: 1.7rem;
+    }
+    ion-label[fixed]{
+        min-width: 120px;
+        text-align: left;
+    }
+    ion-label{
+        // text-align: right;
+        color: #666666;
+    }
+    .has-footer{
+        .scroll-content{
+            margin-bottom: 16rem;
+        }
+    }
+    .fileText{
+        height: 6rem;
+        line-height: 6rem;
+        text-align: left;
+        background: #fff;
+        font-size: 1.7rem;
+        color: #333;
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+
+    .allColor{
+        color: #333;
+        opacity: 1 !important;
+    }
+    & ion-item .text-right{ text-align: right; color: #666;}
+}

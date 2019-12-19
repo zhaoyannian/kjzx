@@ -1,0 +1,17 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhaoYanNian
+ * @Date: 2019-10-12 08:35:49
+ * @LastEditors: ZhaoYanNian
+ * @LastEditTime: 2019-12-17 15:27:59
+ -->
+<ion-tabs #mytabs>
+
+    <ion-tab [root]="tab1Root" tabTitle="首页" tabBadge="{{wfDbCount}}" tabBadgeStyle="orange" tabIcon="shouye1"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="会议" tabIcon="meeting"></ion-tab>
+    <!-- <ion-tab [root]='workhours' tabIcon="jia"></ion-tab> -->
+    <ion-tab [root]="tab4Root" tabTitle="通讯录" tabIcon="address-book"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="日程" tabIcon="schedule"></ion-tab>
+
+</ion-tabs>

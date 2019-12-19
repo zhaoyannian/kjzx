@@ -1,0 +1,226 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>用车申请详情</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        <ion-icon name="xinzeng"></ion-icon>办理意见
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>用车申请详情</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        <ion-icon name="xinzeng"></ion-icon>办理意见
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer':(editable && isTodo)}">
+  <div class="lc-form-row"
+    *ngIf="isPersonResPoint || !(editingEntry.procedureStatus == 'draft' || editingEntry.procedureStatus == 'firstTrial' ||editingEntry.procedureStatus == 'waiting')">
+    <h2 class="lc-toggle-title" (click)="collspaed2=!collspaed2">
+      车辆及司机信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed2"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed2"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="!collspaed2">
+      <ion-item>
+        <ion-label class="textcolor" fixed>车辆类型</ion-label>
+        <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.theCarType"></ion-input>
+        <ion-icon item-end class="iconfont icon1 icon-xinzeng" (click)="selectCar()" *ngIf="editable"></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor" fixed>车牌号</ion-label>
+        <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.theCarNumber"
+          placeholder="请先选择车辆类型"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="editingEntry.selfDriving === '否'">
+        <ion-label class="textcolor" fixed>司机姓名</ion-label>
+        <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.driverName"></ion-input>
+        <ion-icon item-end class="iconfont icon1 icon-xinzeng" (click)="selectDriver()" *ngIf="editable"></ion-icon>
+      </ion-item>
+      <ion-item *ngIf="editingEntry.selfDriving === '否'">
+        <ion-label class="textcolor" fixed>司机电话</ion-label>
+        <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.driverPhone"
+          placeholder="请先选择司机姓名"></ion-input>
+      </ion-item>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="collspaed=!collspaed">
+      申请信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="!collspaed">
+      <ion-list>
+        <button ion-item no-lines [ngClass]="{'button_line':userCarStaffs.length <=0}">
+          <ion-label>用车人</ion-label>
+        </button>
+        <ion-item no-lines *ngIf="userCarStaffs.length > 0" style="height:auto;">
+          <div class="people-item" *ngFor="let item of userCarStaffs;let i=index;">
+            <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photo}}" *ngIf="!!item.photo">
+            <img src="assets/imgs/people-head.png" *ngIf="!item.photo">
+            <span>{{item.userName}}</span>
+          </div>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>用车人电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.useCarUserPhone">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>乘车人数</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.userNumber"></ion-input>
+        </ion-item>
+        <!-- <ion-item>
+          <ion-label class="textcolor" fixed>通知方式</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.isMessage"></ion-input>
+        </ion-item> -->
+        <!-- <div ion-item no-lines>
+          <ion-label>用车事由</ion-label>
+        </div> -->
+        <textarea [(ngModel)]="editingEntry.reason" readonly class="reason" placeholder="请填写用车事由"></textarea>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="collspaed1=!collspaed1">
+      行程信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="!collspaed1"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="collspaed1"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed1">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor">是否自驾</ion-label>
+          <ion-toggle class="driver_flow" value="foo" color="secondary" checked="true" [(ngModel)]="selfDriving"
+            disabled></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.selfDriving === '否'">
+          <ion-label class="textcolor">行程类型</ion-label>
+          <ion-toggle class="trip_type" value="foo" color="secondary" checked="true" [(ngModel)]="tripType" disabled>
+          </ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.tripType === '往返'">
+          <ion-label class="textcolor">司机随从</ion-label>
+          <ion-toggle class="driver_flow" value="foo" color="secondary" checked="true" [(ngModel)]="driverEntourage"
+            disabled></ion-toggle>
+        </ion-item>
+        <!-- 单程 -->
+        <div *ngIf="editingEntry.tripType === '单程'">
+          <ion-item>
+            <ion-label class="textcolor" fixed>出车地点</ion-label>
+            <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.startPlace">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>到达地点</ion-label>
+            <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.arrivePlace">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>出车时间</ion-label>
+            <ion-input class="textdirec" type='text' value="{{editingEntry.outTime | date: 'yyyy-MM-dd HH:mm'}}"
+              readonly></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>结束时间</ion-label>
+            <ion-input class="textdirec" type='text' value="{{editingEntry.endTime | date: 'yyyy-MM-dd HH:mm'}}"
+              readonly></ion-input>
+          </ion-item>
+        </div>
+
+        <!-- 返程 -->
+        <div ion-item no-lines *ngIf="editingEntry.tripType === '往返' && editingEntry.driverEntourage === '否'">
+          <ion-label>去程</ion-label>
+        </div>
+        <div *ngIf="editingEntry.tripType === '往返'">
+          <ion-item>
+            <ion-label class="textcolor" fixed>出车地点</ion-label>
+            <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.goStartPlace">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>到达地点</ion-label>
+            <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.goArrivePlace">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>出车时间</ion-label>
+            <ion-input class="textdirec" type='text' value="{{editingEntry.goOutTime | date: 'yyyy-MM-dd HH:mm'}}"
+              readonly></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>结束时间</ion-label>
+            <ion-input class="textdirec" type='text' value="{{editingEntry.goEndTime | date: 'yyyy-MM-dd HH:mm'}}"
+              readonly></ion-input>
+          </ion-item>
+        </div>
+        <div *ngIf="editingEntry.tripType === '往返' && editingEntry.driverEntourage === '否'">
+          <div ion-item no-lines>
+            <ion-label>返程</ion-label>
+          </div>
+          <ion-item>
+            <ion-label class="textcolor" fixed>出车地点</ion-label>
+            <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.backStartPlace">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>到达地点</ion-label>
+            <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.backArrivePlace">
+            </ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>出车时间</ion-label>
+            <ion-input class="textdirec" type='text' value="{{editingEntry.backOutTime | date: 'yyyy-MM-dd HH:mm'}}"
+              readonly></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor" fixed>结束时间</ion-label>
+            <ion-input class="textdirec" type='text' value="{{editingEntry.backEndTime | date: 'yyyy-MM-dd HH:mm'}}"
+              readonly></ion-input>
+          </ion-item>
+        </div>
+        <!-- <div ion-item no-lines>
+            <ion-label>备注</ion-label>
+          </div> -->
+        <textarea [(ngModel)]="editingEntry.remarks" readonly class="reason"
+          placeholder="备注：有特殊情况请在备注栏填写，将会通知出车安排人员，若是接送航班，应填写航班信息，接送人信息（姓名、电话号码）；若是外来人员乘车，应包含乘车人姓名与电话号码。"></textarea>
+      </ion-list>
+    </div>
+  </div>
+  <work-flow [opinionList]="opinionList"></work-flow>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && !!wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm"
+  [ngStyle]="{'bottom': datamore.btnscollHeight>0 && ismobile? datamore.btnscollHeight+'px' : 0 }">
+  <textarea *ngIf="wfHolderObj.showOpinionArea()" class="optionContent" placeholder="填写办理意见" formControlName="opinion"
+    (click)="blurInput()"></textarea>
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                    'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

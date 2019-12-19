@@ -1,0 +1,21 @@
+[submodule "src/icommon"]
+	path = src/icommon
+url=http://shenqingqing:loveme1314@git.qysoft.cn/stonewomb-dev/icommon.git
+[submodule "src/components/icomponents"]
+	path = src/components/icomponents
+url=http://shenqingqing:loveme1314@git.qysoft.cn/stonewomb-dev/icomponents.git
+[submodule "src/pages/icontacts"]
+	path = src/pages/icontacts
+	url = http://git.qysoft.cn/stonewomb-dev/icontacts.git
+[submodule "src/pages/ihome"]
+	path = src/pages/ihome
+	url = http://git.qysoft.cn/stonewomb-dev/ihome.git
+[submodule "src/pages/imeeting"]
+	path = src/pages/imeeting
+	url = http://git.qysoft.cn/stonewomb-dev/imeeting.git
+[submodule "src/pages/ischedule"]
+	path = src/pages/ischedule
+	url = http://git.qysoft.cn/stonewomb-dev/ischedule.git
+[submodule "src/pages/imine"]
+	path = src/pages/imine
+	url = http://git.qysoft.cn/stonewomb-dev/imine.git

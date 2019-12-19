@@ -1,0 +1,102 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>外出报备详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>外出报备详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content"
+  [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <textarea [(ngModel)]="editingEntry.outInfo" [disabled]="!editable" class="reason"
+          placeholder="请填写外出原因"></textarea>
+        <ion-item>
+          <ion-label class="textcolor" fixed>外出地点</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.address">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">是否返回</ion-label>
+          <ion-toggle class="back_style" value="foo" color="secondary" checked="true" [(ngModel)]="isBack"
+            (ionChange)="changeIsBack()" [disabled]="!editable"></ion-toggle>
+        </ion-item>
+        <div class="timeStyle">
+          <div class="leaveTime">
+            <span class="stactime">{{editingEntry.startDate | date: 'yyyy'}}</span>
+            <i class="statictext">开始时间</i>
+            <i class="statictext">结束时间</i>
+            <span class="stactime">{{editingEntry.endDate | date: 'yyyy'}}</span>
+          </div>
+          <div class="leaveType">
+            <span *ngIf="!!editingEntry.startDate" class="stactime"
+              (click)="openCalendar('startDate')">{{editingEntry.startDate | date:'MM-dd'}}</span>
+            <span *ngIf="!editingEntry.startDate" class="stactime defaultChoose"
+              (click)="openCalendar('startDate')">请选择</span>
+            <i class="statictext2" *ngIf="editable">
+              <ion-toggle value="foo" color="secondary" checked="true" [(ngModel)]="startHour"
+                (ionChange)="savestartHour()"></ion-toggle>
+            </i>
+            <i class="statictext" *ngIf="!editable">{{this.editingEntry.startType =="A" ? "上午" : "下午"}}</i>
+            <span *ngIf="!!editingEntry.endDate" class="stactime"
+              (click)="openCalendar('endDate')">{{editingEntry.endDate | date:'MM-dd'}}</span>
+            <span *ngIf="!editingEntry.endDate" class="stactime defaultChoose"
+              (click)="openCalendar('endDate')">请选择</span>
+            <i class="statictext" *ngIf="!editable">{{this.editingEntry.endType =="A" ? "上午" : "下午"}}</i>
+            <i class="statictext2" *ngIf="editable">
+              <ion-toggle value="foo" color="secondary" checked="true" [(ngModel)]="endHour"
+                (ionChange)="saveendHour()"></ion-toggle>
+            </i>
+          </div>
+          <div class="leaveWeek">
+            <span class="left" *ngIf="!!weekab">星期{{weekab}}</span>
+            <span class="right" *ngIf="!!weekab2">星期{{weekab2}}</span>
+          </div>
+          <em class="choosedaybg"></em>
+        </div>
+        <ion-item>
+          <ion-label class="textcolor" fixed>外出申请天数</ion-label>
+          <ion-input readonly class="textdirec" type="text" value="" [(ngModel)]="editingEntry.goOutDays"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.userName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-input class="textdirec" type='text' value="{{editingEntry.applyDate | date: 'yyyy-MM-dd HH:mm'}}"
+            readonly></ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col>
+        <button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button>
+      </ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+              'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

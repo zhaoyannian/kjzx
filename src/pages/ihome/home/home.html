@@ -1,0 +1,346 @@
+<ion-header>
+    <ion-navbar center>
+        <ion-title>首页</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="presentFilter()">
+        <span class="home-user">
+          <img src="{{httpurl}}/api/fileinfo/downloadFile/{{userinfo.picture}}" *ngIf="!!userinfo.picture" />
+          <img src="assets/imgs/people-head.png" *ngIf="!userinfo.picture" />
+        </span>
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content class="layout-content">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="下拉刷新" refreshingSpinner="circles" refreshingText="正在刷新...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-list class="home-list" *ngIf="dataNewList.length > 0" style="margin-bottom:10px!important;">
+        <ion-grid class="homePro-grid">
+            <ion-row>
+                <ion-col col-3 class="homePro-col2" *ngFor="let item of dataNewList" (click)="goNewsList(item)">
+                    <span class="application-box2" [ngClass]="!item.appIcon ?'cur':''">
+            <img src="{{state + item.appIcon}}" alt=""
+              *ngIf="(!!item.appIcon && item.name!= '办事通知') &&(!!item.appIcon &&item.name != '发文通知')&& (!!item.appIcon &&item.name != '所务公开') && (!!item.appIcon &&item.name != '公示公告') " />
+
+            <ion-icon class="iconfont news icon-schedule" *ngIf="item.name === '办事通知' && !!item.appIcon"></ion-icon>
+            <ion-icon class="iconfont news icon-xinwendongtai" *ngIf="item.name === '发文通知' && !!item.appIcon">
+            </ion-icon>
+            <ion-icon class="iconfont news icon-tongzhi" *ngIf="item.name === '所务公开' && !!item.appIcon"></ion-icon>
+            <ion-icon class="iconfont news icon-gonggao1" *ngIf="item.name === '公示公告' && !!item.appIcon"></ion-icon>
+            <ion-icon class="iconfont news icon-changyongwendang-copy" *ngIf="!item.appIcon"></ion-icon>
+            <i class="orange-num" *ngIf="item.noReadCount > 0">
+              {{item.noReadCount > 0 ? (item.noReadCount >
+              99?'99+':item.noReadCount):''}}
+            </i>
+          </span>
+                    <p>{{item.name}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+
+    <!-- 首页新闻列表 -->
+    <ion-list class="home-list listnew" *ngIf="!!article && !!article.titleText">
+        <button ion-item class="newsList-item" (click)="viewNewsDetialFn(article)">
+      <ion-thumbnail item-start>
+        <img src="{{state}}/api/fileinfo/downloadFile/{{article.picture}}" />
+      </ion-thumbnail>
+      <h2>{{article.titleText}}</h2>
+      <div class="content" [innerHTML]="article.abstractText"></div>
+      <div class="new-mark">NEW</div>
+    </button>
+    </ion-list>
+
+    <!-- 待办工作 -->
+    <ion-list class="home-list">
+        <h2 class="homelist-title">
+            <span>待办工作</span>
+            <span *ngIf="quCount + mcCount + compoCount +  icaCount + equPurCount + enCount + zyCount + dataDbListNew.length + (meetApproval.length > 0 ? 1:0) + (AllMesage.length > 0 ? 1:0) > 3" class="more-right" (click)="goWorkflowDbListFn()">更多<ion-icon class="iconfont icon-arrowright"></ion-icon>
+      </span>
+        </h2>
+        <ion-item class="waitlist-item" (click)="cgsh(1)" *ngIf="equPurCount > 0">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="equPurCount>0">{{equPurCount>99?'99+':equPurCount}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>仪器设备采购申请</h2>
+            <p>
+                您有{{equPurCount}}条仪器设备采购申请，请查收办理。
+            </p>
+        </ion-item>
+        <ion-item class="waitlist-item" (click)="cgsh(2)" *ngIf="icaCount > 0">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="icaCount>0">{{icaCount>99?'99+':icaCount}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>仪器设备合同审批</h2>
+            <p>
+                您有{{icaCount}}条仪器设备合同审批，请查收办理。
+            </p>
+        </ion-item>
+        <ion-item class="waitlist-item" (click)="cgsh(3)" *ngIf="compoCount > 0">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="compoCount>0">{{compoCount>99?'99+':compoCount}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>元器件材料采购申请</h2>
+            <p>
+                您有{{compoCount}}条元器件材料采购申请，请查收办理。
+            </p>
+        </ion-item>
+        <ion-item class="waitlist-item" (click)="cgsh(4)" *ngIf="mcCount > 0">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="mcCount>0">{{mcCount>99?'99+':mcCount}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>元器件材料合同审批</h2>
+            <p>
+                您有{{mcCount}}条元器件材料合同审批，请查收办理。
+            </p>
+        </ion-item>
+        <ion-item class="waitlist-item" (click)="yqj()" *ngIf="zyCount > 0">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="zyCount>0">{{zyCount>99?'99+':zyCount}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>正样器件材料采购</h2>
+            <p>
+                您有{{zyCount}}条正样器件材料采购，请查收办理。
+            </p>
+        </ion-item>
+        <ion-item class="waitlist-item" (click)="cgsh(5)" *ngIf="quCount > 0">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="quCount>0">{{quCount>99?'99+':quCount}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>元器件材料正样合同管理</h2>
+            <p>
+                您有{{quCount}}条元器件材料正样合同管理，请查收办理。
+            </p>
+        </ion-item>
+        <ion-item class="waitlist-item" (click)="cgsh(6)" *ngIf="enCount > 0">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="enCount>0">{{enCount>99?'99+':enCount}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>项目委托申请管理</h2>
+            <p>
+                您有{{enCount}}条项目委托申请管理，请查收办理。
+            </p>
+        </ion-item>
+
+        <ion-item class="waitlist-item" *ngIf="meetApproval.length > 0" (click)="meetAppro()">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <img src="assets/imgs/icon-homePro-1.png" alt="" />
+          <i class="orange-num">{{meetApproval.length > 0 ? (meetApproval.length >
+            99?'99+':meetApproval.length):0}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>会议审批</h2>
+            <p>
+                您有会议审批申请，请查收处理
+            </p>
+        </ion-item>
+
+        <ion-item class="waitlist-item" *ngIf="AllMesage > 0" (click)="dataAppro()">
+            <ion-thumbnail item-start>
+                <span class="waitList">
+          <img src="assets/imgs/icon-homePro-1.png" alt="" />
+          <i class="orange-num">{{AllMesage > 0 ? (AllMesage > 99?'99+':AllMesage):0}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>数据上报</h2>
+            <p>
+                您有新的数据需要上报，请查收处理
+            </p>
+        </ion-item>
+        <ion-item class="waitlist-item" *ngFor="let item of dataDbList" (click)="dbAppro(item)">
+            <ion-thumbnail item-start>
+                <span *ngIf="!!item.icon">
+          <img src="{{state + item.icon}}" alt="" />
+          <i class="orange-num" *ngIf="item.count>0">{{item.count}}</i>
+        </span>
+                <span class="waitList" *ngIf="!item.icon">
+          <ion-icon class="iconfont icon-changyongwendang-copy"></ion-icon>
+          <i class="orange-num" *ngIf="item.count>0">{{item.count}}</i>
+        </span>
+            </ion-thumbnail>
+            <h2>{{item.name}}</h2>
+            <p>
+                {{item.firstContent}}
+            </p>
+        </ion-item>
+        <div class="home-no-data" *ngIf="dataDbList.length <=0 && meetApproval.length<=0 && AllMesage<=0 && quCount<=0 && mcCount<=0 && compoCount<=0 &&  icaCount<=0 && equPurCount<=0 && zyCount<=0 && enCount <=0">
+            无待办事项
+        </div>
+    </ion-list>
+
+    <!-- 常用应用 -->
+    <!--<ion-list class="home-list" *ngIf="dataSList.length > 0">-->
+    <ion-list class="home-list">
+        <h2 class="homelist-title">
+            <span>网上办公</span>
+            <span class="more-right" (click)="goYlListFn()" *ngIf="dataShortList.length > 8">更多
+        <ion-icon class="iconfont icon-arrowright"></ion-icon>
+      </span>
+        </h2>
+        <ion-grid class="homePro-grid yingyong">
+            <ion-row>
+                <ion-col col-3 class="homePro-col" *ngFor="let item of dataShortList.slice(0, 8)" (click)="goUseList(item)">
+                    <span class="application-box">
+            <!-- <img src="assets/imgs/defaulticon.png" alt="" *ngIf="!item.appIcon"> -->
+            <!-- <img src="{{state + item.appIcon}}" alt="" *ngIf="!!item.appIcon"> -->
+            <img src="assets/imgs/def7.png" alt="" *ngIf="item.name=='印章申请'" />
+            <img src="assets/imgs/def8.png" alt="" *ngIf="item.name=='身份卡申办'" />
+            <img src="assets/imgs/def6.png" alt="" *ngIf="item.name=='网络资源申请'" />
+            <img src="assets/imgs/def6.png" alt="" *ngIf="item.name=='网络服务申请'" />
+            <ion-icon class="iconfont icon-plus-circle-fill icon-add-pro" *ngIf="item.appAvaliableAdd === 'TRUE'">
+            </ion-icon>
+          </span>
+                    <p *ngIf="item.name.length<7" style="padding-top: 9px;">
+                        {{item.name}}
+                    </p>
+                    <p *ngIf="item.name.length===7">
+                        {{item.name.substring(0,3)}}<br />{{item.name.substring(3)}}
+                    </p>
+                    <p *ngIf="item.name.length===8 || item.name.length===9">
+                        {{item.name.substring(0,4)}}<br />{{item.name.substring(4)}}
+                    </p>
+                    <p *ngIf="item.name.length===10">
+                        {{item.name.substring(0,5)}}<br />{{item.name.substring(5)}}
+                    </p>
+                </ion-col>
+                <ion-col col-3 class="homePro-col" (click)="cgsh(1)">
+                    <span class="application-box">
+            <!-- <img src="http://nssc-menhu.aicas.cn/resource/images/iconLibrary/large/设备采购-大.png?size=35" alt=""> -->
+            <img src="assets/imgs/def1.png" alt="" />
+          </span>
+                    <p>仪器设备<br />采购申请</p>
+                </ion-col>
+                <ion-col col-3 class="homePro-col" (click)="cgsh(2)">
+                    <span class="application-box">
+            <!-- <img src="http://nssc-menhu.aicas.cn/resource/images/iconLibrary/large/%E4%BB%AA%E5%99%A8%E8%AE%BE%E5%A4%87.png?size=35"
+              alt=""> -->
+            <img src="assets/imgs/def2.png" alt="" />
+          </span>
+                    <p>仪器设备<br />合同审批</p>
+                </ion-col>
+                <ion-col col-3 class="homePro-col" (click)="cgsh(3)">
+                    <span class="application-box">
+            <!-- <img src="http://nssc-menhu.aicas.cn/resource/images/iconLibrary/large/元器件材料.png?size=35" alt=""> -->
+            <img src="assets/imgs/def3.png" alt="" />
+          </span>
+                    <!-- <p>元器件材<br/>料采购申请</p> -->
+                    <p>试验器件<br />材料采购</p>
+                </ion-col>
+                <ion-col col-3 class="homePro-col" (click)="cgsh(4)">
+                    <span class="application-box">
+            <!-- <img src="http://nssc-menhu.aicas.cn/resource/images/iconLibrary/large/%E5%90%88%E5%90%8C%E7%94%B3%E8%AF%B7.png?size=35"
+              alt=""> -->
+            <img src="assets/imgs/def4.png" alt="" />
+          </span>
+                    <!-- <p>元器件材<br/>料合同审批</p> -->
+                    <p>试验器件材<br />料合同管理</p>
+                </ion-col>
+                <ion-col col-3 class="homePro-col" (click)="yqj()">
+                    <span class="application-box">
+            <img src="assets/imgs/def4.png" alt="" />
+          </span>
+                    <p>正样器件材<br />料采购</p>
+                </ion-col>
+                <ion-col col-3 class="homePro-col" (click)="cgsh(5)">
+                    <span class="application-box">
+            <!-- <img src="http://nssc-menhu.aicas.cn/resource/images/iconLibrary/large/%E6%AD%A3%E6%A0%B7%E5%85%83%E5%99%A8%E4%BB%B6.png?size=35"
+              alt=""> -->
+            <img src="assets/imgs/def5.png" alt="" />
+          </span>
+                    <!-- <p>元器件材料<br/>正样合同管理</p> -->
+                    <p>正样器件材<br />料合同管理</p>
+                </ion-col>
+                <ion-col col-3 class="homePro-col" (click)="cgsh(6)">
+                    <span class="application-box">
+            <!-- <img src="http://nssc-menhu.aicas.cn/resource/images/iconLibrary/large/%E4%BB%AA%E5%99%A8%E8%AE%BE%E5%A4%87.png?size=35"
+              alt=""> -->
+            <img src="assets/imgs/def2.png" alt="" />
+          </span>
+                    <p>项目委托<br />申请管理</p>
+                </ion-col>
+                <!-- <ion-col col-3 class="homePro-col" (click)="scan()" *ngIf="showHtSign()">
+                  <ion-col col-3 class="homePro-col" (click)="scan()">
+                <span class="application-box">
+          <img src="http://io.aicas.cn/resource/images/iconLibrary/large/企业座谈-大.png?size=35" alt="">
+          <img src="assets/imgs/def11.png" alt="" />
+        </span>
+                <p>合同签署</p>
+                </ion-col> -->
+                <!-- <ion-col col-3 class="homePro-col" (click)="yj()">
+                    <span class="application-box">
+            <img src="assets/imgs/def11.png" alt="" />
+          </span>
+                    <p>意见反馈</p>
+                </ion-col> -->
+            </ion-row>
+        </ion-grid>
+    </ion-list>
+
+    <!-- 今日日程 -->
+    <ion-list class="home-list" *ngIf="dataCalList.length > 0">
+        <h2 class="homelist-title">
+            <span>今日日程</span>
+            <span class="more-right" (click)="goCalendarListFn()">更多
+        <ion-icon class="iconfont icon-arrowright"></ion-icon>
+      </span>
+        </h2>
+        <div class="pbg"></div>
+
+        <div class="richeng">
+            <div class="calendar-item borColor" *ngFor="let item of dataCalList" (click)="this.showStatus ? viewCal(item):''">
+                <div class="ml15">
+                    <i class="icon-dian"></i>
+                    <span class="homeCal-time">{{item.beginTime | date:'yyyy-MM-dd'}}</span>
+                    <p>{{item.title}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pbg"></div>
+        <div class="home-no-data" *ngIf="dataCalList.length <=0">暂无日程信息</div>
+    </ion-list>
+
+    <!-- 会议信息 -->
+    <ion-list class="home-list" *ngIf="dataMeetList.length > 0">
+        <h2 class="homelist-title">
+            <span>会议通知</span>
+            <span class="more-right" (click)="goMeetingOrder()">更多
+        <ion-icon class="iconfont icon-arrowright"></ion-icon>
+      </span>
+        </h2>
+        <ion-item class="homeMeet-item borColor" *ngFor="let item of dataMeetList" (click)="meetView(item)">
+            <i class="i-icon-left blue">通知</i>
+            <h2>{{item.meetingName}}</h2>
+            <div class="home-meetMsg">
+                <p><span>会议地点：</span>{{item.place}}</p>
+                <p><span>会议时间：</span>{{item.beginTime }}-{{item.endTime}}</p>
+            </div>
+        </ion-item>
+        <div class="home-no-data" *ngIf="dataMeetList.length <=0">暂无会议信息</div>
+    </ion-list>
+    <div class="listTxt">{{nowTime}}</div>
+</ion-content>

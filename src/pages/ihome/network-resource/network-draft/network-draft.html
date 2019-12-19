@@ -1,0 +1,310 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>网络资源管理详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{!editable ? "查看网络资源申请":"新增网络资源申请"}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer2':editable &&wfHolderObj&& wfHolderObj.isTodo()}">
+  <!--<ion-content class="layout-content" [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable &&    
+   wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">-->
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.operatorName">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.operatorDeptName">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>经办人联系电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.phoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-input class="textdirec" type='text' value="" [(ngModel)]="editingEntry.applyUsername"></ion-input>
+          <ion-icon item-end class="iconfont icon1 icon-xinzeng" (click)="selectPerson()" *ngIf="editable"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" [(ngModel)]="editingEntry.applyDeptname"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人手机号码</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.applyPhoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-datetime max="2069" displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH:mm" cancelText="取消"
+            doneText="确定" [(ngModel)]="editingEntry.applyDateNew" [disabled]="!editable"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>人员类别</ion-label>
+          <ion-select [(ngModel)]="editingEntry.userType" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable" (ngModelChange)="wfHolder()">
+            <div *ngFor="let typeData of userTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="editingEntry.userType=='lp'">
+          <ion-label class="textcolor" fixed> 人员聘用开始时间 </ion-label>
+          <ion-datetime max="2069" displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH:mm" cancelText="取消"
+            doneText="确定" [(ngModel)]="editingEntry.delayStartTimeNew" [disabled]="!editable"></ion-datetime>
+        </ion-item>
+
+        <ion-item *ngIf="editingEntry.userType=='lp'">
+          <ion-label class="textcolor" fixed>人员聘用结束时间</ion-label>
+          <ion-datetime max="2069" displayFormat="YYYY-MM-DD HH:mm" pickerFormat="YYYY MM DD HH:mm" cancelText="取消"
+            doneText="确定" [(ngModel)]="editingEntry.delayEndTimeNew" [disabled]="!editable"></ion-datetime>
+        </ion-item>
+
+        <ion-item *ngIf="editingEntry.userType=='lp'">
+          <ion-label class="textcolor" fixed>申请类型</ion-label>
+          <ion-select [(ngModel)]="editingEntry.delayName" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable">
+            <div *ngFor="let typeData of delays">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+
+        <!--<ion-item *ngIf="editingEntry.userType=='lp'&&editingEntry.delayName=='1'">
+          <ion-label class="textcolor" fixed>账号信息</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.delayNumber"></ion-input>
+        </ion-item>-->
+        <ion-item>
+          <ion-label class="textcolor" fixed>业务类型</ion-label>
+          <ion-select [(ngModel)]="editingEntry.businessTypeName" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable" multiple class="btn-type">
+            <div *ngFor="let typeData of businessTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="checkShow('ip')">
+    <h2 class="lc-toggle-title" (click)="collspaed=!collspaed">
+      IP地址申请
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>房间地址</ion-label>
+          <ion-select [(ngModel)]="editingEntry.roomAddressName" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable">
+            <div *ngFor="let typeData of roomAddress">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>房间号</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.roomNum">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>用途</ion-label>
+          <ion-select [(ngModel)]="editingEntry.purposeName" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable">
+            <div *ngFor="let typeData of purposeTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>接入方式</ion-label>
+          <ion-select [(ngModel)]="editingEntry.accessTypeName" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable">
+            <div *ngFor="let typeData of accessTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>信息点网口编号</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.netExport">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>资产标签</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.assetsLabel"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>保密标签</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.secrecyLabel"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>资产类型</ion-label>
+          <ion-select [(ngModel)]="editingEntry.assetsTypeName" placeholder="请选择" okText="确定" cancelText="取消"
+            [disabled]="!editable" multiple>
+            <div *ngFor="let typeData of assetsTypes">
+              <ion-option value="{{typeData?.optionValue}}">{{typeData?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>设备型号</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.switchBoardModel"></ion-input>
+        </ion-item>
+        <div class="macStyle">
+          <ion-label class="textcolor" fixed>MAC地址
+            <a class="checkmac" href="https://jingyan.baidu.com/article/84b4f56529f2dc60f7da325c.html"
+              target="_blank">?</a>
+          </ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.macAddress"
+            (ionBlur)="blurInputTag()"></ion-input>
+        </div>
+      </ion-list>
+    </div>
+  </div>
+  <!--<div class="lc-form-row" *ngIf="checkShow('vpn')">
+    <h2 class="lc-toggle-title" (click)="collspaed2=!collspaed2">
+      VPN资源
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed2"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed2"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed2">
+      <ion-list>
+        <ion-item>
+          请勾选需要申请的vpn资源
+        </ion-item>
+        <ion-item *ngFor="let vpn of vpnList">
+          <ion-label>{{vpn.name}}</ion-label>
+          <ion-checkbox slot="end" [checked]="vpnTypes.indexOf(vpn.value)>-1? true:false" (click)="vpnCheckboxClick(vpn.value)"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>说明</ion-label>
+          <div item-content class="form-item-content" style="margin-left:0;">
+            <div class="" tappable style="font-size: 16px;text-align: right;color: #666;">
+              <span style="position:relative; top:-3px;">研究生原则不予分配VPN资源。
+              </span>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>-->
+  <div class="lc-form-row" *ngIf="checkShow('email')">
+    <h2 class="lc-toggle-title" (click)="collspaed3=!collspaed3">
+      NSSC邮箱
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed3"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed3"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed3">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed style="max-width: 200px;flex: 0 0 100px;">说明</ion-label>
+          <ion-label fixed class="textdirec"
+            style="width: initial;max-width: inherit;min-width: initial;display: flex;flex: 1;">
+            您正在申请@nssc.ac.cn后缀邮箱服务，用户名默认为姓名全拼,研究生原则不予分配中心邮箱。</ion-label>
+          <!-- <div item-content class="form-item-content" style="margin-left:0;">
+            <div class="" tappable style="font-size: 16px;text-align: right;color: #666;">
+              <span style="position:relative; top:-3px;">勾选此处即申请@nssc.ac.cn后缀邮箱服务，用户名默认为姓名全拼,研究生原则不予分配中心邮箱。</span>
+            </div>
+          </div> -->
+          <!-- <ion-input class="textdirec" type='text' disabled value="勾选此处即申请@nssc.ac.cn后缀邮箱服务，用户名默认为姓名全拼"></ion-input> -->
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="checkShow('num')">
+    <h2 class="lc-toggle-title" (click)="collspaed4=!collspaed4">
+      网络实名制账号
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed4"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed4"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed4">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" style="max-width: 200px;flex: 0 0 100px;">说明</ion-label>
+          <ion-label fixed class="textdirec"
+            style="width: initial;max-width: inherit;min-width: initial;display: flex;flex: 1;">
+            您正在申请网络实名帐号。研究生及其他人员请在备注填写个人邮箱信息，用于网络实名帐号。</ion-label>
+          <!-- <ion-input class="textdirec" type='text' disabled value="您正在申请网络实名帐号,研究生请在备注填写个人邮箱信息，用于网络实名帐号。"></ion-input> -->
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <div class="lc-form-row" *ngIf="opeType">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>用户协议</ion-label>
+
+          <div item-content class="form-item-content" style="margin-left:0;">
+            <div class="" tappable (click)="openModal()" style="font-size: 13px;text-align: right;color: #666;">
+              <input type="checkbox" [(ngModel)]="editingEntry.checked" style="">
+              <span style="position:relative; top:-3px;">我已阅读并且同意遵守该用户协议</span>
+            </div>
+          </div>
+          <!-- <div item-content class="form-item-content">
+              <div class="form-checkbox" tappable (click)="openModal()">
+                <ul>
+                  <li style="float: left;margin-top: 10px;"><input type="checkbox" [(ngModel)]="editingEntry.checked" style="width:20px;height:20px"></li>
+                  <li>我已阅读并且同意遵守该用户协议</li>
+                </ul>
+              </div>
+          </div> -->
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <ion-item>
+          <ion-label>备注</ion-label>
+          <ion-input class="textdirec" type='text' value="" [disabled]="!editable" [(ngModel)]="editingEntry.remarks">
+          </ion-input>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="editable && wfHolderObj && wfHolderObj.isTodo()" [formGroup]="myForm">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col>
+        <button ion-button color="gray" outline (click)="saveAndReturn()">暂存</button>
+      </ion-col>
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button [disabled]='myForm.valid == false && wfHolderObj.opinionRequired()' (click)="manage(btn ,opinion)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 'color-back': btn.type == 'rollback'}">
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

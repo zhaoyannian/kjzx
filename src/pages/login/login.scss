@@ -1,0 +1,77 @@
+page-login {
+    ion-segment{ margin: 1rem 0;}
+    .segment-ios .segment-button{ font-size: 1.6rem; color: #000000; border-bottom:1px solid #CCCCCC; border-top: none!important; border-left: none!important;border-right: none!important; border-radius: 0!important;}
+    .segment-ios .segment-button.segment-activated{ background-color: inherit; color: #488aff; border-bottom:1.5px solid #488aff;}
+    .logo-box {
+        width: 42.6%;
+        margin: 18% auto;
+    }
+    .login-con {
+        padding: 0 16px;
+    }
+    & .login-item {
+        padding-left: 8px;
+        border-bottom: 1px solid #ededed;
+        .item-inner {
+            border: none!important;
+        }
+        input::-webkit-input-placeholder {
+            color: #ccc;
+            font-size: 1.6rem;
+        }
+        .iconfont {
+            color: #858585;
+            margin-top: 13px;
+            margin-bottom: 10px;
+            font-size: 3.4rem;
+        }
+        .iconfont.small{
+            font-size: 2.4rem;
+            padding-top: 4px;
+            color: #eeeeee;
+        }
+    }
+    .login-btn {
+        color: #fff;
+        font-size: 1.8rem;
+        margin-top: 18px;
+    }
+    .password-select {
+        font-size: 1.6rem;
+        color: #666;
+        overflow: hidden;
+        .item {
+            width: 50%;
+            float: left;
+            padding-left: 10px;
+            .item-inner {border: none;color: #666;}
+        }
+        p {
+            float: right;
+            margin-top: 16px;
+            padding: 0 10px;
+            // color: #0088ff;
+        }
+        .checkbox-ios.checkbox {
+            margin: 10px 10px 6px 0;
+        }
+        .checkbox-icon {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            border-color: #666;
+        }
+        .checkbox-checked {
+            border-color: #666;
+            background-color: #fff;
+            .checkbox-inner {
+                border-color: #666;
+                left: 5px;
+                top: 1px;
+            }
+        }
+    }
+    .input-cover {position: static;}
+    & .bottom-con{ width: 100%; text-align: center; color: #CCCCCC; position: fixed;}
+    canvas{width: 10rem; height: 43px;}
+}

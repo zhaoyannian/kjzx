@@ -1,0 +1,52 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>{{title}}预览</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{title}}预览</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="newsDetail">
+    <h3>{{newEntity.titleText}}</h3>
+    <p class="time-info" *ngIf="type !== 'video'">
+      发布时间：{{newEntity.publDate | date:'yyyy-MM-dd'}} ┊ 文章来源：{{newEntity.articleSource}}
+    </p>
+
+    <div *ngIf="type !== 'video'">
+      <div class="news-content" [innerHTML]="newEntity.content"></div>
+      <h3 class="title" *ngIf="filreLength>0 && type !== 'video'">附件：</h3>
+      <a *ngFor="let item of filreList" ion-item icon-start class="born drop"
+        href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}">
+        <ion-icon class="iconfont icon-rizhi" item-start></ion-icon>
+        <a>{{item.fileName}}</a>
+        <ion-icon class="iconfont icon-download" item-end></ion-icon>
+      </a>
+    </div>
+    <div class="row accessory-style sw-msg"
+      *ngIf="newEntity.filePath!==null && newEntity.filePath!=='' && type === 'video'">
+      <div class="row pic-show-flex" *ngFor="let item of filreList;let i=index;">
+        <div class="col">
+        <vg-player>
+          <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+              <!-- <source src="https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" type="video/mp4"> -->
+              <!-- <source src={{item.videourl}} type="video/mp4"> -->
+
+              <source src="{{httpurl}}/base/fileinfo/getSendVideo?id={{item.id}}" type="video/mp4">
+
+              <!-- <source src="http://io.aicas.cn/base/fileinfo/getSendVideo?id=e5cda6b0143d4e01acf7117da8338639" type="video/mp4"> -->
+              <!-- <source src="http://io.aicas.cn/stoneVfs/local/file/1556615951266.mp4" type="video/mp4"> -->
+              <!-- <source src="http://io.aicas.cn/resource/file/web/video.jsp?fileId=e5cda6b0143d4e01acf7117da8338639" type="video/mp4"> -->
+          </video>
+        </vg-player>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

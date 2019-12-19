@@ -1,0 +1,13 @@
+page-forgetpwd {
+    canvas{ border: 1px solid #cccccc; border-radius: 5px; width: 10rem; height: 43px;}
+    
+    #Login{ padding: 0 16px;}
+    .login_item{ background: #f6f6f6; border-radius: 5px; margin: 1rem auto; font-size: 1.4rem;}
+    .login_item ion-icon{ color: #cccccc;}
+    .login_item_valid{ padding-left: 0;}
+    .login_item_valid ion-input{background: #f6f6f6;border-radius: 5px; padding-left: 1rem;}
+
+    .input-ios[clearInput] .text-input {
+        padding-right: 0px !important;
+    }
+}

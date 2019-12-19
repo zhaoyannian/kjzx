@@ -1,0 +1,62 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhaoYanNian
+ * @Date: 2019-12-16 15:24:10
+ * @LastEditors  : ZhaoYanNian
+ * @LastEditTime : 2019-12-18 17:20:15
+ -->
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons>
+            <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+        </ion-buttons>
+        <ion-title>职工意见建议</ion-title>
+        <ion-buttons end (click)="addFn()" *ngIf="!showTwo">
+            <button ion-button>
+        <i class="iconfont icon-xinzeng"></i>新增
+      </button>
+        </ion-buttons>
+    </ion-toolbar>
+    <div class="pageMenuSlides2">
+        <div class="swiper-container">
+            <div class="swiper-wrapper inventory-tab-title">
+                <div class="swiper-slide {{i==0?'bottomLine':''}}" *ngFor="let item of menus;let i=index;" tappable (click)="selectPageMenu($event,i)">
+                    <span>{{item}}</span>
+                    <!-- <em class="badge badge-red" *ngIf="totalCount>0 && item === '来访审批'">{{totalCount>99?'99+': totalCount}}</em> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="searchBox2">
+    <div class="serhch">
+      <div class="bar" (click)=getItems()>
+        <i></i>
+      </div>
+      <input type="text" placeholder="搜索" [(ngModel)]="address" #searchBar (ngModelChange)=inputchange($event)
+        (keyup)="keyUpSearch($event)">
+      <div class="bar2" (click)=clear() *ngIf="address">
+        <em>x</em>
+      </div>
+    </div>
+  </div> -->
+</ion-header>
+<ion-content>
+    <!-- 职工意见建议 -->
+    <ion-slides #contentSlides (ionSlideDidChange)="slideChanged()">
+        <ion-slide>
+            <page-istaffadvise-slide1></page-istaffadvise-slide1>
+        </ion-slide>
+        <ion-slide *ngIf="showOne">
+            <page-istaffadvise-slide2></page-istaffadvise-slide2>
+        </ion-slide>
+        <ion-slide>
+            <page-istaffadvise-slide3></page-istaffadvise-slide3>
+        </ion-slide>
+        <ion-slide>
+            <page-istaffadvise-slide4></page-istaffadvise-slide4>
+        </ion-slide>
+    </ion-slides>
+</ion-content>

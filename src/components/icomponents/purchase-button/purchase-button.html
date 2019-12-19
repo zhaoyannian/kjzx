@@ -1,0 +1,14 @@
+<ion-footer class="footer-btnRowLiucheng" [formGroup]="myForm" [ngStyle]="{'bottom': datascroll.btnscollHeight>0 && ismobile ? datascroll.btnscollHeight+'px' : 0 }">
+    <textarea class="optionContent" placeholder="填写办理意见" formControlName="opinion" (click)="blurInput()" [(ngModel)]="OPINION_TITLE"></textarea>
+    <ion-grid class="btnsStyle">
+      <ion-row>
+        <ion-col *ngFor="let btn of buttons">
+          <button [disabled]='myForm.valid == false && currentPoint.xmlData.opinionRequred == 1' (click)="manage(btn ,OPINION_TITLE)"
+            [ngClass]="{'color-submit': (btn.type == 'SUBMIT' || btn.type =='END'), 
+                    'color-back': (btn.type == 'ROLEBACK' &&  btn.title!='退回采购办经办人'),'color-submit-next':(btn.type == 'ROLEBACK' && btn.title=='退回采购办经办人')}">
+            {{ btn.title }}
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-footer>

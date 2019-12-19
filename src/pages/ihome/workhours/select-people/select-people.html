@@ -1,0 +1,40 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            {{peope.selectResTitle}}
+        </ion-title>
+        <ion-buttons>
+            <button ion-button (click)="dismiss()">
+                <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button (click)="save()" *ngIf="showOk()">确定</button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content text-center>
+    <ion-searchbar #searchBox id="search-box" (ionInput)="search(searchBox.value)" (ionClear)="onClearFilter($event)"
+        placeholder="搜索"></ion-searchbar>
+    <!-- <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+        <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新..."
+            *ngIf="!isFilter"></ion-refresher-content>
+    </ion-refresher> -->
+    <ion-list *ngIf="!isFilter">
+        <ion-item *ngFor="let item of data;let i =index">
+            <ion-label>{{item.userName}}</ion-label>
+            <ion-checkbox ([ngModule])="item" (ionChange)="updateItem(item)"></ion-checkbox>
+        </ion-item>
+        <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </ion-list>
+    <ion-list>
+        <ion-item *ngFor="let item of heroes$ | async">
+            <ion-label>{{item.userName}}</ion-label>
+            <ion-checkbox ([ngModule])="item" (ionChange)="updateItem(item)"></ion-checkbox>
+        </ion-item>
+    </ion-list>
+    <!-- <div padding><button ion-button full (click)="save()" *ngIf="showOk()">保存</button></div> -->
+</ion-content>

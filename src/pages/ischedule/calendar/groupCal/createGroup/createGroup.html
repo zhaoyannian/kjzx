@@ -1,0 +1,40 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>{{title}}群组</ion-title>
+    <ion-buttons end class="contactbtn">
+      <button ion-button icon-only (click)="saveGroup()" *ngIf="!editable">完成</button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{title}}群组</ion-title>
+    <ion-buttons end class="contactbtn">
+      <button ion-button icon-only (click)="saveGroup()" *ngIf="!editable">完成</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <ion-list>
+    <ion-item class="duan" no-lines>
+      <ion-textarea rows="2" placeholder="请输入群组名称" autoresize="200" [(ngModel)]="obj.title" [disabled]="!!editable">
+      </ion-textarea>
+    </ion-item>
+    <button ion-item no-lines (click)="selectPerson()">
+      <ion-label>群组人员</ion-label>
+      <span item-end *ngIf="groupStaff.length > 0">{{groupStaff.length}}人</span>
+    </button>
+    <ion-item no-lines *ngIf="groupStaff.length > 0"  class="choosePeopleList">
+      <div class="people-item" (click)="!editable ? deletePeer2(i):''" *ngFor="let item of groupStaff;let i=index;">
+        <!-- <ion-icon class="del" *ngIf="!editable">x</ion-icon> -->
+        <ion-icon class="del" *ngIf="!editable"><i class="iconfont icon-guanbi "></i></ion-icon>
+        <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photo}}" *ngIf="!!item.photo">
+        <img src="assets/imgs/people-head.png" *ngIf="!item.photo">
+        <span>{{item.userName}}</span>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

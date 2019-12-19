@@ -1,0 +1,47 @@
+page-infor-edit {
+    .scroll-content{
+        background: #000;
+        // opacity: .6;
+    }
+    img{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background-size: 80%;
+    }
+    // 添加附件
+.orderimg{
+    display: flex;
+    padding: 0 16px;
+    position: relative;
+    span{
+        display: flex;
+        width: 6.9rem;
+        height: 6.9rem;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #DDDDDD;
+    }
+    .icon-xinzeng{
+        font-size: 4rem;
+        color: #DDDDDD;
+    }
+    input{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      z-index: 11;
+      opacity: 0;
+      padding: 0 16px;
+      height: 6.9rem;
+    }
+    img{
+      width: 7.2rem;
+      height: 7.2rem;
+      margin-right: 1.5rem;
+      margin-top: 1rem;
+    }
+  }
+}

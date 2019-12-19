@@ -1,0 +1,188 @@
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>审批流程</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>审批流程</ion-title>
+  </ion-toolbar>
+  <ion-segment [(ngModel)]="toggle" (ngModelChange)=toggleClick($event)>
+      <ion-segment-button value="listData" >
+          办理意见列表
+      </ion-segment-button>
+      <ion-segment-button value="detailData" >
+          流程图
+      </ion-segment-button>
+  </ion-segment>
+  <!-- <div class="pageMenuSlides2">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide {{i==0?'bottomLine':''}}" *ngFor="let item of menus;let i=index;" tappable
+          (click)="selectPageMenu($event,i)">{{item}}</div>
+      </div>
+    </div>
+  </div> -->
+  <!-- <ion-segment [(ngModel)]="toggle">
+    <ion-segment-button value="awiatData" (click)="goToSlide(0)" [ngClass]="{'active':index ==0}">
+        办理意见列表
+    </ion-segment-button>
+    <ion-segment-button value="complateData" (click)="goToSlide(1)" [ngClass]="{'active':index ==1}">
+        流程图
+    </ion-segment-button>
+  </ion-segment> -->
+</ion-header>
+<!-- <ion-content>
+  <ion-slides #contentSlides (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <div class="workflowlist">
+        <ion-list *ngFor="let item of opinionList;let i =index">
+          <ion-item>
+            <ion-label class="textcolor">办理环节</ion-label>
+            <ion-label class="textdirec">{{item.pointName}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor">送交人</ion-label>
+            <ion-label class="textdirec">{{item.fromTargetName}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor">办理人</ion-label>
+            <ion-label class="textdirec">{{item.resourceTargetName}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor">阅读时间</ion-label>
+            <ion-label class="textdirec">{{item.readTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor">办理时间</ion-label>
+            <ion-label class="textdirec">{{item.allocateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label class="textcolor">办理意见</ion-label>
+            <ion-label class="textdirec">{{item.opinion}}</ion-label>
+          </ion-item>
+        </ion-list>
+
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <div class="sw-toggle-box">
+        <div class="toggle-wrap">
+          <ul class="toggle-list-cont">
+            <li class="iconfont toggle-item" *ngFor="let point of points;let i =index">
+              <div class="proceeLeft">
+                <span class="process-status" [ngClass]="{'icon-wancheng': (point.status == 'complate' ||point.status == 'inprocess'),
+                                          'icon-daichuli': point.status == 'waiting',
+                                          'icon-weichuli': (point.status == ''  || point.status ==null),
+                                          'icon-tuihuichuli': point.status == 'back'}"></span>
+                <em
+                  [ngClass]="{'process-complate': (point.status == 'complate' || point.status == 'inprocess'), 
+                                          'process-waiting ': point.status == 'waiting',
+                                          'process-default':(point.status == ''  || point.status ==null || point.status == 'back')}"></em>
+                <i class=" iconfont icon-arrowdown"
+                  [ngClass]="{'color-complate': (point.status == 'complate' || point.status == 'incolor'), 
+                                          'color-waiting ': point.status == 'waiting',
+                                          'color-default ':(point.status == ''  || point.status ==null || point.status == 'back')}"></i>
+                <span class="process-border"
+                  [ngClass]="{'process-complate': (point.status == 'complate' || point.status == 'inprocess'), 
+                                          'process-waiting ': point.status == 'waiting',
+                                          'process-default ':(point.status == ''  || point.status ==null || point.status == 'back')}"></span>
+              </div>
+              <div class="process-axisCont" [ngClass]="{'process-complate': (point.status == 'complate' || point.status == 'inprocess'), 
+                                      'process-waiting ': point.status == 'waiting',
+                                      'process-default ':(point.status == ''  || point.status ==null),
+                                      'process-back': point.status == 'back'}">
+                <h2>{{i+1}}、{{point.pointName}}</h2>
+                <h3><span>状态：</span><em
+                    [ngClass]="{'color-complate': (point.status == 'complate' || point.status == 'incolor'), 
+                                              'color-waiting ': point.status == 'waiting',
+                                              'color-default ':(point.status == ''  || point.status ==null),
+                                              'color-back': point.status == 'back'}">{{pointInstStatuss[point.status]}}</em>
+                  <i>{{point.createTime | date: 'MM-dd HH:mm'}}</i>
+                </h3>
+                <h3 *ngIf="point.config.showApprover"><span>处理人：</span><em>{{point.handleUserName}}</em></h3>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </ion-slide>
+
+  </ion-slides>
+</ion-content> -->
+
+<ion-content>
+  <div class="sw-toggle-box" *ngIf="toggle == 'detailData'">
+    <div class="toggle-wrap">
+      <ul class="toggle-list-cont">
+        <li class="iconfont toggle-item" *ngFor="let point of points;let i =index">
+          <div class="proceeLeft">
+            <span class="process-status" [ngClass]="{'icon-wancheng': (point.status == 'complate' ||point.status == 'inprocess'),
+                        'icon-daichuli': point.status == 'waiting',
+                        'icon-weichuli': (point.status == ''  || point.status ==null),
+                        'icon-tuihuichuli': point.status == 'back'}"></span>
+            <em
+              [ngClass]="{'process-complate': (point.status == 'complate' || point.status == 'inprocess'), 
+                        'process-waiting ': point.status == 'waiting',
+                        'process-default':(point.status == ''  || point.status ==null || point.status == 'back')}"></em>
+            <i class=" iconfont icon-arrowdown" [ngClass]="{'color-complate': (point.status == 'complate' || point.status == 'incolor'), 
+                        'color-waiting ': point.status == 'waiting',
+                        'color-default ':(point.status == ''  || point.status ==null || point.status == 'back')}"></i>
+            <span class="process-border"
+              [ngClass]="{'process-complate': (point.status == 'complate' || point.status == 'inprocess'), 
+                        'process-waiting ': point.status == 'waiting',
+                        'process-default ':(point.status == ''  || point.status ==null || point.status == 'back')}"></span>
+          </div>
+          <div class="process-axisCont" [ngClass]="{'process-complate': (point.status == 'complate' || point.status == 'inprocess'), 
+                    'process-waiting ': point.status == 'waiting',
+                    'process-default ':(point.status == ''  || point.status ==null),
+                    'process-back': point.status == 'back'}">
+            <h2>{{i+1}}、{{point.pointName}}</h2>
+            <h3><span>状态：</span><em [ngClass]="{'color-complate': (point.status == 'complate' || point.status == 'incolor'), 
+                            'color-waiting ': point.status == 'waiting',
+                            'color-default ':(point.status == ''  || point.status ==null),
+                            'color-back': point.status == 'back'}">{{pointInstStatuss[point.status]}}</em>
+              <i>{{point.createTime | date: 'MM-dd HH:mm'}}</i>
+            </h3>
+            <h3 *ngIf="point.config.showApprover"><span>处理人：</span><em>{{point.handleUserName}}</em></h3>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <div *ngIf="toggle == 'listData'" class="workflowlist">
+    <ion-list *ngFor="let item of opinionList;let i =index">
+      <ion-item>
+        <ion-label class="textcolor">办理环节</ion-label>
+        <ion-label class="textdirec">{{item.pointName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">送交人</ion-label>
+        <ion-label class="textdirec">{{item.fromTargetName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">办理人</ion-label>
+        <ion-label class="textdirec">{{item.resourceTargetName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">阅读时间</ion-label>
+        <ion-label class="textdirec">{{item.readTime | date: 'yyyy-MM-dd HH:mm'}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">办理时间</ion-label>
+        <ion-label class="textdirec">{{item.allocateTime | date: 'yyyy-MM-dd HH:mm'}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">办理意见</ion-label>
+        <ion-label class="textdirec">{{item.opinion}}</ion-label>
+      </ion-item>
+    </ion-list>
+
+  </div>
+</ion-content>

@@ -1,0 +1,25 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>个人头像</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)='more()'>
+                <ion-icon class="iconfont icon-more" item-end></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    <!-- <div class="orderimg" (click)="captureImage($event)">
+        <span>
+            <ion-icon class="iconfont icon-xinzeng" item-end></ion-icon>
+        </span>
+        <input #uploadImg type="file" (click)="captureImage($event)">
+    </div> -->
+    <img src="{{httpurl}}/api/fileinfo/downloadFile/{{userinforList.staff.photo}}">
+    <!-- <button class="btn" id="crop_circle_btn" (click)="save()">Crop Circle</button>
+    <div id="crop_result" style="text-align: center; padding-top: 30px; height: 230px; line-height: 300px;"></div> -->
+</ion-content>

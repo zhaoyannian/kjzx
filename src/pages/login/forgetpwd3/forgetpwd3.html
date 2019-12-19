@@ -1,0 +1,24 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>忘记密码</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>忘记密码</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <div id="Login">
+    <ion-icon name="success"></ion-icon>
+    <p>恭喜您，密码设置成功！</p>
+    <button ion-button block color="primary" (click)="login()">
+      立即登录
+    </button>
+  </div>
+
+</ion-content>

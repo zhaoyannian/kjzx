@@ -1,0 +1,150 @@
+page-information {
+    .content{
+        background: #efefef;
+    }
+    .red{
+        color: red;
+    }
+    .inforList{
+        margin-top: 1rem;
+        margin-bottom: 0;
+    }
+    .text-input{
+        text-align: right;
+    }
+    .error-message{
+        float: right;
+        color: red;
+    }
+    .list-ios[inset] .item{
+        border: none!important;
+    }
+    .list-ios[inset] .item-inner{
+        border-bottom: 1px solid #ededed;
+    }
+    .userlist{
+        padding-top: 3.2rem;
+    }
+    .listcom{
+        background: #fff;
+        margin-bottom: .5rem;
+    }
+    .item-ios.item-block .item-inner{
+        padding-right: 0;
+        border-color: #eeeeee;
+    }
+    .disabled{
+        color: #999999!important;
+    }
+    .list-ios > .item-block:first-child{
+        border: 0;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border: 0;
+    }
+    ion-label[fixed]{
+        font-size: 1.7rem;
+        color: #333333;
+    }
+    .item-input ion-input, .item-input ion-textarea{
+        font-size: 1.7rem;
+        color: #333333;
+    }
+    .item,.item-ios{
+        padding-right: 16px;
+        height: 6rem;
+        .item-inner{
+            padding-right: 0;
+        }
+        .item-block .item-inner{
+            padding-right: 0;
+        }
+    }
+    .addres{
+        height: auto;
+        margin: 0 16px;
+        font-size: 1.7rem;
+        color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-bottom: 1px solid #ededed;
+        min-height: 8.2rem;
+        span{
+            float: left;
+            width: 80px;
+            min-width: 80px;
+            max-width: 200px;
+            font-size: 1.7rem;
+            color: #333333;
+        }
+        .addresscontent{
+            float: right;
+            border: none;
+            text-align: right;
+            display: flex;
+            flex: 1;
+            padding: 1.5rem 0 1rem;
+            height: auto;
+            font-size: 1.5rem;
+            font-size: 1.7rem;
+            color: #333333;
+        }
+    }
+    .userinfo {
+        .userimg{
+            width: 8.7rem;
+            height: 8.7rem;
+            border-radius: 50%;
+            margin: auto;
+            background: #0081e4;
+            display: flex;
+            flex-direction: column;
+            span{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #2b96e8;
+                margin-top: .5rem;
+                font-size: 1rem;
+            }
+            .icon-shangchuanzhaopian{
+                font-size: 4rem;
+                align-items: center;
+                justify-content: center;
+                color: #fff;
+                display: flex;
+                margin-top: 1.6rem;
+            }
+        }
+        .icon-nan{
+            color: #0081e4;
+            font-size: 15px;
+        }
+        .icon-nv1{
+            color: #e67a;
+            font-size: 15px;
+        }
+        img{
+            width: 8.7rem;
+            height: 8.7rem;
+            border-radius: 50%;
+            margin: auto;
+            display: inherit;
+        }
+        h2{
+            text-align: center;
+            font-size: 1.7rem;
+            margin-top: 1.2rem;
+            color: #333;
+        }
+        p{
+            text-align: center;
+            font-size: 1.4rem;
+            color: #999;
+            margin-top: 1rem;
+            padding-bottom: 2.3rem;
+        }
+    }
+    
+}

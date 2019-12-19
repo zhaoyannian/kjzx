@@ -1,0 +1,49 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhaoYanNian
+ * @Date: 2019-12-17 10:03:24
+ * @LastEditors: ZhaoYanNian
+ * @LastEditTime: 2019-12-18 17:14:07
+ -->
+<ion-header animation="no-animation">
+    <ion-toolbar>
+        <ion-buttons>
+            <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+        </ion-buttons>
+        <ion-title>正样元器件采购</ion-title>
+    </ion-toolbar>
+    <div class="pageMenuSlides4">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide {{i==0?'bottomLine':''}}" *ngFor="let item of menus;let i=index;" tappable (click)="selectPageMenu($event,i)">{{item}}
+                    <i class="orange-num" *ngIf="!!dbtotalCount && item =='待处理'">{{dbtotalCount}}</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="searchBox2">
+    <div class="serhch">
+      <div class="bar" (click)=getItems()> <i></i></div>
+      <input type="text" placeholder="搜索" [(ngModel)]="address" #searchBar (ngModelChange)=inputchange($event)
+        (keyup)="keyUpSearch($event)">
+      <div class="bar2" (click)=clear() *ngIf="address"><em>x</em></div>
+    </div>
+  </div> -->
+
+    <ion-content class="layout-content">
+        <ion-slides #contentSlides (ionSlideDidChange)="slideChanged()" *ngIf="isShow">
+            <ion-slide>
+                <page-zy-purchase-slide1></page-zy-purchase-slide1>
+            </ion-slide>
+            <ion-slide>
+                <page-zy-purchase-slide2></page-zy-purchase-slide2>
+            </ion-slide>
+            <ion-slide>
+                <page-zy-purchase-slide3></page-zy-purchase-slide3>
+            </ion-slide>
+        </ion-slides>
+    </ion-content>
+</ion-header>

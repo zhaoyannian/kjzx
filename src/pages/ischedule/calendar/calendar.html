@@ -1,0 +1,344 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons start class="contactbtn">
+            <button ion-button icon-only (click)="choose('Select')">
+        {{(calendarType!=='0'&&calendarType!=='1'&&calendarType!=='2'&&calendarType!=='3'&&calendarType!=='4'&&calendarType!=='5')?calendarType:calendarTypeEntry[calendarType]}}
+        <!-- <i class="iconfont icon-arrowdown"></i> -->
+        <img src="assets/imgs/sanjiao.png" alt="" class="sanjiao">
+      </button>
+        </ion-buttons>
+        <ion-title>
+        </ion-title>
+        <ion-buttons end class="contactbtn">
+            <button ion-button icon-only (click)="allType = !allType;selctCT('5')" *ngIf="calendarType === '5'">
+        <img src="assets/imgs/qiehuan.png" alt="" class="qiehuan">
+        {{!!allType ? '切换分组日程':'切换周日程'}}
+        <img src="assets/imgs/more2.png" alt="" class="more2">
+      </button>
+            <button ion-button icon-only (click)="add()" *ngIf="calendarType === '0'">
+        <i class="iconfont icon-xinzeng"></i>新增
+      </button>
+        </ion-buttons>
+    </ion-navbar>
+    <ion-list radio-group id="Select" class="select-box" animation="no-animation">
+        <ion-item animation="no-animation" (click)="selctCT('0')" [ngClass]="{'activebg':calendarType ==0}">
+            <ion-label animation="no-animation">
+                <ion-icon animation="no-animation" class="iconfont icon-wo ionic-color"></ion-icon>
+                我的日程
+            </ion-label>
+        </ion-item>
+        <ion-item (click)="selctCT('4')" [ngClass]="{'activebg':calendarType ==4}">
+            <ion-label>
+                <ion-icon class="iconfont icon-tongshi ionic-color"></ion-icon>
+                同事日程
+            </ion-label>
+        </ion-item>
+        <ion-item *ngIf="isDeptManager" (click)="selctCT('1')" [ngClass]="{'activebg':calendarType ==1}">
+            <ion-label>
+                <ion-icon class="iconfont icon-bumen ionic-color"></ion-icon>
+                部门日程
+            </ion-label>
+        </ion-item>
+        <!-- <ion-item *ngIf="isManager" (click)="selctCT('2')">
+      <ion-label>
+        <ion-icon class="iconfont icon-quanbu-copy ionic-color"></ion-icon>
+        领导日程</ion-label>
+    </ion-item> -->
+        <ion-item (click)="selctCT('3')" [ngClass]="{'activebg':calendarType ==3}">
+            <ion-label>
+                <ion-icon class="iconfont icon-qunzu ionic-color"></ion-icon>
+                群组日程
+            </ion-label>
+        </ion-item>
+        <ion-item *ngIf="isLeader" (click)="selctCT('5')" [ngClass]="{'activebg':calendarType ==5}">
+            <ion-label>
+                <ion-icon class="iconfont icon-quanbu1 ionic-color"></ion-icon>
+                全部日程
+            </ion-label>
+        </ion-item>
+        <ion-item *ngFor="let lead of leadArr;" (click)="selctCT(lead)" [ngClass]="{'activebg':lead.checked ==true}">
+            <ion-label>
+                <ion-icon class="iconfont icon-quanbu1 ionic-color"></ion-icon>
+                {{lead.name}}
+            </ion-label>
+        </ion-item>
+    </ion-list>
+    <div class="calendar-short">
+        <div class="calendar-short-head">
+            <!-- 上一个月 -->
+            <ion-icon class="iconfont icon-arrowleft calendar-prev" (click)="updateDateMonthLast(today,-nextMonthDaysLast)">
+            </ion-icon>
+            <!-- <a href="javascript:void(0);" class="ion-ios-arrow-left calendar-prev calendar-opcity" (click)="updateDateMonthLast(today,-nextMonthDaysLast)"></a> -->
+            <h3 class="calendar-ymd">{{today | date:'yyyy年MM月dd日'}}</h3>
+            <!-- 下一个月 -->
+            <!-- <a href="javascript:void(0);" class="ion-ios-arrow-right calendar-next calendar-opcity" (click)="updateDateMonthNext(today,nextMonthDaysNext)"></a> -->
+            <ion-icon class="iconfont icon-arrowright calendar-next" (click)="updateDateMonthNext(today,nextMonthDaysNext)">
+            </ion-icon>
+        </div>
+        <div class="calendar-short-content">
+            <ul class="calendar-calHead">
+                <li>日</li>
+                <li>一</li>
+                <li>二</li>
+                <li>三</li>
+                <li>四</li>
+                <li>五</li>
+                <li>六</li>
+            </ul>
+            <ion-slides class="calendar-calBody">
+                <ion-slide class="calendar-calRow" (swipeleft)="updateWeek(today,7)" (swiperight)="updateWeek(today,-7)">
+                    <div class="calendar-calTd" *ngFor="let item of thisWeeks;" (click)="queryDateCalendarPage(item.week)">
+                        <span [ngClass]="(isToday | date:'yyyy-MM-dd')?'curr':''" *ngIf="(isToday | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')">{{item.week
+              | date:'dd'}}</span>
+                        <span [ngClass]="(today | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')?'current':''" *ngIf="(isToday | date:'yyyy-MM-dd') !== (item.week | date:'yyyy-MM-dd')">{{item.week
+              | date:'dd'}}</span>
+                        <em [ngClass]="(checkClassType(item.week,now))?'orange':'gray'" *ngIf="item.count>0"></em>
+                    </div>
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </div>
+</ion-header>
+<a href="javascript:void(0);" class="goToday" (click)="initToday()" *ngIf="getShow()">今</a>
+<a href="javascript:void(0);" class="goToday" (click)="add()" *ngIf="!getShow()">
+    <i class="iconfont icon-xinzeng"></i>
+</a>
+<ion-content class="layout-content">
+    <!-- <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+
+
+    <div class="calendar-list" *ngIf="calendarType === '0'">
+        <!-- 我的日程 -->
+        <ion-list class="mycalendar-list" *ngIf="myResultDate.length > 0">
+            <ion-item-sliding *ngFor="let item of myResultDate">
+                <ion-item class="mycalendar-item" (click)="showStatus ? viewCal(item,false):''">
+                    <div item-start class="time-box">
+                        <span *ngIf="item.allDay === 'false'">{{item.detailBeginTime.substring(0,5)}}</span>
+                        <span *ngIf="item.allDay === 'false'" class="endTime">{{item.detailEndTime.substring(0,5)}}</span>
+                        <span *ngIf="item.allDay === 'true'">全天</span>
+                    </div>
+                    <p>{{item.title}}</p>
+                </ion-item>
+                <ion-item-options side="right" *ngIf="item.calType === 'calendar'">
+                    <button ion-button color="danger" (click)="removeItem(item)">
+            <ion-icon name="delete"></ion-icon>
+            删除
+          </button>
+                </ion-item-options>
+                <ion-item-options side="right" *ngIf="item.calType === 'meeting'">
+                    <button ion-button [disabled]="true" color="#666">
+            <ion-icon name="delete"></ion-icon>
+            不可删除
+          </button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+        <div class="listTxt" *ngIf="myResultDate.length > 0">{{nowTime}}好，抖擞起精神吧</div>
+        <div class="tips-Nodata" *ngIf="myResultDate.length <= 0">暂无日程</div>
+    </div>
+
+    <div class="calendar-list" *ngIf="(calendarType === '1' ||calendarType === '2' || calendarType === '4')">
+        <!-- 部门日程 -->
+        <!-- 领导日程 -->
+        <!-- 同事日程 -->
+
+        <!-- <div class="peerCalecdar-list">
+        
+        <a class="item item-avatar has-item-bor" href="javascript:void(0);" *ngFor="let item of calendarList">
+          <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photoId}}" *ngIf="!!item.photoId">
+          <img src="assets/imgs/people-head.png" *ngIf="!!!item.photoId">
+          <h2>
+            <span>{{item.userName}}</span>
+            <em>{{item.deptName}}</em>
+          </h2>
+          <div class="item-Colist" *ngFor="let calendar of item.calendarTos" (click)="viewCal(calendar)">
+            <i></i>
+            <span>{{timeMethod(calendar.beginTime ,calendar.endTime)}}</span>
+            <p *ngIf="calendar.allDay === 'true'">【全天】{{calendar.title}}</p>
+            <p *ngIf="calendar.allDay === 'false'">【{{calendar.detailBeginTime}}-{{calendar.detailEndTime}}】{{calendar.title}}</p>
+          </div>
+        </a>
+      
+    </div> -->
+
+        <div class="peerCal-list">
+            <div class="peerCal-group" *ngFor="let item of calendarList">
+                <div class="peerCal-left">
+                    <span class="peerCal-imgbox">
+            <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photoId}}" *ngIf="!!item.photoId">
+            <img src="assets/imgs/people-head.png" *ngIf="!!!item.photoId">
+          </span>
+                    <span>{{item.userName}}</span>
+                    <span class="deptName">{{item.deptName}}</span>
+                </div>
+                <div class="peerCal-right">
+                    <ion-list>
+                        <ion-item class="mycalendar-item" *ngFor="let calendar of item.calendarTos" (click)="showStatus ? viewCal(calendar,true):''">
+                            <div item-start class="time-box">
+                                <span *ngIf="calendar.allDay === 'false'">{{calendar.detailBeginTime}}</span>
+                                <span *ngIf="calendar.allDay === 'false'" class="endTime">{{calendar.detailEndTime}}</span>
+                                <span *ngIf="calendar.allDay === 'true'">全天</span>
+                            </div>
+                            <p>{{calendar.title}}</p>
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+        <div class="listTxt" *ngIf="calendarList.length > 0">{{nowTime}}好，抖擞起精神吧</div>
+        <div class="tips-Nodata" *ngIf="calendarList.length<=0">暂无日程</div>
+    </div>
+
+    <div class="calendar-list" *ngIf="calendarType === '5' && !!allType">
+        <!-- 全部日程 -->
+        <div class="peerCal-list">
+            <div class="peerCal-group" *ngFor="let item of userCalTos">
+                <div class="peerCal-left">
+                    <span class="peerCal-imgbox">
+            <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photoId}}" *ngIf="!!item.photoId">
+            <img src="assets/imgs/people-head.png" *ngIf="!!!item.photoId">
+          </span>
+                    <span>{{item.userName}}</span>
+                </div>
+                <div class="peerCal-right">
+                    <ion-list>
+                        <ion-item class="mycalendar-item" *ngFor="let calendar of item.calendarTos" (click)="showStatus ? viewCal(calendar,true):''">
+                            <div item-start class="time-box">
+                                <span *ngIf="calendar.allDay === 'false'">{{calendar.detailBeginTime}}</span>
+                                <span *ngIf="calendar.allDay === 'false'" class="endTime">{{calendar.detailEndTime}}</span>
+                                <span *ngIf="calendar.allDay === 'true'">全天</span>
+                            </div>
+                            <p>{{calendar.title}}</p>
+                        </ion-item>
+                    </ion-list>
+                </div>
+            </div>
+        </div>
+        <div class="listTxt" *ngIf="userCalTos.length > 0">{{nowTime}}好，抖擞起精神吧</div>
+        <div class="tips-Nodata" *ngIf="userCalTos.length<=0">暂无日程</div>
+    </div>
+
+    <div class="calendar-list calendar-listAll" *ngIf="calendarType === '5' && !allType">
+        <!-- 全部日程 -->
+        <div class="list calendar-Colist" *ngIf="goOutCals.length>0">
+            <a href="javascript:void(0);" (click)="goMoreList(goOutCals)">
+                <h2>
+                    <span class="cal-type">{{goOutCals[0].calTypeText}}</span>
+                    <span class="cal-num">{{goOutCals.length}}人</span>
+                </h2>
+            </a>
+            <!--循环示例-->
+        </div>
+        <div class="list calendar-Colist" *ngIf="leaveCals.length>0">
+            <a href="javascript:void(0);" (click)="goMoreList(leaveCals)">
+                <h2>
+                    <span class="cal-type">{{leaveCals[0].calTypeText}}</span>
+                    <span class="cal-num">{{leaveCals.length}}人</span>
+                </h2>
+            </a>
+            <!--循环示例-->
+        </div>
+        <div class="list calendar-Colist" *ngIf="evectionCals.length>0">
+            <a href="javascript:void(0);" (click)="goMoreList(evectionCals)">
+                <h2>
+                    <span class="cal-type">{{evectionCals[0].calTypeText}}</span>
+                    <span class="cal-num">{{evectionCals.length}}人</span>
+                </h2>
+            </a>
+            <!--循环示例-->
+        </div>
+        <div class="list calendar-Colist" *ngIf="meetingCals.length>0">
+            <a href="javascript:void(0);" (click)="goMoreList(meetingCals)">
+                <h2>
+                    <span class="cal-type">{{meetingCals[0].calTypeText}}</span>
+                    <span class="cal-num">{{meetingCals.length}}人</span>
+                </h2>
+            </a>
+            <!--循环示例-->
+        </div>
+        <div class="list calendar-Colist" *ngIf="calendarNList.length>0">
+            <a href="javascript:void(0);" (click)="goMoreList(calendarNList)">
+                <h2>
+                    <span class="cal-type">{{calendarNList[0].calTypeText}}</span>
+                    <span class="cal-num">{{calendarNList.length}}个</span>
+                </h2>
+            </a>
+            <!--循环示例-->
+        </div>
+        <div class="listTxt" *ngIf="allCalList.length > 0">{{nowTime}}好，抖擞起精神吧</div>
+        <div class="tips-Nodata" *ngIf="allCalList.length <= 0">暂无日程</div>
+    </div>
+    <div class="calendar-list" *ngIf="(calendarType !== '1' && calendarType !== '2' && calendarType !== '3' && calendarType !== '4' && calendarType !== '5' && calendarType !== '0')">
+        <!-- 岗位日程 -->
+        <div class="peerCal-list">
+            <div class="peerCal-group" *ngFor="let item of calendarList">
+                <div class="peerCal-left">
+                    <span class="peerCal-imgbox">
+            <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photoId}}" *ngIf="!!item.photoId">
+            <img src="assets/imgs/people-head.png" *ngIf="!!!item.photoId">
+          </span>
+                    <span>{{item.userName}}</span>
+                </div>
+                <div class="peerCal-right">
+                    <ion-list>
+                        <ion-item class="mycalendar-item" *ngIf="getGwData(item.calendarTos,'AM').length>0 || getGwData(item.calendarTos,'CROSS').length>0 || getGwData(item.calendarTos,'ALL').length>0">
+                            <div item-start class="time-box">
+                                <span class="dateTime-am">上午</span>
+                            </div>
+                            <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'AM')" (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+                            <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'CROSS')" (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+                            <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'ALL')" (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+                        </ion-item>
+                        <ion-item class="mycalendar-item bort" *ngIf="getGwData(item.calendarTos,'PM').length>0 || getGwData(item.calendarTos,'CROSS').length>0 || getGwData(item.calendarTos,'ALL').length>0">
+                            <div item-start class="time-box">
+                                <span class="dateTime-am">下午</span>
+                            </div>
+                            <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'PM')" (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+                            <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'CROSS')" (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+                            <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'ALL')" (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+                        </ion-item>
+
+                    </ion-list>
+                    <!-- <ion-list *ngIf="types === 'FALSE'">
+            <ion-item class="mycalendar-item" *ngFor="let calendar of item.calendarTos"
+              (click)="showStatus ? viewCal(calendar,true):''">
+              <div item-start class="time-box">
+                <span *ngIf="calendar.allDay === 'false'">{{calendar.detailBeginTime}}</span>
+                <span *ngIf="calendar.allDay === 'false'" class="endTime">{{calendar.detailEndTime}}</span>
+                <span *ngIf="calendar.allDay === 'true'">全天</span>
+              </div>
+              <p>{{calendar.title}}</p>
+            </ion-item>
+          </ion-list>
+          <ion-list *ngIf="types === 'TRUE'">
+            <ion-item class="mycalendar-item" *ngIf="getGwData(item.calendarTos,'AM').length>0">
+              <div item-start class="time-box">
+                <span class="dateTime-am">上午</span>
+              </div>
+              <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'AM')"
+                (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+            </ion-item>
+            <ion-item class="mycalendar-item" *ngIf="getGwData(item.calendarTos,'PM').length>0">
+              <div item-start class="time-box">
+                <span class="dateTime-am">下午</span>
+              </div>
+              <p class="dateTime-p" *ngFor="let calendar of getGwData(item.calendarTos,'PM')"
+                (click)="showStatus ? viewCal(calendar,true):''">{{calendar.title}}</p>
+            </ion-item>
+          </ion-list> -->
+                </div>
+            </div>
+        </div>
+        <div class="listTxt" *ngIf="calendarList.length>0">{{nowTime}}好，抖擞起精神吧</div>
+        <div class="tips-Nodata" *ngIf="calendarList.length<=0">暂无日程</div>
+    </div>
+    <!-- <div class="tips-Nodata" *ngIf="userCalTos.length<=0 || calendarList.length<=0 || myResultDate.length <= 0 || allCalList.length>0">暂无日程</div> -->
+    <!-- <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content loadingText="正在加载更多...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+
+</ion-content>

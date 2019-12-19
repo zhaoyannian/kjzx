@@ -1,0 +1,65 @@
+page-select-peoplenew {
+    .radio-checked{
+        background-color: #488aff;
+        border: none!important;
+        .radio-inner{
+          border-color: #ffffff!important;
+        }
+      }
+      .radio-icon{
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        width: 25px!important;
+        height: 25px!important;
+        display: flex!important;
+        justify-content: center;
+        align-items: center;
+      }
+      .radio-inner{
+        left: 0!important;
+        top: 0!important;
+        bottom: 0!important;
+        right: 0!important;
+        margin: auto;
+        border-color: #ffffff!important;
+      }
+      .item-radio-checked.item-ios ion-label{
+        color: #8e9093!important;
+      }
+    .header .bar-button-default {
+        font-size: 1.8rem;
+      }
+    .projectcontent{
+        padding: 0;
+        overflow: hidden;
+        li{
+            min-height: 6rem;
+            line-height: 1.8rem;
+            padding: 1rem 1.5rem;
+            background: #fff;
+            font-size: 1.5rem;
+            color: #666666;
+            border-top: 1px solid #e8eaf4;
+            display: flex;
+            align-items: center;
+        }
+
+        .pro_list {
+            overflow: hidden;
+
+            .name {
+                width: 20%;
+                float: left;
+            }
+
+            .deptment {
+                width: 80%;
+                float: left;
+            }
+        }
+    }
+    .checked{
+        background: #61adff !important;
+        color: #fff!important;
+    }
+}

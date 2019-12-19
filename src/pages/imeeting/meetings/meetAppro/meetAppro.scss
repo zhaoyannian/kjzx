@@ -1,0 +1,73 @@
+page-meetAppro{
+    .myorder-item-notdata{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        background-size: 80%;
+    }
+      .shuipai-tit {
+        font-size: 1.7rem;
+        height: 5.1rem;
+        line-height: 5.1rem;
+        padding-left: 1.3rem;
+        font-family: MicrosoftYaHei;
+        background: #fff;
+        color: #333;
+        border-bottom: 1px solid #ededed;
+      }
+      .header .bar-button-default{
+        .button-inner {
+          font-size: 1.6rem;
+        }
+      }
+      .list-ios .item-block .item-inner{
+        // height: 2.5rem;
+      }
+      .list-ios{
+        margin-bottom: .5rem;
+      }
+      .list-ios .item-ios:last-child,.list-ios .item-ios:first-child{
+        border: none!important;
+      }
+      .item-block{
+        min-height: 2.5rem;
+      }
+    //   & .label {
+    //     color: #999;
+    //   }
+      & .button-inner {
+        font-size: 1.7rem;
+      }
+      .label-ios{
+          color: #999999;
+          font-size: 1.5rem;
+          font-family: MicrosoftYaHei;
+          margin: 0;;
+      }
+      .textcolor{
+          color: #333333;
+          font-size: 1.5rem;
+          font-family: MicrosoftYaHei;
+      }
+      .input-wrapper{
+        min-width: 50%;
+      }
+      .item-ios {
+        padding-left: 0px;
+      }
+      .list-ios .item-block .item-inner {
+        padding-left: 16px;
+        padding-right: 16px;
+        border-color: #e8eaf4;
+      }
+      .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        height: 5rem;
+      }
+      .list-ios > .item-block:last-child .item-inner, .list-ios > .item-wrapper:last-child .item-block .item-inner{
+        height: 5rem;
+      }
+      .item-ios [item-right], .item-ios [item-end]{
+        margin: 0 8px;
+      }
+}

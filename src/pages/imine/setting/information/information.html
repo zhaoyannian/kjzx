@@ -1,0 +1,119 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>个人信息</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="change()">
+        完成
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>个人信息</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="change()">
+        完成
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list class="listcom userlist">
+    <div class="userinfo" (click)="viewAvatar()">
+      <div *ngIf="!userinfor.staff.photo" class="userimg">
+        <ion-icon class="iconfont icon-shangchuanzhaopian" item-start></ion-icon>
+        <span>头像未设置</span>
+      </div>
+      <img *ngIf="!!userinfor.staff.photo" src="{{httpurl}}/api/fileinfo/downloadFile/{{userinfor.staff.photo}}">
+      <h2>
+        <ion-icon *ngIf="generName == '男'" class="iconfont icon-nan" item-start></ion-icon>
+        <ion-icon *ngIf="generName == '女'" class="iconfont icon-nv1" item-start></ion-icon>
+        {{userinfor.staff.userName}}
+      </h2>
+      <p>账号：{{userinfor.staff.mobile}}</p>
+    </div>
+  </ion-list>
+  <ion-list class="listcom">
+    <ion-item>
+      <ion-label fixed>手机号码<span class="red">*</span></ion-label>
+      <ion-input type="text" [(ngModel)]="userinfor.staff.mobile" placeholder="请填写手机号码"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>座机号码</ion-label>
+      <ion-input type="text" [(ngModel)]="userinfor.staff.officeTel" placeholder="请填写座机号码"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list class="listcom">
+    <ion-item>
+      <ion-label fixed>工作邮箱<span class="red">*</span></ion-label>
+      <ion-input type="text" [(ngModel)]="userinfor.loginInfo.emailWork" placeholder="请填写工作邮箱"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list class="listcom">
+    <!-- <ion-item> -->
+    <div class="addres">
+      <span>办公地址</span>
+      <textarea class="addresscontent" type="text" [(ngModel)]="userinfor.staff.officeAddr" placeholder="请填写办公地址"></textarea>
+    </div>
+    <!-- <ion-item>
+            <ion-label position="floating">办公地址</ion-label>
+            <ion-textarea type="text"  [(ngModel)]="userinfor.staff.officeAddr"></ion-textarea>
+        </ion-item> -->
+
+    <!-- <ion-label fixed>办公地址</ion-label>
+            <textarea type="text"  [(ngModel)]="userinfor.staff.officeAddr" ></textarea> -->
+    <!-- </ion-item> -->
+    <ion-item class="born">
+      <ion-label class="disabled" fixed>机构</ion-label>
+      <ion-input type="text" class="disabled" [disabled]="disabled" [(ngModel)]="userinfor.deptTo.deptName"
+        readonly="true"></ion-input>
+    </ion-item>
+  </ion-list>
+  <!-- <form [formGroup]="registerForm" (ngSubmit)="change(registerForm.value)" novalidate>
+        <ion-list class="inforList">
+          <ion-item class="born">
+            <ion-label >姓名</ion-label>
+            <ion-input required type="text"  formControlName="userName" readonly="true"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>性别</ion-label>
+            <ion-input type="text" readonly="true" formControlName="gener"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label fixed>手机号码</ion-label>
+            <ion-input type="text"  formControlName="mobile" ></ion-input>
+          </ion-item>
+          <div *ngIf="(mobile.hasError('minLength')||mobile.hasError('maxLength')||mobile.hasError('pattern')) && mobile.touched" class="error-message">* 请输入正确的手机号码</div>
+          <ion-item class="born">
+            <ion-label fixed>工作邮箱</ion-label>
+            <ion-input type="text"  formControlName="emailWork" ></ion-input>
+          </ion-item>
+          <div *ngIf="(emailWork.hasError('pattern')) && emailWork.touched" class="error-message">* 请输入正确的邮箱</div>
+        </ion-list>
+        <ion-list class="inforList">
+            <ion-item class="born">
+                <ion-label fixed>办公地址</ion-label>
+                <ion-input type="text"  formControlName="officeAddr" ></ion-input>
+            </ion-item>
+            <ion-item class="born">
+                <ion-label fixed>座机号码</ion-label>
+                <ion-input type="text"  formControlName="officeTel" ></ion-input>
+            </ion-item>
+            <div *ngIf="(officeTel.hasError('pattern')) && officeTel.touched" class="error-message">* 请输入正确的座机号码</div>
+        </ion-list>
+        <ion-list class="inforList">
+            <ion-item class="born">
+                <ion-label fixed>机构</ion-label>
+                <ion-input type="text"  formControlName="deptName" readonly="true" ></ion-input>
+            </ion-item>
+        </ion-list>
+        <div class="btn2">
+          <button ion-button block type="submit" [disabled]="!registerForm.valid">修改</button>
+        </div>
+    </form>
+     -->
+</ion-content>

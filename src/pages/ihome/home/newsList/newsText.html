@@ -1,0 +1,63 @@
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>{{newTitle}}列表</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{newTitle}}列表</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <ion-searchbar #searchBox id="search-box" (ionInput)="search(searchBox.value)" (ionClear)="onClearFilter($event)"
+    placeholder="搜索"></ion-searchbar>
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)" *ngIf="!isFilter">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <div class="newList-item-max" (click)="viewNewsDetialFn(firstEntry)" *ngIf="!!firstEntry && !isFilter">
+    <img src="{{httpurl}}/api/fileinfo/downloadFile/{{firstEntry.picture}}" *ngIf="!!firstEntry.picture">
+    <img src="assets/imgs/no-data.jpg" *ngIf="!firstEntry.picture">
+    <div class="bottom-text">{{firstEntry.titleText}}</div>
+  </div> -->
+  <ion-list *ngIf="!isFilter">
+    <ion-item class="newsList-item" *ngFor="let item of newList" (click)="viewNewsDetialFn(item)">
+      <h2 class="exitH2">{{item.titleText}}</h2>
+      <div class="time">
+        <ion-icon class="iconfont icon-time"></ion-icon>
+        <span>{{item.publDate | date:'yyyy-MM-dd'}}</span>
+        <ion-icon item-end class="right-class" [ngClass]="{'color-class':item.readStatus === '未读'}">
+          <span>{{item.readStatus}}</span></ion-icon>
+      </div>
+    </ion-item>
+    <div class="myorder-item-notdata" *ngIf="newList && newList.length<=0">
+      <img src="assets/imgs/notdata.png" alt="">
+    </div>
+  </ion-list>
+  <div class="nomore" *ngIf="nomoreData && !isFilter">
+    <i></i>
+    <span>没有更多了</span>
+    <i></i>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)" *ngIf="!isFilter">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-list>
+    <ion-item class="newsList-item" *ngFor="let item of heroes$ | async" (click)="viewNewsDetialFn(item)">
+      <h2 class="exitH2">{{item.titleText}}</h2>
+      <div class="time">
+        <ion-icon class="iconfont icon-time"></ion-icon>
+        <span>{{item.publDate | date:'yyyy-MM-dd'}}</span>
+        <ion-icon item-end class="right-class" [ngClass]="{'color-class':item.readStatus === '未读'}">
+          <span>{{item.readStatus}}</span></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
+  <div class="myorder-item-notdata" *ngIf="count==0">
+    <img src="assets/imgs/notdata.png" alt="">
+  </div>
+</ion-content>

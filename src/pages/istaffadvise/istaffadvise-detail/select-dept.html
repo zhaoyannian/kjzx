@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>选择建议回复部门</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()">确定</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <ion-list>
+    <ion-item *ngFor="let item of data">
+      <ion-label>
+        <h2>{{item.deptName}}</h2>
+      </ion-label>
+      <ion-checkbox item-end color="blue" [(ngModel)]="item.checked" (click)="select(item)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

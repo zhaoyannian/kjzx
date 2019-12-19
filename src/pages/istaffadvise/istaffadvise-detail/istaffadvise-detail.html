@@ -1,0 +1,235 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>意见反馈</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer2':opeType == 'reply' || opeType == 'appReply'}">
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="collspaed1=!collspaed1">
+      基本信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="!collspaed1"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="collspaed1"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="!collspaed1">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>姓名</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.createUserName">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngIf="opeType !== 'cre'">
+          <ion-label class="textcolor" fixed>是否公开申请人姓名</ion-label>
+          <ion-toggle class="back_style" value="foo" color="secondary" checked="true" [(ngModel)]="isShow"
+            [disabled]="opeType !== 'assignment'" (ionChange)="changeIsShow()"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>邮箱</ion-label>
+          <ion-input class="textdirec" type="text" value="" [disabled]="!editable" [(ngModel)]="editingEntry.userMail">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>联系电话</ion-label>
+          <ion-input class="textdirec" type="text" value="" [disabled]="!editable" [(ngModel)]="editingEntry.userPhone">
+          </ion-input>
+        </ion-item>
+        <ion-item *ngIf="opeType !== 'reply'">
+          <ion-label class="textcolor" fixed>建议回复部门</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.recommendDept">
+          </ion-input>
+          <ion-icon item-end class="iconfont icon1 icon-xinzeng" (click)="selectDept()" *ngIf="editable"></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="opeType == 'assignment'">
+          <ion-label class="textcolor" fixed>分配负责人</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.replyUserNames">
+          </ion-input>
+          <ion-icon item-end class="iconfont icon1 icon-xinzeng" (click)="selectPerson()"
+            *ngIf="opeType == 'assignment'"></ion-icon>
+        </ion-item>
+        <ion-item *ngIf="opeType == 'assignment' || opeType == 'reply'">
+          <ion-label class="textcolor" fixed>{{opeType == 'assignment' ? "负责人部门":"负责回复部门"}}</ion-label>
+          <ion-input class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.replyDeptNames">
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>互动标题</ion-label>
+          <ion-input class="textdirec" type="text" value="" [disabled]="!editable" [(ngModel)]="editingEntry.title">
+          </ion-input>
+        </ion-item>
+        <ion-item class="hudongTit">
+          <ion-label>互动内容</ion-label>
+          <!-- <ion-input class="textdirec" type="text" value="" [disabled]="!editable"
+            [(ngModel)]="editingEntry.communicateContent"> </ion-input>-->
+        </ion-item>
+        <div class="hudongCont">
+          <textarea [(ngModel)]="editingEntry.communicateContent" [disabled]="!editable" class="reason"
+            placeholder=""></textarea>
+        </div>
+      </ion-list>
+      <ion-list>
+        <button class="file" *ngIf="editable">
+          附件
+          <input #uploadImg type="file" [disabled]="!editable" (change)="uploadFile($event)" />
+        </button>
+        <div class="fileText" *ngIf="!editable">附件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item of fileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.fileName) == 'excel',
+                        'icon-pdf': fileIcon(item.fileName) == 'pdf','icon-ppt': fileIcon(item.fileName) == 'ppt',
+                        'icon-word': fileIcon(item.fileName) == 'doc','icon-txt': fileIcon(item.fileName) == 'txt',
+                        'icon-tupian': fileIcon(item.fileName) == 'img','icon-qitafujian': fileIcon(item.fileName) == 'file',
+                        'icon-rar': fileIcon(item.fileName) == 'zip'}"></ion-icon>
+            <span>{{item.fileName}}</span>
+            <ion-icon class="iconfont icon-del" (click)="removeFile(item,i)" *ngIf="editable"></ion-icon>
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}"></a>
+          </li>
+          <li *ngIf="fileList.length <=0 && !editable">无</li>
+        </ul>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row"
+    *ngIf="opeType === 'assignment' || ((opeType === 'appReply' || opeType === 'ansure') && !!adviseEntiry.id)">
+    <h2 class="lc-toggle-title" (click)="collspaed4=!collspaed4">
+      转发回复区
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed4"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed4"></ion-icon>
+      </a>
+      <a href="javascript:void(0);" class="addApply" (click)="selectAdvise()" *ngIf="opeType === 'assignment'">新增</a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed4">
+      <ion-list class="assets-list" *ngIf="!!adviseEntiry.id" tappable>
+        <ul>
+          <li><span>编号</span>{{adviseEntiry.code}}</li>
+          <li><span>标题</span>{{adviseEntiry.title}}</li>
+          <li><span>创建时间</span>{{adviseEntiry.createTime | date: 'yyyy-MM-dd HH:mm'}}</li>
+          <li><span>互动内容</span>{{adviseEntiry.communicateContent}}</li>
+        </ul>
+        <div class="btnBox">
+          <ion-row>
+            <ion-col class="state blue" (click)="viewAdvise(adviseEntiry)">查看</ion-col>
+            <ion-col class="state blue" (click)="deleteAdvise()" *ngIf="opeType === 'assignment'">删除</ion-col>
+          </ion-row>
+        </div>
+      </ion-list>
+    </div>
+  </div>
+  <!-- <div class="lc-form-row" *ngIf="opeType !== 'cre' && opeType !== 'assignment'">
+    <h2 class="lc-toggle-title" (click)="collspaed2=!collspaed2">
+      回复负责人反馈情况
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed2"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed2"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed2">
+      <ion-list class="assets-list" *ngFor="let item of replyList;let i =index;" tappable>
+        <ul>
+          <li><span>姓名</span>{{item.replyUserName}}</li>
+          <li><span>部门</span>{{item.deptOrgName}}</li>
+          <li><span>状态</span>{{status[item.replyStatus]}}</li>
+        </ul>
+      </ion-list>
+    </div>
+  </div> -->
+  <div class="lc-form-row" *ngIf="opeType !== 'cre' && opeType !== 'assignment'">
+    <h2 class="lc-toggle-title" (click)="collspaed3=!collspaed3">
+      互动跟进反馈内容区
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed3"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed3"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed3">
+      <div>
+        <ion-list class="assets-list" *ngFor="let item of replyInfoList;let i =index;" tappable>
+          <ul>
+            <li><span>姓名</span>{{item.createUser}}</li>
+            <li>
+              <span>创建时间</span>{{item.createTime | date: 'yyyy-MM-dd
+              HH:mm'}}
+            </li>
+            <li><span>互动内容</span>{{item.options}}</li>
+          </ul>
+        </ion-list>
+      </div>
+      <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+  </div>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng" *ngIf="opeType !== 'view'"
+  [ngStyle]="{'bottom': datamore.btnscollHeight>0 && ismobile ? datamore.btnscollHeight+'px' : 0 }">
+  <textarea class="optionContent" placeholder="填写回复意见" (click)="blurInput()" [(ngModel)]="opinion"
+    *ngIf="opeType == 'reply' || opeType == 'appReply'"></textarea>
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <!-- <ion-col *ngIf="opeType !== 'assignmentAll'">
+        <button ion-button color="gray" outline (click)="goback()">取消</button>
+      </ion-col> -->
+      <ion-col *ngIf="opeType == 'cre'">
+        <button ion-button color="gray" outline class="color-submit" (click)="savePublic()">
+          发布
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'assignment'">
+        <button ion-button color="gray" outline class="color-callBack" (click)="forwardReply()">
+          转发回复
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'assignment'">
+        <button ion-button color="gray" outline class="color-submit" (click)="saveAssgin()">
+          确认分配
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'reply'">
+        <button ion-button color="gray" outline class="color-submit" (click)="saveReply('BM')">
+          确认回复
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'appReply'">
+        <button ion-button color="gray" outline class="color-submit" (click)="saveReply('BR')">
+          确认回复
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'reply'">
+        <button ion-button color="gray" outline class="color-callBack" (click)="forwardOther()">
+          转发
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'assignmentAll'">
+        <button ion-button color="gray" outline class="color-submit" (click)="publicShow('GK')">
+          公开展示
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'assignmentAll'">
+        <button ion-button color="gray" outline class="color-callBack" (click)="publicShow('GD')">
+          归档
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'assignmentAll'">
+        <button ion-button color="gray" outline class="color-back" (click)="publicShow('BH')">
+          驳回
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'ansure'">
+        <button ion-button color="gray" outline class="color-submit" (click)="updateExchangeStatus('QBHF')">
+          已解决
+        </button>
+      </ion-col>
+      <ion-col *ngIf="opeType == 'ansure'">
+        <button ion-button color="gray" outline class="color-callBack" (click)="updateExchangeStatus('DFP')">
+          未解决
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

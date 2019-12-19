@@ -1,0 +1,56 @@
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>{{newTitle}}列表</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{newTitle}}列表</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <ion-searchbar #searchBox id="search-box" (ionInput)="search(searchBox.value)" (ionClear)="onClearFilter($event)"
+    placeholder="搜索"></ion-searchbar>
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)" *ngIf="!isFilter">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!isFilter" class="videoList">
+    <div class="video-item" *ngFor="let item of newList" (click)="viewNewsDetialFn(item)">
+      <img src="assets/imgs/video-img.jpg" *ngIf="!item.picture" />
+      <img src="{{httpurl}}/api/fileinfo/downloadFile/{{item.picture}}" *ngIf="!!item.picture" />
+      <div class="video-title">
+        <h2>{{item.titleText}}</h2>
+        <p>{{item.browsCount<=0 ? 0:item.browsCount}}次播放</p>
+      </div>
+      <div class="play-icon"><span class="iconfont icon-arrowright"></span></div>
+      <div class="video-time">{{item.publDate | date:'yyyy-MM-dd'}}</div>
+    </div>
+    <div class="nomore" *ngIf="nomoreData">
+      <i></i>
+      <span>没有更多了</span>
+      <i></i>
+    </div>
+  </div>
+
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)" *ngIf="!isFilter">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <div class="video-item" *ngFor="let item of heroes$ | async" (click)="viewNewsDetialFn(item)">
+    <img src="assets/imgs/video-img.jpg" *ngIf="!item.picture" />
+    <img src="{{httpurl}}/api/fileinfo/downloadFile/{{item.picture}}" *ngIf="!!item.picture" />
+    <div class="video-title">
+      <h2>{{item.titleText}}</h2>
+      <p>{{item.browsCount<=0 ? 0:item.browsCount}}次播放</p>
+    </div>
+    <div class="play-icon"><span class="iconfont icon-arrowright"></span></div>
+    <div class="video-time">{{item.publDate | date:'yyyy-MM-dd'}}</div>
+  </div>
+  <div class="myorder-item-notdata" *ngIf="count==0">
+    <img src="assets/imgs/notdata.png" alt="">
+  </div>
+</ion-content>

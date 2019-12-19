@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button clear small (click)="close()">
+          <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+      <ion-title>通讯录</ion-title>
+      <ion-buttons end>
+          <button ion-button (click)="dismiss()">确定</button>
+        </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content>
+      
+    <div class="mine_list">
+  
+      <!--English-->
+      <ul id="mine_Englist" [class.size]="model.length < 15">
+        <li *ngFor="let x of model;" (click)="goList(x['type'])">{{x['type']}}</li>
+      </ul>
+      <!--End:English-->
+      <div class="mine_list_li" *ngFor="let x of model;">
+        <div [id]="'minesel_'+ x['type']" class="ttl">{{x['type']}}</div>
+        <ion-list>
+          <ion-item *ngFor="let y of x['data'];">
+            <ion-checkbox item-left [(ngModel)]="y.check"></ion-checkbox>
+            <ion-label>
+            <img src="http://img0.imgtn.bdimg.com/it/u=858959453,1988929777&fm=26&gp=0.jpg" alt="">{{y['userName']}}
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+  

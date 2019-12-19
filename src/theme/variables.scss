@@ -1,0 +1,180 @@
+// Ionic Variables and Theming. For more info, please see:
+// http://ionicframework.com/docs/theming/
+// Font path is used to include ionicons,
+// roboto, and noto sans fonts
+$font-path: "../assets/fonts";
+// The app direction is used to include
+// rtl styles in your app. For more info, please see:
+// http://ionicframework.com/docs/theming/rtl-support/
+$app-direction: ltr;
+@import "ionic.globals";
+// Shared Variables
+// --------------------------------------------------
+// To customize the look and feel of this app, you can override
+// the Sass variables found in Ionic's source scss files.
+// To view all the possible Ionic variables, see:
+// http://ionicframework.com/docs/theming/overriding-ionic-variables/
+// Named Color Variables
+// --------------------------------------------------
+// Named colors makes it easy to reuse colors on various components.
+// It's highly recommended to change the default colors
+// to match your app's branding. Ionic uses a Sass map of
+// colors so you can add, rename and remove colors as needed.
+// The "primary" color is the only required color in the map.
+$colors: (primary: #488aff, secondary: #32db64, danger: #f53d3d, light: #f4f4f4, dark: #222, gray: #d9d9d9, orange: #f19149, pink: #fe9191, cyan-blue: #b5e8ff);
+// App iOS Variables
+// --------------------------------------------------
+// iOS only Sass variables can go here
+// App Material Design Variables
+// --------------------------------------------------
+// Material Design only Sass variables can go here
+// App Windows Variables
+// --------------------------------------------------
+// Windows only Sass variables can go here
+// App Theme
+// --------------------------------------------------
+// Ionic apps can have different themes applied, which can
+// then be future customized. This import comes last
+// so that the above variables are used and Ionic's
+// default are overridden.
+
+/**************************华丽的分割线***********************/
+
+
+/*start:覆盖ionic 默认样式*/
+
+// $tabs-ios-border-color: #ededed;
+$hairlines-width: 1px;
+$list-border-color: #ededed;
+
+/***************************华丽的分割线************************/
+
+@import "ionic.theme.default";
+// Ionicons
+// --------------------------------------------------
+// The premium icon font for Ionic. For more info, please see:
+// http://ionicframework.com/docs/ionicons/
+@import "ionic.ionicons";
+// Fonts
+// --------------------------------------------------
+@import "roboto";
+@import "noto-sans";
+// // 基础颜色 common
+// $blue: #007bff;
+// $red: #fe9191;
+// $white: #fff;
+// $orange: #ff9900;
+// $orange-badge: #f19149;
+// $textColor: #333;
+// $textColor-gray: #666;
+// $textColor-light: #787878;
+// $textColor-lighter: #999;
+// $textColor-blue:#0181e4;
+// $placeholderColor: #ccc;
+// $moreBtnColor: #ccc;
+// $borderColor: #ededed; //边框颜色
+// $border-gray:#d8d8d8; //深颜色边框
+// $contentBg: #eceef1;//内容区背景色
+// $hoverBg: #eaecf5; // 手指触碰背景色
+// $hoverBg-light: #f7f7f7; // 手指触碰背景色
+// $box-shadow: 0 1px 18px 1px rgba(0,0,0,0.3); //阴影
+// $iconColor: #858585;
+// $listTitleColor: #010101;//列表标题颜色
+// $loginBtnBg: #b5e8ff;
+// $rightIcongoColor: #d9e1ed;
+// $newsListItemBg: #f7f7f7;//首页新闻列表背景色
+// $workflowText: #999999;//流程列表颜色
+// // 蓝
+// $textColor-blue: $blue;  //点击后
+// // 红
+// $textColor-red: $red;   //点击后
+// // 橘色
+// $textColor-num: $orange;    //新消息数量提醒
+// // 主色调
+// $textColor-main: $blue;
+// //字号
+// $loginIconFont: 3.4rem; //登录页图标
+// $appIconFont: 2.8rem; //首页常用应用字号
+// $headerIconfont: 1.6rem;   //头部图标字号
+// $headerTitleFont: 1.8rem;  //头部标题字号
+// $contentTitleFont: 1.8rem;  //文字列表标题
+// $imgContentTitleFont: 1.7rem;  //图文列表标题
+// $contentTimeFont: 0.9rem;      //文字列表日期
+// $commonAppFont: 1.3rem;    //常用应用字号
+// $listTitleFont: 1.3rem;    //列表标题
+// $listContFont: 1.6rem;      //列表内容标题
+// $smallContentFont: 1.2rem;  //内容小字号
+// $contentFont: 1.4rem;  //内容字号
+// $badgeFont: 1.3rem;    //提示数字字号
+// $inputFont: 1.6rem;        //input字号
+// $selectFont: 1.6rem;       //单选多选字号
+// $loginBtnFont: 1.8rem;     //登录按钮字号
+// $editorItemFont:1.5rem;   //编辑页面内容字号
+// //日程
+// $calTitleFont: 1.7rem; //日期标题字号
+// $calContFont: 1.5rem;  //日期内容字号
+// $calIconFont: 2rem;  //日期icon字号
+// $tbodyFont: 1.2rem;
+// $calendarMargin: 8px;
+// $calendarPadding: 8px;
+// // $calendarShortHeight: 164px;
+// $calendarShortHeight: auto;
+// $calendarHeadHeight: 4.8rem;
+// $calendarTd: #cce6fa;
+// $gray-base: #000;
+// $gray: lighten($gray-base, 33%); //#545454
+// $gray-light: lighten($gray-base, 46%); //#8a8a8a
+// $gray-lighter: lighten($gray-base, 92%); //#eaeaea
+// $gray-dark: darken($gray-base, 13%);
+// $gray-darker: darken($gray-base, 20%);
+// $orange-base: #ff9000;
+// $orange-base-dark: #ff6600;
+// $red-base: #ff0000;
+// $table-bg-hover: #e7f6ff;
+// $blue-base: #0181e4;
+// $white: #fff;
+// $orange-base-light:#ff6600;
+// $calendar-border: #e8eaf4;
+// //------------------------------------
+// //paddings
+// //------------------------------------
+// $padding: 20px !default;
+// //------------------------------------
+// //margins
+// //------------------------------------
+// $margin: 15px !default;
+// //------------------------------------
+// //borderColors
+// //------------------------------------
+// $borColor: $borderColor;
+// $borColor-dark: lighten($gray-base, 87%);
+// //------------------------------------
+// //tabContainer
+// //------------------------------------
+// $tab-header: 43px !default;
+// $tab-footer:64px !default;
+// $tab-footer-bg:#f5f5f5 !default;
+// //------------------------------------
+// //------------------------------------
+// //buttons
+// //------------------------------------
+// $btn-font-weight: normal !default;
+// $btn-default-gray-color: #333 !default;
+// $btn-default-gray-bg: #dedede !default;
+// $btn-default-gray-border: #dedede !default;
+// $btn-confirm-color: #fff !default;
+// $btn-confirm-bg: #ff9900 !default;
+// $btn-confirm-border: #ff9900 !default;
+// $btn-cancel-color: #333 !default;
+// $btn-cancel-bg: #dedede !default;
+// $btn-cancel-border: #dedede !default;
+// $btn-edit-color: #fff !default;
+// $btn-edit-bg: #0181e4 !default;
+// $btn-edit-border: #0181e4 !default;
+// $btn-ghost-color: #0181e4 !default;
+// $btn-ghost-bg: transparent !default;
+// $btn-ghost-border: #0181e4 !default;
+// $formMargin: 16px;
+// $formPadding: 12px;
+// $formRed: #ff0000;
+// $formGreen:#00aa00;

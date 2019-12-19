@@ -1,0 +1,31 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhaoYanNian
+ * @Date: 2019-07-24 15:21:55
+ * @LastEditors: ZhaoYanNian
+ * @LastEditTime: 2019-12-18 08:52:19
+ -->
+<ion-header>
+    <ion-navbar>
+        <ion-buttons>
+            <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+        </ion-buttons>
+        <ion-title>合同签署</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content no-scroll [ngClass]=" {'qrscanner':isShow}">
+    <!-- <div [ngClass]="{'qrscanner-area':isShow}">
+    </div>
+    <div [ngClass]="{'through-line':isShow}"></div> -->
+    <!-- <div class="button-bottom">
+    <button (click)="toggleLight()" ion-fab class="icon-camera" margin-right>
+      <ion-icon name="flash"></ion-icon>
+    </button>
+    <button (click)="toggleCamera()" ion-fab class="icon-camera">
+      <ion-icon name="reverse-camera"></ion-icon>
+    </button>
+  </div> -->
+</ion-content>

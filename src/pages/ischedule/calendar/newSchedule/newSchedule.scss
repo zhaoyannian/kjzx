@@ -1,0 +1,376 @@
+page-newSchedule {
+  .datetime-text{
+    text-indent: 100%;
+}
+.timeNormal {
+  .datetime-text{
+    text-indent: inherit;
+    font-size: 1.7rem;
+    color: #9a9a9a;
+}
+}
+
+  .btn3 {
+    padding: 2rem .2rem;
+
+    button:first-child {
+      width: 100%;
+    }
+
+    button:last-child {
+      width: 95%;
+    }
+  }
+
+  .starred {
+    color: red;
+  }
+
+  & ion-content,
+  & .content,
+  & ion-list {
+    background: #e8eaf4;
+  }
+
+  & .duan {
+    margin-bottom: 5px;
+
+  }
+
+  .allColor {
+    // color: #333;
+    opacity: 1 !important;
+  }
+
+  & ion-item .text-right {
+    text-align: right;
+    color: #666;
+  }
+.toggle-ios.toggle-disabled, .item-ios.item-toggle-disabled ion-label{
+
+}
+  .item-ios {
+    padding-left: 0px;
+  }
+
+  .list-ios .item-block .item-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+    border-color: #e8eaf4;
+  }
+
+  & #DateSelect ion-label.label-ios {
+    margin: 0px auto !important;
+  }
+
+  & #DateSelect {
+    display: flex;
+    margin-bottom: 0px;
+  }
+
+  & #DateSelect ion-item {
+    padding-left: 0;
+    width: 50%;
+    flex: 2;
+    align-items: flex-end;
+    border: none !important;
+
+  }
+
+  & #DateSelect ion-item.jiantou {
+    flex: 0 0 20px;
+    align-items: center;
+
+    .item-inner {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+
+  & #DateSelect ion-item .label-ios {
+    margin-right: 0;
+  }
+
+  & #DateSelect ion-item ul {
+    padding-left: 0;
+    clear: both;
+    overflow: hidden;
+
+  }
+
+  & #DateSelect ion-item ul li {
+    float: left;
+    width: 50%;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+  }
+
+  & #DateSelect ion-item ul li:nth-child(even) {
+    text-align: right;
+  }
+
+  // #DateSelect ion-item ul li.dateselect_year{font-size: 1.2rem;}
+  & #DateSelect ion-item ul li.dateselect_zh {
+    color: #bbbbbb;
+  }
+
+  & #DateSelect ion-item ul li.week-color {
+    color: #a9b2b9;
+  }
+
+  & #DateSelect ion-item ul li:nth-child(3),
+  #DateSelect ion-item ul li:nth-child(4) {
+    font-size: 2.2rem;
+    color: #000000;
+  }
+
+  & #DateSelect ion-item ul li {
+    font-size: 1.2rem;
+    color: #d2d8dd;
+  }
+
+
+  & #DateSelect1 ion-label.label-ios {
+    margin: 0px auto !important;
+  }
+
+  & #DateSelect1 {
+    display: flex;
+    margin-bottom: 0px;
+  }
+
+  & #DateSelect1 ion-item {
+    padding-left: 0;
+    width: 50%;
+    flex: 2;
+    align-items: flex-end;
+    border: none !important;
+
+  }
+
+  & #DateSelect1 ion-item.jiantou {
+    flex: 0 0 20px;
+    align-items: center;
+
+    .item-inner {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+  }
+
+  & #DateSelect1 ion-item .label-ios {
+    margin-right: 0;
+  }
+
+  & #DateSelect1 ion-item ul {
+    padding-left: 0;
+    clear: both;
+    overflow: hidden;
+
+  }
+
+  & #DateSelect1 ion-item ul li {
+    float: left;
+    width: 50%;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+  }
+
+  & #DateSelect1 ion-item ul li:nth-child(even) {
+    text-align: right;
+  }
+
+  // #DateSelect ion-item ul li.dateselect_year{font-size: 1.2rem;}
+  & #DateSelect1 ion-item ul li.dateselect_zh {
+    color: #bbbbbb;
+  }
+
+  & #DateSelect1 ion-item ul li.week-color {
+    color: #a9b2b9;
+    text-align: right;
+  }
+
+  & #DateSelect1 ion-item ul li.week-color1 {
+    color: #a9b2b9;
+    text-align: left;
+  }
+
+  & #DateSelect1 ion-item ul li:nth-child(3) {
+    font-size: 2.2rem;
+    color: #000000;
+    width: 100%;
+    text-align: center;
+  }
+
+  & #DateSelect1 ion-item ul li {
+    font-size: 1.2rem;
+    color: #d2d8dd;
+  }
+
+  .list-ios {
+    margin-bottom: .5rem;
+  }
+
+  .list-ios>.item-block:last-child,
+  .list-ios>.item-wrapper:last-child .item-block {
+    border: none;
+  }
+
+  .list-ios>.item-block:first-child {
+    border: none;
+    overflow: hidden;
+  }
+
+  .textcolor {
+    color: #333;
+  }
+
+  .textdirec {
+    color: #666666;
+  }
+
+  ion-label[fixed] {
+    min-width: 120px;
+    text-align: left;
+  }
+
+  ion-label {
+    // text-align: right;
+    font-size: 1.7rem;
+    color: #333;
+  }
+
+  .text-input[disabled] {
+    opacity: 1;
+  }
+  .input-ios .text-input-clear-icon{
+      background: none;
+  }
+  .select-disabled,
+  .item-select-disabled ion-label {
+    opacity: 1;
+  }
+  .input-ios[clearInput] .text-input{
+      padding-right: 0;
+      color: #9a9a9a;
+  }
+  .text-input-ios {
+    text-align: right;
+  }
+  .item-ios {
+    padding-left: 0;
+    height: 6rem;
+    min-height: 6rem;
+  }
+
+  .item-ios.item-block .item-inner {
+    padding: 0 1.5rem;
+    border-color: #e8eaf4;
+    font-size: 1.7rem;
+  }
+
+  .datetime-text {
+    font-size: 2.15rem;
+    color: #333;
+  }
+
+
+
+
+  // .toggle-ios .toggle-checked .toggle-icon {
+  //   background-color: #007bff !important;
+  // }
+
+  // .toggle-ios .toggle-icon {
+  //   background-color: #ccc !important;
+  // }
+
+  // .toggle-ios .toggle-icon::before {
+  //   background-color: #ccc;
+  // }
+  .toggle-ios .toggle-icon::before{
+    background-color: #ccc;
+  }
+  .file {
+    height: 6rem;
+    line-height: 6rem;
+    text-align: center;
+    background: #fff;
+    font-size: 1.7rem;
+    color: #007bff;
+    width: 100%;
+    padding: 0 1.5rem;
+    position: relative;
+
+    input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      z-index: 11;
+      opacity: 0;
+    }
+
+  }
+
+  .fileText {
+    height: 6rem;
+    line-height: 6rem;
+    text-align: left;
+    background: #fff;
+    font-size: 1.7rem;
+    color: #333;
+    width: 100%;
+    padding: 0 1.5rem;
+  }
+
+  .button-outline-ios-gray {
+    color: #333;
+  }
+
+  .select-text {
+    text-align: right;
+    color: #9a9a9a;
+  }
+
+  ion-select {
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .has-footer {
+    .scroll-content {
+      margin-bottom: 16rem;
+    }
+  }
+
+  .has-footer2 {
+    .scroll-content {
+      margin-bottom: 6rem;
+    }
+  }
+
+  .defaultChoose {
+    color: #bbbbbb !important;
+  }
+
+  [text-right]{
+    color: #9a9a9a;
+  }
+  .reason {
+    width: 100%;
+    height: auto;
+    display: flex;
+    min-height: 15.5rem;
+    padding: 0 1.5rem;
+    padding-top: 2rem;
+    color: #9a9a9a;
+    font-size: 1.7rem;
+    border: none;
+    border-bottom: 1px solid #e8eaf4;
+    background: #fff;
+    margin-bottom: 5px;
+  }
+}

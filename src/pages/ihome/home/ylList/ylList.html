@@ -1,0 +1,32 @@
+<ion-header>
+  <!-- <ion-navbar center>
+    <ion-title>常用应用</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>常用应用</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="layout-content">
+  <ion-list class="home-list">
+    <ion-grid class="homePro-grid">
+      <ion-row>
+        <ion-col col-3 class="homePro-col" *ngFor="let item of list">
+          <span class="application-box" (click)="goUseList(item)">
+            <img src="http://io.aicas.cn/resource/images/iconLibrary/large/企业座谈-大.png?size=35" alt=""
+              *ngIf="!item.appIcon">
+            <img src="{{state + item.appIcon}}" alt="" *ngIf="!!item.appIcon">
+            <ion-icon class="iconfont icon-plus-circle-fill icon-add-pro" *ngIf="item.appAvaliableAdd === 'TRUE'">
+            </ion-icon>
+          </span>
+          <p>{{item.name}}</p>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>

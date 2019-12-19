@@ -1,0 +1,96 @@
+<ion-content class="layout-content">
+  <!-- <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <div class="workflowlist">
+    <ion-list *ngFor="let item of allList">
+      <div *ngIf="aliasMold!=='networkResource' && aliasMold!=='webService' && aliasMold.indexOf('ICCard')<=-1">
+        <ion-item>
+          <ion-label class="textcolor">申请人</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.userName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请部门</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.deptName}}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="aliasMold.indexOf('ICCard') > -1">
+        <ion-item>
+          <ion-label class="textcolor">经办人</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.userName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">经办人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.deptName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.applyICUsername}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.applyICDeptname}}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="aliasMold=='networkResource' || aliasMold =='webService'">
+        <ion-item>
+          <ion-label class="textcolor">经办人</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.operatorName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">经办人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.operatorDeptName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.applyUsername}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.applyDeptname}}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="aliasMold.indexOf('SealApply') > -1">
+        <ion-item>
+          <ion-label class="textcolor">申请事由</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.applyReason}}</ion-label>
+        </ion-item>
+
+      </div>
+      <ion-item>
+        <ion-label class="textcolor">申请时间</ion-label>
+        <ion-label class="textdirec" *ngIf="item.bizData">{{item.bizData.createTime
+          | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">流程状态</ion-label>
+        <ion-label class="textdirec">{{wfInstStatuss[item.wfInstStatus]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">环节名称</ion-label>
+        <ion-label class="textdirec">{{item.pointName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">阅读时间</ion-label>
+        <ion-label class="textdirec">{{item.readTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label class="textcolor">办理时间</ion-label>
+        <ion-label class="textdirec">{{item.allocateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+      </ion-item>
+      <ion-grid class="btns">
+        <ion-row>
+          <ion-col (click)="toEditor(item, 'update')"><button type="button">办理</button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+    <div class="myorder-item-notdata" *ngIf="allList.length<=0">
+      <img src="assets/imgs/notdata.png" alt="">
+    </div>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content loadingText="正在加载更多...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

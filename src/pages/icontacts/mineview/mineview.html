@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>个人信息</ion-title>
+  </ion-toolbar>
+  <!-- <ion-toolbar>
+    <ion-title>个人信息</ion-title>
+    <ion-buttons>
+      <button ion-button (click)="dismiss()">
+        <ion-icon ios="ios-arrow-back" class="back-button-icon"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content>
+  <div id="mine_view_head">
+    <div class="photo">
+        <img src="{{httpurl}}/base/fileinfo/getFileImage?id={{model.photo}}" *ngIf="!!model.photo">
+        <img src="assets/imgs/people-head.png" *ngIf="!model.photo">
+      <!-- <img src="{{model['photo']}}" alt=""> -->
+    </div>
+    <p>
+      <span class="iconfont" [class.icon-nan]="model['gender']=='M' || model['gender']==''"
+        [class.icon-nv1]="model['gender']=='F'"></span>
+      {{model['userName']}}
+    </p>
+  </div>
+
+  <ul class="mineview_list">
+    <li>
+      <strong class="iconfont icon-tel"></strong>
+      <div>
+        <a [href]="sanitize()" *ngIf="model['mobile']"><span class="iconfont icon-duanxin"></span></a>
+        <p>手机</p>
+        <p><a href="tel:{{model['mobile']}}">{{model['mobile']}}</a></p>
+      </div>
+    </li>
+    <li>
+      <strong class="iconfont "></strong>
+      <div>
+        <p>座机号码</p>
+        <p><a href="tel:{{model['officeTel']}}">{{model['officeTel']}}</a></p>
+      </div>
+    </li>
+  </ul>
+  <ul class="mineview_list">
+    <li>
+      <strong class="iconfont icon-1"></strong>
+      <div>
+        <p>邮箱</p>
+        <p><a href="mailto:{{model['mail']}}">{{model['mail']}}</a></p>
+      </div>
+    </li>
+  </ul>
+</ion-content>

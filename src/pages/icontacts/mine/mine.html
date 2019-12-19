@@ -1,0 +1,111 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <ion-title>通讯录</ion-title>
+  </ion-navbar>
+</ion-header>
+<ul id="mine_Englist" [class.size]="model.length < 15">
+  <li (click)="goList('☆',0)" *ngIf="model.length > 0">☆</li>
+  <li *ngFor="let x of model;let i=index;" (click)="goList(x['type'],i)">{{x['type']}}</li>
+</ul>
+<ion-content>
+  <div class="mine_list_li">
+    <div id='☆'>我的单位</div>
+    <ul>
+      <li *ngFor="let x of dept;" (click)="goDept(x['orgId'],x['deptName'])">
+        <p><img src="{{state + x['logo']}}" alt=""></p>
+        <div>{{x['deptName']}}</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="mine_list_li" *ngFor="let x of model;">
+    <div [id]="x['type']">{{x['type']}}</div>
+    <ul>
+      <li (click)="goView(y)" *ngFor="let y of x['data'];">
+        <p><img src="{{getImg(y.photo)}}" alt=""></p>
+        <div>{{y['userName']}}</div>
+      </li>
+    </ul>
+  </div>
+  <p class="txl-count">{{model.count}}位联系人</p>
+</ion-content> -->
+<ion-header>
+  <ion-navbar>
+    <ion-title>通讯录</ion-title>
+  </ion-navbar>
+  <div class="pageMenuSlides2">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide {{i==0?'bottomLine':''}}" *ngFor="let item of menus;let i=index;" tappable (click)="selectPageMenu($event,i)">{{item}}</div>
+      </div>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-slides #contentSlides (ionSlideDidChange)="slideChanged()">
+    <ion-slide>
+      <page-minecontact></page-minecontact>
+    </ion-slide>
+    <ion-slide>
+      <page-minedept></page-minedept>
+      <!-- <div class="mine_list_li">
+        <ul>
+          <li *ngFor="let x of dept;" (click)="goDept(x['orgId'],x['deptName'])">
+            <p>
+              <img src="assets/imgs/regnize.png" alt="">
+            </p>
+            <div>{{x['deptName']}}</div>
+            <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+          </li>
+        </ul>
+      </div> -->
+      <!-- <div class="mine_list_li">
+        <ul>
+          <li *ngFor="let x of dept;" (click)="goDept(x['orgId'],x['deptName'])">
+            <p>
+              <img src="assets/imgs/regnize.png" alt="">
+            </p>
+            <div>机构通讯录</div>
+            <ion-icon class="iconfont icon-arrowright" item-end></ion-icon>
+          </li>
+        </ul>
+      </div> -->
+    </ion-slide>
+  </ion-slides>
+</ion-content>
+<!-- <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content>
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+<!-- <ion-alpha-list [hasTop]="true" *ngIf="!isFilter && data.length>0">
+      <ng-container *ngFor="let i of data">
+        <ion-alpha-section [index]="i.type">
+          <ng-container *ngFor="let contact of i.data">
+            <ion-alpha-cell>
+              <ion-item (click)="goDetail(contact);">
+                <ion-avatar item-start>
+                    <img src="{{httpurl}}/base/fileinfo/getFileImage?id={{contact.photo}}" *ngIf="!!contact.photo">
+                    <img src="assets/imgs/people-head.png" *ngIf="!contact.photo">
+                </ion-avatar>
+                <ion-label>
+                  <h2>{{contact.userName}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-alpha-cell>
+          </ng-container>
+        </ion-alpha-section>
+      </ng-container>
+      <p class="txl-count">{{data.count}}位联系人</p>
+    </ion-alpha-list> -->
+<!-- <div *ngIf="isFilter">
+    <ion-list no-lines="true">
+      <ion-item *ngFor="let item of searchItems" class="search-item" (click)="goDetail(item);">
+        <div item-start>
+          <img class="phonto" src="{{httpurl}}/base/fileinfo/getFileImage?id={{item.photo}}" *ngIf="!!item.photo">
+          <img class="phonto" src="assets/imgs/people-head.png" *ngIf="!item.photo">
+        </div>
+        <ion-label [innerHTML]="item.userName | keyword:searchText"></ion-label>
+      </ion-item>
+    </ion-list>
+  </div> -->

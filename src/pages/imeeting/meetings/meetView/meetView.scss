@@ -1,0 +1,64 @@
+page-meetView {
+  
+  & ion-content,
+  & .content,
+  & ion-list {
+    background: #e8eaf4;
+  }
+  & .duan {
+    margin-bottom: 5px;
+  }
+  .allColor {
+    color: #333;
+    opacity: 1 !important;
+  }
+  & ion-item .text-right {
+    text-align: right;
+    color: #666
+  }
+  .item-ios {
+    padding-left: 0px;
+    min-height: 6rem;
+  }
+  ion-label{
+    color: #333;
+    white-space: inherit;
+  }
+  .list-ios .item-block .item-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+    border-color: #e8eaf4;
+  }
+  .card-content-ios {
+    padding: 12px 3px 14px !important;
+    .border-type {
+      border-bottom: 1px solid #e8eaf4;
+    }
+    .border-type,
+    .border-type1 {
+      line-height: 30px;
+      span {
+        padding-left: 10px;
+      }
+      em {
+        float: right;
+        padding-right: 10px;
+      }
+    }
+  }
+  .image-style{
+    width: 5.3rem;
+    height: 4rem;
+    overflow: hidden;
+    border-radius: 10px;
+    float: right;
+    display: flex;
+    margin: auto 0px 15px 15px;
+    img{
+      height: 100%;
+    }
+  }
+  .image-style2{
+    float: left!important;
+  }
+}

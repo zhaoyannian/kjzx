@@ -1,0 +1,73 @@
+<!--
+ * @Descripttion: 
+ * @version: 
+ * @Author: ZhaoYanNian
+ * @Date: 2019-07-24 15:14:26
+ * @LastEditors  : ZhaoYanNian
+ * @LastEditTime : 2019-12-18 17:11:38
+ -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>空间中心</title>
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4e8ef7">
+
+    <!-- add to homescreen for ios -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link href="/build/main.css" rel="stylesheet">
+    <link href="assets/fonts/iconfont.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/video/videogular.css">
+</head>
+
+<body>
+    <ion-app>
+        <img id="img" src="assets/imgs/lad.gif" style="position: absolute;width: 40%;border-radius: 10%; height: 173px;left: 30%; top: 34%;;" />
+    </ion-app>
+    <script src="/build/polyfills.js"></script>
+    <script src="/build/vendor.js"></script>
+    <script src="./assets/lib/alloycrop/alloy-finger.js"></script>
+    <script src="./assets/lib/alloycrop/transform.js"></script>
+    <script src="./assets/lib/alloycrop/alloy-crop.js"></script>
+    <!-- <link rel="stylesheet" href="./assets/lib/cropper/cropper.min.css">
+    <script src="./assets/lib/cropper/cropper.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="./assets/lib/swiper/swiper-3.4.2.min.css"> -->
+    <script src="./assets/lib/swiper/swiper-3.4.2.min.js"></script>
+    <script src="/build/main.js"></script>
+    <style>
+        .loading-wrapper {
+            background-color: rgba(0, 0, 0, .6) !important;
+        }
+        
+        .click-block-enabled {
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            z-index: 99999;
+            display: block;
+            opacity: 1;
+            contain: strict;
+        }
+        
+        .ion-diagnostics-toast-message {
+            display: none !important;
+        }
+        
+        #ion-diagnostics-toast {
+            background-color: transparent !important;
+        }
+    </style>
+</body>
+
+</html>

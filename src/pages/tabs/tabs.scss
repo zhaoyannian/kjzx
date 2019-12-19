@@ -1,0 +1,28 @@
+page-tabs {
+    .tab-button-icon {
+        font-size: 28px !important;
+    }
+    .ion-ios-jia,
+    .ion-ios-jia-outline,
+    .ion-md-jia {
+        color: #0181e4 !important;
+        font-size: 40px !important;
+        height: 40px !important;
+        min-width: 42px !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+    }
+    .has-icon .tab-badge {
+        right: calc(50% - 30px);
+        background: #f19149;
+        color: #fff;
+        display: inline-block;
+        min-width: 18px;
+        height: 18px;
+        line-height: 18px;
+        border-radius: 10px;
+        position: absolute;
+        left: 50px;
+        width: 18px;
+    }
+}

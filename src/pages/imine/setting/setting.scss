@@ -1,0 +1,88 @@
+page-setting {
+    .list-ios[inset] .born{
+        border: none!important;
+    }
+    .usename{
+        margin-top: 0!important;
+    }
+    .drop{
+        .item-inner{
+            background: none!important;
+        }
+    }
+    .vsersion{
+        text-align: right;
+    }
+    .icon {
+        // color: #858585;
+    }
+    .icon-icon-userhead{
+        color: #26b5fe;
+    }
+    .icon-lock{
+        color: #eabe16;
+    }
+    .icon-tongzhi{
+        color: #f76160;
+    }
+    .icon-quit{
+        color: #26b5fe;
+    }
+    .icon-arrowright{
+        font-size: 2.3rem;
+        color: #d9e1ed;
+    }
+    .list-ios[inset] .item{
+        border-bottom: 1px solid #eeeeee;
+        height: 5.5rem;
+        line-height: 5.5rem;
+        padding-left: 1.6rem;
+    }
+    .list-ios[inset]{
+        margin: 0!important;
+    }
+    .label-ios{
+        margin: 0;
+        font-family: PingFang SC Medium;
+        color: #333333;
+        font-size: 1.6rem;
+    }
+    .userinfo {
+        img{
+            width: 8.7rem;
+            height: 8.7rem;
+            border-radius: 50%;
+            margin: auto;
+            display: inherit;
+            margin-top: 3.2rem;
+        }
+        .icon-nan{
+            color: #0081e4;
+            font-size: 18px;
+        }
+        .icon-nv1{
+            color: #e67a;
+            font-size: 18px;
+        }
+        ion-icon{
+            // font-size: 8.7rem;
+            // text-align: center;
+            // margin-top: 3.2rem;
+            // display: block;
+            // color: #e4e6eb;
+        }
+        h2{
+            text-align: center;
+            font-size: 1.7rem;
+            margin-top: 1.2rem;
+            color: #333;
+        }
+        p{
+            text-align: center;
+            font-size: 1.4rem;
+            color: #999;
+            margin-top: 1rem;
+            margin-bottom: 2.1rem;
+        }
+    }
+}

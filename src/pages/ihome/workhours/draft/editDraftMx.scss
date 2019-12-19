@@ -1,0 +1,107 @@
+page-workhours-editmx{
+    .header .bar-button-default{
+        // font-size: 1.8rem;
+    }
+    .text-input-ios{
+        margin: 0;
+    }
+    .content-ios{
+        background-color: #e8eaf4;
+    }
+    .list-ios{
+        margin-bottom: .5rem;
+    }
+    .list-ios > .item-block:first-child{
+        border: none;
+        overflow: hidden;
+    }
+    .duan{
+        padding: 0 0 0 1.5rem !important;
+        font-size: 1.7rem;
+        border-bottom: 1px solid #e8eaf4 !important;
+        color:#666666;
+    }
+    .icon-arrowright{
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        color: #666;
+    }
+    .projectName{
+        color:#666666;
+        min-height: 6rem;
+        line-height: 2.2rem;
+        padding: 1.8rem 1.5rem;
+        background: #fff;
+        font-size: 1.7rem;
+        color: #666666;
+        display: flex;
+        align-items: center;
+        // border-bottom: 1px solid #e8eaf4;
+    }
+    .item-ios{
+        padding-left:0;
+        // height: 6rem;
+        height: 100%;
+        min-height: 6rem;
+    }
+    .textcontent{
+        // border-top: 1px solid #e8eaf4 !important;
+        border: none;
+        height: 12rem;
+        width: 100%;
+        padding: 2rem 1.5rem 0;
+        font-size: 1.7rem;
+    }
+    .item-ios.item-block .item-inner{
+        // padding: 0 1.5rem;
+        // border-color: #e8eaf4;
+        // font-size: 1.7rem;
+        border-color: #e8eaf4;
+    }
+    .label-ios{
+        margin: 0;
+        white-space: inherit;
+    }
+    .textdirec{
+        color:#666666;
+        background: #ffffff;
+    }
+    .projectTime{
+        font-size: 1.7rem;
+        color: #333;
+        height: 6rem;
+        line-height: 6rem;
+        padding: 0 1.5rem;
+        background: #fff;
+        overflow: hidden;
+        border: none;
+        border-bottom: 1px solid #e8eaf4;
+        span{
+            float: left;
+        }
+        input{
+            width: 7.6rem;
+            text-align: center;
+            float: right;
+            font-size: 2.4rem;
+            border: none;
+        }
+        .iconfont{
+            font-size: 2.2rem;
+            float: right;
+            height: 6rem;
+            background: #fff;
+        }
+        .icon-jianhao{
+            padding: 0;
+            font-size: 3rem;
+            margin-right: -.5rem;   
+        }
+    }
+    .btnsStyle{
+        button{
+            background: #007bff!important;
+        }
+    }
+}

@@ -1,0 +1,162 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons start class="contactbtn">
+      <button ion-button (click)="myApplay()">我的申请</button>
+    </ion-buttons>
+    <ion-title>会议室占用情况</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="createMeetingFn()" *ngIf=" meetingRoomList.length > 0"><i
+          class="iconfont icon-xinzeng"></i>新增</button>
+    </ion-buttons>
+  </ion-navbar>
+  <div class="calendar-short">
+    <div class="calendar-short-head">
+      <!-- 上一个月 -->
+      <ion-icon class="iconfont icon-arrowleft calendar-prev" (click)="updateDateMonthLast(today,-nextMonthDaysLast)">
+      </ion-icon>
+      <!-- <a href="javascript:void(0);" class="ion-ios-arrow-left calendar-prev calendar-opcity" (click)="updateDateMonthLast(today,-nextMonthDaysLast)"></a> -->
+      <h3 class="calendar-ymd">{{today | date:'yyyy年MM月dd日'}}</h3>
+      <!-- 下一个月 -->
+      <!-- <a href="javascript:void(0);" class="ion-ios-arrow-right calendar-next calendar-opcity" (click)="updateDateMonthNext(today,nextMonthDaysNext)"></a> -->
+      <ion-icon class="iconfont icon-arrowright calendar-next" (click)="updateDateMonthNext(today,nextMonthDaysNext)">
+      </ion-icon>
+    </div>
+    <div class="calendar-short-content">
+      <ul class="calendar-calHead">
+        <li>日</li>
+        <li>一</li>
+        <li>二</li>
+        <li>三</li>
+        <li>四</li>
+        <li>五</li>
+        <li>六</li>
+      </ul>
+      <ion-slides class="calendar-calBody">
+        <ion-slide class="calendar-calRow" (swipeleft)="updateWeek(today,7)" (swiperight)="updateWeek(today,-7)">
+          <div class="calendar-calTd" *ngFor="let item of thisWeeks;" (click)="queryDateMrReserve(item.week)">
+            <span [ngClass]="(isToday | date:'yyyy-MM-dd')?'curr':''"
+              *ngIf="(isToday | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')">{{item.week
+              | date:'dd'}}</span>
+            <span [ngClass]="(today | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')?'current':''"
+              *ngIf="(isToday | date:'yyyy-MM-dd') !== (item.week | date:'yyyy-MM-dd')">{{item.week
+              | date:'dd'}}</span>
+            <em [ngClass]="(checkClassType(item.week,now))?'orange':'gray'" *ngIf="item.count>0"></em>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </div>
+</ion-header>
+<a href="javascript:void(0);" class="goToday" (click)="initToday()" *ngIf="getShow()">今</a>
+<a href="javascript:void(0);" class="goToday" (click)="createMeetingFn()"
+  *ngIf="!getShow() && meetingRoomList.length > 0">
+  <i class="iconfont icon-xinzeng"></i>
+</a>
+
+<ion-content class="layout-content">
+
+  <div class="calendar-list calendar-nobg meetingRoom-content" *ngIf="meetingRoomList.length>0">
+
+    <ul class="left-cont">
+      <li><b>中关村园区</b></li>
+      <li *ngFor="let room of meetingRoomListOne" (click)="goMeetView(room)">
+        {{room.name}}
+      </li>
+    </ul>
+
+    <div class="scroll-x">
+      <table class="table table-header">
+        <thead>
+          <tr>
+            <ng-container *ngFor="let def of definition.slice(0,-1),let i = index">
+              <td *ngIf="i % 2 == 0" colspan="2">{{def}}<div>●</div>
+              </td>
+            </ng-container>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="meetingRoom-cont">
+        <table class="table table-main" id="draw">
+          <tbody>
+            <tr></tr>
+            <tr *ngFor="let room of meetingRoomListOne;let x=index;">
+              <td *ngFor="let def of defTimeData,let j = index" style="cursor:default">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="calendar-list calendar-nobg meetingRoom-content" *ngIf="meetingRoomList.length>0">
+
+    <ul class="left-cont">
+      <li><b>怀柔园区</b></li>
+      <li *ngFor="let room of meetingRoomListTwo" (click)="goMeetView(room)">
+        {{room.name}}
+      </li>
+    </ul>
+
+    <div class="scroll-x">
+      <table class="table table-header">
+        <thead>
+          <tr>
+            <ng-container *ngFor="let def of definition.slice(0,-1),let i = index">
+              <td *ngIf="i % 2 == 0" colspan="2">{{def}}<div>●</div>
+              </td>
+            </ng-container>
+          </tr>
+        </thead>
+      </table>
+
+      <div class="meetingRoom-cont">
+        <table class="table table-main" id="drawTwo">
+          <tbody>
+            <tr></tr>
+            <tr *ngFor="let room of meetingRoomListTwo;let x=index;">
+              <td *ngFor="let def of defTimeData,let j = index" style="cursor:default">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <div class="myorder-item-notdata" *ngIf="meetingRoomList.length<=0">
+    <img src="assets/imgs/notdata.png" alt="">
+  </div>
+  <!-- <ion-fab right bottom>
+    <button ion-fab>
+      <ion-icon name="ios-xinzeng" color="secondary"></ion-icon>
+    </button>
+    <ion-fab-list side="left" (click)="initToday()" *ngIf="getShow()">
+      <button ion-fab color="secondary">
+        <ion-label>今</ion-label>
+      </button>
+    </ion-fab-list>
+    <ion-fab-list side="top" (click)="createMeetingFn()">
+      <button ion-fab color="primary">
+        <ion-label>新增</ion-label>
+      </button>
+    </ion-fab-list>
+  </ion-fab> -->
+</ion-content>
+
+<style>
+  .meetingRoom-content .left-cont {
+    margin-top: 30px;
+  }
+
+  .meetingRoom-content .left-cont li {
+    margin-top: 0px !important;
+  }
+
+</style>

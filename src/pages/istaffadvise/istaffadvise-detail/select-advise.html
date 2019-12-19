@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>选择转发内容</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="close()">确定</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <ion-list radio-group [(ngModel)]="selectRadio">
+    <ion-item *ngFor="let item of allList">
+      <ion-radio value="{{item.id}}"></ion-radio>
+      <ion-label>
+        <h2>{{item.code}}</h2>
+        <p>{{item.title}}</p>
+        <p>{{item.createTime | date:'yyyy-MM-dd HH:mm'}}</p>
+        <p>{{item.communicateContent}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

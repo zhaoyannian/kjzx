@@ -1,0 +1,203 @@
+page-service-edit{
+    .macStyle{
+        padding: 0 1.5rem;
+        border-color: #e8eaf4;
+        font-size: 1.7rem;
+        background: #fff;
+        height: 6.2rem;
+        border-bottom: 1px solid #ededed;
+        line-height: 6.2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        ion-label[fixed]{
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      .checkmac{
+        width: 18px;
+        height: 18px;
+        background: #999;
+        border-radius: 50%;
+        display: inline-block;
+        text-align: center;
+        color: #fff;
+        margin: auto;
+        margin-left: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    .list-ios{
+        margin-bottom: .5rem;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border: none;
+    }
+    .list-ios > .item-block:first-child{
+        border: none;
+        overflow: hidden;
+    }
+    .textcolor{
+        color: #333;
+    }
+    .textdirec{
+        color:#666666;
+    }
+    ion-label[fixed]{
+        min-width: 100px;
+        text-align: left;
+        text-overflow: inherit;
+        white-space: normal;
+    }
+    ion-label{
+        // text-align: right;
+        color: #666666;
+    }
+    .text-input[disabled]{
+        opacity: 1;
+    }
+    .select-disabled, .item-select-disabled ion-label{
+        opacity: 1;
+    }
+    .text-input-ios{
+        text-align: right;
+    }
+    .header .bar-button-default{
+        // font-size: 1.8rem;
+    }
+    .item-ios{
+        padding-left:0;
+        // height: 6rem;
+        min-height: 6rem;
+    }
+    .item-ios.item-block .item-inner{
+        padding: 0 1.5rem;
+        border-color: #e8eaf4;
+        font-size: 1.7rem;
+    }
+    
+    .datetime-text{
+        font-size: 2.15rem;
+        color: #333;
+    }
+    .toggle-ios{
+        width: 5.9rem;
+    }
+
+    .toggle-checked .toggle-inner{
+        right: 23px!important;
+        left: initial!important;
+    }
+    .toggle-ios .toggle-inner{
+        right: initial;
+        left: 5px;
+    }
+    .toggle-inner::before{
+        padding-left: 0px;
+    }
+    .toggle-ios .toggle-icon{
+        &::before{
+            content: "下午";
+            background-color: #00c4ff;
+            left: 0;
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 4px;
+            font-size: 1rem;
+            color: #fff;
+            align-items: center;
+        }
+    }
+    .toggle-checked .button-inner{
+        justify-content: flex-start;
+        &::before{
+            content: "上午";
+            right: 0;
+            align-items: center;
+            justify-content: end;
+            font-size: 1rem;
+            color: #fff;
+            padding-left: 3px;
+        }
+        
+    }
+    .toggle-ios-secondary.toggle-checked .toggle-icon{
+        background-color: #0081e4!important;
+    }
+    .toggle-ios .toggle-icon{
+        background-color: #00c4ff!important;
+    }
+    .toggle-ios .toggle-icon{
+        background-color: #00c4ff!important;
+    }
+    .toggle-ios .toggle-icon::before{
+        background-color: #00c4ff;
+    }
+    .file{
+        height: 6rem;
+        line-height: 6rem;
+        text-align: center;
+        background: #fff;
+        font-size: 1.7rem;
+        color: #007bff;
+        width: 100%;
+        padding: 0 1.5rem;
+        position: relative;
+        input{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: 11;
+            opacity: 0;
+        }
+
+    }
+    
+    .fileText{
+        height: 6rem;
+        line-height: 6rem;
+        text-align: left;
+        background: #fff;
+        font-size: 1.7rem;
+        color: #333;
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+    .button-outline-ios-gray{
+        color: #333;
+    }
+   
+    .select-text{
+        text-align: right;
+        color: #666666;
+    }
+    ion-select{
+        flex: 1;
+        max-width: 100%;
+    }
+    .has-footer{
+        .scroll-content{
+            margin-bottom: 16rem;
+        }
+    }
+    .has-footer2{
+        .scroll-content{
+            margin-bottom: 6rem;
+        }
+    }
+   .defaultChoose{
+    color: #bbbbbb!important;
+   }
+
+   .lc-form-row .lc-toggle-box{
+       padding: 0rem !important
+   }
+   .checkbox-ios .checkbox-icon{
+        border-radius: 0 !important;
+   }
+}

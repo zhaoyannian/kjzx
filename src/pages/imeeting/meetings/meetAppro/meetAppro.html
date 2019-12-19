@@ -1,0 +1,74 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>会议审批</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>会议审批</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <!-- <ion-card *ngFor="let item of list">
+    <ion-card-content>
+      <div class="card-text">
+        <p>
+          <span>会议名称：</span>
+          <em>{{item.meetingName}}</em>
+        </p>
+        <p>
+          <span>地点：</span>
+          <em>{{item.meetingRoomName}}</em>
+        </p>
+        <p>
+          <span>时间：</span>
+          <em class="">{{item.meetingDateBegin | date:"yyyy-MM-dd"}} {{item.beginTime}}~{{item.endTime}}</em>
+        </p>
+      </div>
+    </ion-card-content>
+    <ion-grid class="card-bottom">
+      <ion-row>
+        <ion-col (click)="toEditor(item)">
+          <button type="button">办理</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card> -->
+
+  <ion-list *ngFor="let entry of list">
+    <ion-item>
+      <ion-label>会议名称</ion-label>
+      <span item-end class="textcolor">{{entry.meetingName}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>所属部门</ion-label>
+      <span item-end class="textcolor">{{entry.deptName}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>地点</ion-label>
+      <span item-end class="textcolor">{{entry.meetingRoomName}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>开始日期</ion-label>
+      <span item-end class="textcolor">{{entry.meetingDateBegin | date:"yyyy-MM-dd HH:mm'"}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>结束日期</ion-label>
+      <span item-end class="textcolor">{{entry.meetingDateEnd | date:"yyyy-MM-dd HH:mm'"}}</span>
+    </ion-item>
+    <ion-item text-center><button ion-button full clear (click)="toEditor(entry)">办理</button></ion-item>
+  </ion-list>
+  <div class="myorder-item-notdata" *ngIf="list.length<=0">
+    <img src="assets/imgs/notdata.png" alt="">
+  </div>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

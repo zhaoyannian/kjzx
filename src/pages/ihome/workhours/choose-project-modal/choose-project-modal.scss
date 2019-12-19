@@ -1,0 +1,98 @@
+page-choose-project-modal {
+    .projecttotle{
+        height: 6rem;
+        line-height: 6rem;
+        padding: 0 1.5rem;
+        font-size: 1.7rem;
+        color: #333;
+        background: #fff;
+    }
+    .radio-checked{
+        background-color: #488aff;
+        border: none!important;
+        .radio-inner{
+          border-color: #ffffff!important;
+        }
+      }
+      .radio-icon{
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        width: 25px!important;
+        height: 25px!important;
+        display: flex!important;
+        justify-content: center;
+        align-items: center;
+      }
+      .radio-inner{
+        left: 0!important;
+        top: 0!important;
+        bottom: 0!important;
+        right: 0!important;
+        margin: auto;
+        border-color: #ffffff!important;
+      }
+    .item-ios {
+        padding-left: 0px;
+        min-height: 6rem;
+      }
+    
+      .list-ios .item-block .item-inner {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        border-color: #e8eaf4;
+      }
+    
+      .label-ios {
+        margin: 1.5rem 8px 1.5rem 0;
+      }
+    
+      .item-ios h2 {
+        margin: 0 0 2px;
+        font-size: 1.7rem;
+        font-weight: normal;
+        color: #666666;
+        font-family: MicrosoftYaHei;
+        margin-bottom: 10px;
+      }
+      ion-label{
+        white-space: inherit;
+      }
+    .projectcontent{
+        padding: 0;
+        overflow: hidden;
+        li{
+            min-height: 6rem;
+            line-height: 2.2rem;
+            padding: 1.8rem 1.5rem;
+            background: #fff;
+            font-size: 1.7rem;
+            color: #666666;
+            border-top: 1px solid #e8eaf4;
+            display: flex;
+            align-items: center;
+        }
+    }
+    .icon-arrowleft{
+        // font-size: 2.4rem;
+        // font-weight: bold;
+        margin-left: -6px;
+    }
+    .toolbar .searchbar-ios .searchbar-input{
+        background: #fff!important;
+    }
+    .searchbar-ios .searchbar-input{
+        color: #333!important;
+    }
+    .button-clear-ios{
+        color: #fff!important;
+    }
+    .checked{
+        background: #61adff !important;
+        color: #fff!important;
+    }
+    .btnsStyle{
+        button{
+            background: #007bff!important;
+        }
+    }
+}

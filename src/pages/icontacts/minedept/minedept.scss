@@ -1,0 +1,111 @@
+
+page-minedept {
+  .searchbar-ios{
+    background: rgba(0, 0, 0, 0.1);
+  }
+  ul {
+    padding: 0;
+    margin: 0;
+    padding-left: 2rem;
+  }
+
+  ul .item-ios {
+    padding: 0;
+  }
+
+  ul .item-ios.item-block .item-inner {
+    // padding-left: 1rem;
+    height: 5rem;
+    line-height: 5rem;
+    border-bottom-width:1px!important;
+  }
+
+  .label-ios {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #333;
+  }
+
+  .dept_addlist {
+    overflow: hidden;
+    padding: 0;
+    padding-left: 3rem;
+  }
+
+  .dept_addlist li {
+    display: flex;
+    height: 5rem;
+    line-height: 5rem;
+  }
+
+  .dept_addlist li img {
+    width: 3.8rem;
+    height: 3.8rem;
+    border-radius: 50%;
+    border: 1px solid #e8eaf4;
+    margin-top: .5rem;
+    margin-right: 1rem;
+  }
+
+  .dept_addlist li div {
+    flex: 1;
+    background-color: inherit;
+    color: inherit;
+    padding: 0;
+    font-size: 1.6rem;
+    justify-content: left;
+    display: flex;
+    border-bottom: 1px solid #ededed;
+  }
+
+  /*面包屑*/
+  #Breadcrumbs {
+    padding: 10px 16px;
+    width: 100%;
+    white-space: nowrap;
+    background: #fff;
+  }
+  .fixed-content{
+    // margin-top: 40px!important;
+  }
+  .scroll-content{
+    margin-bottom: 0!important;
+    // margin-top: 40px!important;
+  }
+  #Breadcrumbs ul {
+    overflow-x: auto;
+    padding: 0;
+  }
+
+  #Breadcrumbs ul::-webkit-scrollbar {
+    display: none;
+    /*隐藏滚轮*/
+  }
+ 
+  #Breadcrumbs li {
+    display: inline-block;
+    color: #007bff;
+    font-size: 1.8rem;
+    float: left;
+  }
+
+  #Breadcrumbs li::after {
+    content: '>';
+    margin: 0 5px;
+    color: #787878;
+  }
+
+  #Breadcrumbs li:last-child::after {
+    content: '';
+  }
+
+  & .txl_datanull {
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 100px;
+
+    & img {
+      width: 80%;
+    }
+  }
+}

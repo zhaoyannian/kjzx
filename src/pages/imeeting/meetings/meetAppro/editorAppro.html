@@ -1,0 +1,172 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>会议详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>会议详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <!-- <ion-item class="duan" no-lines>
+      <ion-label>{{selectMr.meetingName}}</ion-label>
+    </ion-item> -->
+    <textarea rows="2" class="reason" placeholder="请输入会议内容" autoresize="200" [(ngModel)]="selectMr.meetingName"
+      readonly>
+    </textarea>
+    <div class="timeStyle">
+      <div class="leaveTime">
+        <span class="stactime">{{year}}</span>
+        <i class="statictext">开始时间</i>
+        <i class="statictext">结束时间</i>
+        <span class="stactime">{{year}}</span>
+      </div>
+      <div class="leaveType">
+        <span class="stactime">{{moth}}</span>
+        <i class="statictext">{{selectMr.beginTime}}</i>
+        <span class="stactime">{{moth}}</span>
+        <i class="statictext">{{selectMr.endTime}}</i>
+      </div>
+      <div class="leaveWeek">
+        <span class="left">{{weekDay}}</span>
+        <span class="right">{{weekDay}}</span>
+      </div>
+      <em class="choosedaybg"></em>
+    </div>
+
+    <!-- <div id="DateSelect" class="duan">
+      <ion-item detail-none no-border>
+        <ul>
+          <li>{{year}}</li>
+          <li class="dateselect_zh">开始时间</li>
+          <li>{{moth}}</li>
+          <li>{{selectMr.beginTime}}</li>
+          <li class="week-color">{{weekDay}}</li>
+        </ul>
+      </ion-item>
+      <ion-item class="jiantou">
+        >
+      </ion-item>
+      <ion-item detail-none>
+        <ul>
+          <li class="dateselect_zh">结束时间</li>
+          <li>{{year}}</li>
+          <li>{{selectMr.endTime}}</li>
+          <li>{{moth}}</li>
+          <li></li>
+          <li class="week-color">{{weekDay}}</li>
+        </ul>
+      </ion-item>
+    </div> -->
+    <ion-item *ngIf="selectMr.meetingType === 'firm_outside' ">
+      <ion-label>会议室名称</ion-label>
+      <ion-label class="text-right">{{selectMr.outRoomname}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="selectMr.meetingType === 'firm_outside' ">
+      <ion-label>会议室地址</ion-label>
+      <ion-label class="text-right">{{selectMr.outRoomaddress}}</ion-label>
+    </ion-item>
+    <ion-item *ngIf="selectMr.meetingType === 'firm_inside' ">
+      <ion-label>会议室</ion-label>
+      <ion-label class="text-right">{{selectedMRInfo.name}}</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label class="textcolor" fixed>服务需求</ion-label>
+        <ion-label class="text-right">{{selectMr.devicesNames}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>参会人员</ion-label>
+      <span item-end *ngIf="selectMr.meetingStaff && selectMr.meetingStaff.length > 0" class="text-right">{{selectMr.meetingStaff.length}}人</span>
+    </ion-item>
+    <ion-item *ngIf="selectMr.meetingStaff && selectMr.meetingStaff.length > 0">
+      <div class="people-item" *ngFor="let item of selectMr.meetingStaff">
+        <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photo}}" *ngIf="!!item.photo">
+        <img src="assets/imgs/people-head.png" *ngIf="!item.photo">
+        <span>{{item.userName}}</span>
+      </div>
+    </ion-item>
+    <ion-item class="duan" no-lines>
+      <ion-label>外部参会人员</ion-label>
+      <ion-label class="text-right">{{selectMr.outMeetStaff}}</ion-label>
+    </ion-item>
+    <div class="meeting-details" *ngIf="!selectMr.collspaed2">
+      <h3 (click)="selectMr.collspaed2=!selectMr.collspaed2">
+        更多详情
+        <p>
+          <ion-icon class="iconfont icon-arrowdown"></ion-icon>
+        </p>
+      </h3>
+    </div>
+    <div *ngIf="selectMr.collspaed2">
+      <ion-item class="duan" no-lines>
+        <ion-label>会议类型</ion-label>
+        <ion-label class="text-right">{{meetType[selectMr.meetingType]}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>联系方式</ion-label>
+        <ion-label class="text-right">{{selectMr.phone}}</ion-label>
+      </ion-item>
+      <ion-item class="duan" no-lines>
+        <ion-label>备注</ion-label>
+        <ion-label class="text-right">{{selectMr.info}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>所属部门</ion-label>
+        <ion-label class="text-right">{{selectMr.deptName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>召集人</ion-label>
+        <ion-label class="text-right">{{selectMr.convenorId}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>主持人</ion-label>
+        <ion-label class="text-right">{{selectMr.compereId}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>记录人</ion-label>
+        <ion-label class="text-right">{{selectMr.recorderId}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>创建人</ion-label>
+        <ion-label class="text-right">{{selectMr.createUserName}}</ion-label>
+      </ion-item>
+    </div>
+    <div class="meeting-details" *ngIf="selectMr.collspaed2">
+      <h3 (click)="selectMr.collspaed2=!selectMr.collspaed2">
+        <p>
+          <ion-icon class="iconfont icon-arrowup"></ion-icon>
+        </p>
+        收起
+      </h3>
+    </div>
+  </ion-list>
+</ion-content>
+<ion-footer class="footer-btnRow">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <button ion-button (click)="approvalMeeting(selectMr,'3')">不同意</button>
+      </ion-col>
+      <ion-col>
+        <button ion-button (click)="approvalMeeting(selectMr,'2')">审核通过</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
+<ion-footer class="footer-btnRowLiucheng">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col><button ion-button class="color-back" outline (click)="approvalMeeting(selectMr,'3')">不同意</button></ion-col>
+      <ion-col>
+        <button (click)="approvalMeeting(selectMr,'2')" class="color-submit">
+          审核通过
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

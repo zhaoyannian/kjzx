@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start class="contactbtn">
+      <button ion-button icon-only (click)="choose()">
+        我的日程
+        <ion-icon class="iconfont icon-arrowdown" item-end></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+    </ion-title>
+    <ion-buttons end class="contactbtn">
+      <button ion-button icon-only (click)="add()">
+        <ion-icon name="xinzeng"></ion-icon>新增
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-calendar [(ngModel)]="dateMulti" [options]="optionsMulti" [type]="type" [format]="'YYYY-MM-DD'" (onSelect)="onSelect($event)"
+    (monthChange)="monthChange($event)">
+  </ion-calendar>
+  <!-- 日程信息 -->
+  <ion-list class="home-list">
+    <ion-item-sliding *ngFor="let item of myResultDate">
+      <ion-item class="homeMeet-item borColor" (click)="update(item)">
+        <i></i>
+        <span>{{timeMethod(item.beginTime ,item.endTime)}}</span>
+        <p *ngIf="item.allDay === 'true'">【全天】{{item.title}}</p>
+        <p *ngIf="item.allDay === 'false'">【{{item.detailBeginTime}}-{{item.detailEndTime}}】{{item.title}}</p>
+      </ion-item>
+      <ion-item-options side="right" *ngIf="item.calType === 'calendar'">
+          <button ion-button color="danger" (click)="removeItem(item)">
+            <ion-icon name="delete"></ion-icon>  
+            Delete
+          </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <div class="home-no-data" *ngIf="myResultDate.length <=0">暂无日程</div>
+</ion-content>

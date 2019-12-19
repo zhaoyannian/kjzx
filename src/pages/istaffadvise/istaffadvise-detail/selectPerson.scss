@@ -1,0 +1,19 @@
+page-selectPerson{
+    .item-ios{
+        height: 5rem;
+    }
+    .item-ios ion-avatar ion-img, .item-ios ion-avatar img{
+        border-radius: 50%;
+        overflow: hidden;
+        width: 3.8rem;
+        height: 3.8rem;
+        border: 1px solid #e8eaf4;
+    }
+    .item-ios h2{
+        font-size: 1.6rem;
+        color: #333;
+    }
+    .list-ios .item-block .item-inner{
+        border-color: #ededed;
+    }
+}

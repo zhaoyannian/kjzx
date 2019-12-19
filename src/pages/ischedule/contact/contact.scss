@@ -1,0 +1,55 @@
+page-contact {
+    .contactbtn {
+        .button-inner{
+            color: #fff;
+        }
+    }
+    .ion-ios-xinzeng,.ion-md-xinzeng,.ion-ios-arrowdown,.ion-md-arrowdown{
+        font-size: 1.9rem!important;
+        margin-right: .1rem;
+    }
+    .schedule{
+        color: #fff;
+        .radio-ios .radio-icon{
+            display: none;
+        }
+    }
+    ion-calendar{
+        .button-inner{
+            background: #ccc;
+        }
+        .title button:nth-child(1) .button-inner{
+            background:#fff!important;
+        }
+    }
+    ion-calendar-month .primary button.days-btn small{
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: red;
+        left: 50%;
+        margin-left: -3px;
+    }
+    
+    .home-list {
+        margin-bottom: 1.2rem;
+        background: #fff;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        .icon {
+            font-size: 3.4rem;
+            color: #0088ff;
+            &.font54 {
+                font-size: 5.4rem;
+            }
+        }
+        .ion-ios-news,
+        .ion-md-news,
+        .ion-ios-inform,
+        .ion-md-inform {
+            font-size: 3rem;
+            margin-top: 3px;
+        }
+    }
+}

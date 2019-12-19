@@ -1,0 +1,226 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>{{inittitle}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{inittitle}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer': (editable)}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list *ngIf="editingEntry.bizEntity">
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请编号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.paCode}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>委托人</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.applicantName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>委托部门</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.orgCodeName}}</ion-label>
+          <!-- <ion-label class="textdirec" type="text" value="" readonly *ngIf="entry.title && entry.title.orgCodeName" [(ngModel)]="entry.title.orgCodeName"></ion-label> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.applicationDate |date: 'yyyy-MM-dd' }}</ion-label>
+          <!-- <ion-label class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.applicationDate "></ion-label> -->
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>采购项目名称</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.title}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>是否进口</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.isImportedName}}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="editingEntry.bizEntity.isImported === 'yes'">
+          <ion-label class="textcolor" fixed>是否批复</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.isApproveName}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请采购方式</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.purchaseTypeName}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>项目批复采购方式</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.projectApproTypeName }}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="!!editingEntry.bizEntity.purchaseWay || (!!editingEntry.flowSaveParDto.flowInstName && (editingEntry.flowSaveParDto.flowInstName == '采购负责人'))">
+          <ion-label class="textcolor" fixed>建议采购方式</ion-label>
+          <ion-select  [disabled]=" editingEntry.flowSaveParDto.flowInstName !== '采购负责人'||!editable"  [(ngModel)]="editingEntry.bizEntity.purchaseWay"  placeholder="请选择" okText="确定" cancelText="取消" (ngModelChange)="changepurchaseWay()">
+            <ion-option value="0">请选择</ion-option>
+            <div *ngFor="let item of purchaseWayList">
+              <ion-option value="{{item?.optionValue}}">{{item?.optionName}}</ion-option>
+            </div>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>预算金额(万元)</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.amount}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>资金来源</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.fundSourceName}}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="editingEntry.bizEntity.isChange === 'yes'">
+          <ion-label class="textcolor" fixed>变更金额</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.changeAmount}}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="editingEntry.bizEntity.fundSource ==='other'">
+          <ion-label class="textcolor" fixed>资金来源说明</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.fundSourceCon}}</ion-label>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>所属项目</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.projectName}}</ion-label>
+        </ion-item>
+
+         <ion-item  *ngIf="editingEntry.bizEntity.project=='9'">
+          <ion-label class="textcolor" fixed>其他项目</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.otherPro}}</ion-label>
+        </ion-item>
+
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>书面资料提交人</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.submitterName}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>书面资料提交人联系方式</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.subMobile}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>参与评标用户代表</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.evaluUserName}}</ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>参与评标用户代表联系方式 </ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.evaluMobile}}</ion-label>
+        </ion-item>
+        <!--
+        <ion-item>
+          <ion-label class="textcolor" fixed>主管所领导  </ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.chargeBusinessUserName}}</ion-label>
+        </ion-item>-->
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>业务主管部门经办人 </ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.competentDeptUserName}}</ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="editingEntry.bizEntity.chargeBusinessUserID || (!!editingEntry.flowSaveParDto.flowInstName && (editingEntry.flowSaveParDto.flowInstName == '主管部门经办人'))">
+          <ion-label class="textcolor" fixed>主管所领导</ion-label>
+           <ion-label  style=" text-align: right;" (click)="(editingEntry.flowSaveParDto.flowInstName ==='主管部门经办人'&&!!editable)? selectStaffType('cdUserName') :select()">
+             {{cdUserName}}
+            <ion-icon style="padding-left: 1rem;color:darkgray; font-size:1.8rem" *ngIf="!cdUserName">请选择</ion-icon>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>市场调研情况</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.surveyRea}}
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>备注</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.remarks}}
+          </ion-label>
+        </ion-item>
+
+
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <ion-list *ngIf="fileList.length>0" class="lc-form-row">
+      <div class="fileText">批复文件</div>
+      <ul class="fileStyle">
+        <li *ngFor="let item of fileList;let i =index">
+          <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.name) == 'excel',
+                    'icon-pdf': fileIcon(item.name) == 'pdf','icon-ppt': fileIcon(item.name) == 'ppt',
+                    'icon-word': fileIcon(item.name) == 'doc','icon-txt': fileIcon(item.name) == 'txt',
+                    'icon-tupian': fileIcon(item.name) == 'img','icon-qitafujian': fileIcon(item.name) == 'file',
+                    'icon-rar': fileIcon(item.name) == 'zip'}"></ion-icon>
+          <span>{{item.name}}</span>
+          <a class="iconfont icon-xiazai" href="{{httpurl}}{{item.uri}}"></a>
+        </li>
+      </ul>
+    </ion-list>
+  </div>
+  <!--<div class="lc-form-row" *ngIf="!!editingEntry.flowSaveParDto">
+    <ion-list *ngIf="(!!editingEntry.flowSaveParDto.flowInstName && (editingEntry.flowSaveParDto.flowInstName == '主管部门经办人')) || (!!point && point.sequence > 3) || !!editable">
+      <div class="fileText">上传任务书关键页（新增设备一览表）</div>
+      <button class="file" *ngIf="!!editable && (!!editingEntry.flowSaveParDto.flowInstName && (editingEntry.flowSaveParDto.flowInstName == '主管部门经办人'))">
+        <input #uploadImg type="file" [disabled]="!editable" (change)="uploadFile($event)">+
+      </button>
+      <ul class="fileStyle">
+        <li *ngFor="let item of fileRwlist;let i =index">
+          <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.name) == 'excel',
+                    'icon-pdf': fileIcon(item.name) == 'pdf','icon-ppt': fileIcon(item.name) == 'ppt',
+                    'icon-word': fileIcon(item.name) == 'doc','icon-txt': fileIcon(item.name) == 'txt',
+                    'icon-tupian': fileIcon(item.name) == 'img','icon-qitafujian': fileIcon(item.name) == 'file',
+                    'icon-rar': fileIcon(item.name) == 'zip'}"></ion-icon>
+          <span>{{item.name}}</span>
+          <ion-icon class="iconfont icon-del" (click)="deletePicture(item,i)" *ngIf="!!editable && (!!editingEntry.flowSaveParDto.flowInstName && (editingEntry.flowSaveParDto.flowInstName == '业务主管部门经办人'))"></ion-icon>
+          <a class="iconfont icon-xiazai" href="{{httpurl}}{{item.uri}}"></a>
+        </li>
+      </ul>
+    </ion-list>
+  </div>-->
+   <div class="lc-form-row">
+    <ion-list *ngIf="fileRwlist.length>0" class="lc-form-row">
+      <div class="fileText">上传任务书关键页（新增设备一览表）</div>
+      <ul class="fileStyle">
+        <li *ngFor="let item of fileRwlist;let i =index">
+          <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.name) == 'excel',
+                    'icon-pdf': fileIcon(item.name) == 'pdf','icon-ppt': fileIcon(item.name) == 'ppt',
+                    'icon-word': fileIcon(item.name) == 'doc','icon-txt': fileIcon(item.name) == 'txt',
+                    'icon-tupian': fileIcon(item.name) == 'img','icon-qitafujian': fileIcon(item.name) == 'file',
+                    'icon-rar': fileIcon(item.name) == 'zip'}"></ion-icon>
+          <span>{{item.name}}</span>
+          <a class="iconfont icon-xiazai" href="{{httpurl}}{{item.uri}}"></a>
+        </li>
+      </ul>
+    </ion-list>
+  </div>
+
+  <purchase-flow [opinionList]="opinionList"></purchase-flow>
+</ion-content>
+<purchase-button *ngIf="editable && buttons && editingEntry" [buttons]="buttons" [OPINION_TITLE]="OPINION_TITLE" [editingEntry]="editingEntry"
+  [hjenty]="hjenty" [currentPoint]="currentPoint" [points]="points" [flowType]="flowType" [editable]="editable" [lockfileds]="lockfileds"
+  [point]="point" [toggle]="toggle"></purchase-button>

@@ -1,0 +1,51 @@
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>水牌信息</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>水牌信息</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="myApplay()">
+        我的申请
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <div class="shuipai-tit">
+    <span>{{dateStr}}</span>会议一览
+  </div>
+
+  <ion-list *ngFor="let entry of listData">
+    <ion-item>
+      <ion-label>会议名称</ion-label>
+      <span item-end class="textcolor">{{entry.meetingName}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>所属部门</ion-label>
+      <span item-end class="textcolor">{{entry.deptName}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>地点</ion-label>
+      <span item-end class="textcolor">{{entry.meetingAddress}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>开始时间</ion-label>
+      <span item-end class="textcolor">{{entry.beginTime}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>结束时间</ion-label>
+      <span item-end class="textcolor">{{entry.endTime}}</span>
+    </ion-item>
+    <ion-item text-center><button ion-button full clear (click)="goView(entry)">查看</button></ion-item>
+  </ion-list>
+  <div class="myorder-item-notdata" *ngIf="listData.length<=0">
+    <img src="assets/imgs/notdata.png" alt="">
+  </div>
+</ion-content>

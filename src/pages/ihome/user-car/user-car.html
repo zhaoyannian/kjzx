@@ -1,0 +1,102 @@
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-buttons start class="contactbtn">
+    </ion-buttons>
+    <ion-title>出车安排情况</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="createCarFn()">
+        <i class="iconfont icon-xinzeng"></i>
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>出车安排情况</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="createCarFn()">
+        <i class="iconfont icon-xinzeng"></i>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<a href="javascript:void(0);" class="goToday" (click)="initToday()" *ngIf="getShow()">今</a>
+<ion-content class="layout-content">
+
+  <div class="calendar-short">
+    <div class="calendar-short-head">
+      <!-- 上一个月 -->
+      <ion-icon class="iconfont icon-arrowleft calendar-prev" (click)="updateDateMonthLast(today,-nextMonthDaysLast)">
+      </ion-icon>
+      <!-- <a href="javascript:void(0);" class="ion-ios-arrow-left calendar-prev calendar-opcity" (click)="updateDateMonthLast(today,-nextMonthDaysLast)"></a> -->
+      <h3 class="calendar-ymd">{{today | date:'yyyy年MM月dd日'}}</h3>
+      <!-- 下一个月 -->
+      <!-- <a href="javascript:void(0);" class="ion-ios-arrow-right calendar-next calendar-opcity" (click)="updateDateMonthNext(today,nextMonthDaysNext)"></a> -->
+      <ion-icon class="iconfont icon-arrowright calendar-next" (click)="updateDateMonthNext(today,nextMonthDaysNext)">
+      </ion-icon>
+    </div>
+    <div class="calendar-short-content">
+      <ul class="calendar-calHead">
+        <li>日</li>
+        <li>一</li>
+        <li>二</li>
+        <li>三</li>
+        <li>四</li>
+        <li>五</li>
+        <li>六</li>
+      </ul>
+      <ion-slides class="calendar-calBody">
+        <ion-slide class="calendar-calRow" (swipeleft)="updateWeek(today,7)" (swiperight)="updateWeek(today,-7)">
+          <div class="calendar-calTd" *ngFor="let item of thisWeeks;" (click)="queryDateMrReserve(item.week)">
+            <span [ngClass]="(isToday | date:'yyyy-MM-dd')?'curr':''"
+              *ngIf="(isToday | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')">{{item.week | date:'dd'}}</span>
+            <span [ngClass]="(today | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')?'current':''"
+              *ngIf="(isToday | date:'yyyy-MM-dd') !== (item.week | date:'yyyy-MM-dd')">{{item.week | date:'dd'}}</span>
+            <em [ngClass]="(checkClassType(item.week,now))?'orange':'gray'" *ngIf="item.count>0"></em>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </div>
+
+
+  <div class="userCar-content">
+    <div class="userCar-list" *ngFor="let car of carList">
+
+      <div class="carNum" (click)="goCarView(car)">
+        <span class="type">{{car.type}}</span>
+        <span class="pai">{{car.numberPlate}}</span>
+        <span class="seat">{{!!car.numberPassengers ? car.numberPassengers+'座':''}}</span>
+      </div>
+
+      <div class="carOrderMsg">
+        <!-- <div *ngIf="!car.limit"> -->
+        <div class="list" *ngFor="let item of car.list">
+          <div class="msgBox" (click)="goUseCarView(item)">
+            <p class="time">
+              {{item.showOutTime| date: 'yyyy-MM-dd HH:mm'}}-{{item.showEndTime| date: 'yyyy-MM-dd HH:mm'}}</p>
+            <p class="address">{{item.showStartPlace}}-{{item.showArrivePlace}}</p>
+          </div>
+
+          <div class="userBox" (click)="goUseCarView(item)">
+            <img class="img" src="{{state +'/base/fileinfo/getFileImage?id='+ item.photoId}}" *ngIf="!!item.photoId">
+            <img sclass="img" rc="assets/imgs/people-head.png" *ngIf="!!!item.photoId">
+            <span class="name">{{item.userName}}</span>
+          </div>
+        </div>
+        <!-- </div> -->
+        <div *ngIf="!!car.limit && car.limit=='限行' && car.list.length <=0" class="limit-row-data">
+          限行
+        </div>
+        <div *ngIf="!!car.list && car.list.length <=0 && !car.limit" class="no-user-data">
+          未安排行程
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+</ion-content>

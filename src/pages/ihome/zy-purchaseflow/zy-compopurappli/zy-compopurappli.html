@@ -1,0 +1,204 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>正样元器件采购申请</ion-title>
+    <ion-buttons end *ngIf="editingEntry.entry">
+      <button
+        ion-button
+        (click)="viewFlow()"
+        *ngIf="editingEntry.entry.procedureStatus !== 'draft'"
+      >
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer': (editable)}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list *ngIf="editingEntry.entry">
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请单编号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.entry.code}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请单标题</ion-label>
+          <ion-label class="textdirec">{{editingEntry.entry.title}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>使用人</ion-label>
+          <ion-label class="textdirec"
+            >{{editingEntry.entry.useUserName}}</ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-label class="textdirec"
+            >{{editingEntry.entry.createUserName}}</ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>所属部门</ion-label>
+          <ion-label class="textdirec"
+            >{{editingEntry.entry.deptName}}</ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>工程型号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.entry.model}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>采购方式</ion-label>
+          <ion-select
+            [(ngModel)]="editingEntry.entry.purchaseWay"
+            placeholder="请选择"
+            okText="确定"
+            cancelText="取消"
+            disabled
+          >
+            <div *ngFor="let typeData of purchaseWays">
+              <ion-option value="{{typeData?.optionValue}}"
+                >{{typeData?.optionName}}</ion-option
+              >
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>采购来源</ion-label>
+          <ion-select
+            [(ngModel)]="editingEntry.entry.purchaseType"
+            placeholder="请选择"
+            okText="确定"
+            cancelText="取消"
+            disabled
+          >
+            <div *ngFor="let typeData of purchaseTypes">
+              <ion-option value="{{typeData?.optionValue}}"
+                >{{typeData?.optionName}}</ion-option
+              >
+            </div>
+            <ion-option value="0">国产</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>期望付款方式</ion-label>
+          <ion-select
+            [(ngModel)]="editingEntry.entry.payType"
+            placeholder="请选择"
+            okText="确定"
+            cancelText="取消"
+            disabled
+          >
+            <div *ngFor="let typeData of payTypes">
+              <ion-option value="{{typeData?.optionValue}}"
+                >{{typeData?.optionName}}</ion-option
+              >
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>课题号</ion-label>
+          <ion-label class="textdirec"
+            >{{editingEntry.entry.topicNo}}</ion-label
+          >
+        </ion-item>
+        <!-- <ion-item>
+          <ion-label class="textcolor" fixed>质管处经办人</ion-label>
+          <ion-label class="textdirec">{{editingEntry.entry.zgcjbrName}}</ion-label>
+        </ion-item> -->
+        <ion-item>
+          <ion-label class="textcolor" fixed>项目主管</ion-label>
+          <ion-label class="textdirec"
+            >{{editingEntry.entry.kjcprojectName}}</ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>任务阶段</ion-label>
+          <ion-select
+            [(ngModel)]="editingEntry.entry.productStage"
+            placeholder="请选择"
+            okText="确定"
+            cancelText="取消"
+            disabled
+          >
+            <div *ngFor="let typeData of productStages">
+              <ion-option value="{{typeData?.optionValue}}"
+                >{{typeData?.optionName}}</ion-option
+              >
+            </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>备注</ion-label>
+          <ion-label class="textdirec">{{editingEntry.entry.remark}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="editingEntry.entryDetail">
+    <h2 class="lc-toggle-title" (click)="detailCollspaed=!detailCollspaed">
+      采购明细
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon
+          class="iconfont icon-arrowup"
+          *ngIf="detailCollspaed"
+        ></ion-icon>
+        <ion-icon
+          class="iconfont icon-arrowdown"
+          *ngIf="!detailCollspaed"
+        ></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="detailCollspaed">
+      <ion-card *ngFor="let item of editingEntry.entryDetail;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>元器件编号：</span><em>{{item.code}}</em></p>
+            <p><span>元器件名称：</span><em>{{item.name}}</em></p>
+            <p><span>规格型号：</span><em>{{item.model}}</em></p>
+            <p>
+              <span>元器件类型：</span
+              ><em>{{item.commonTypeName || item.commonType}}</em>
+            </p>
+            <p><span>封装形式：</span><em>{{item.packForm}}</em></p>
+            <p><span>军标号：</span><em>{{item.grade}}</em></p>
+            <p><span>生产单位：</span><em>{{item.productionUnit}}</em></p>
+            <p><span>质量等级：</span><em>{{item.levels}}</em></p>
+            <p><span>采购申请数量：</span><em>{{item.sumDosage}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <work-flow [opinionList]="opinionList"> </work-flow>
+</ion-content>
+<ion-footer
+  class="footer-btnRowLiucheng"
+  *ngIf="(editable && !!wfHolderObj && wfHolderObj.isTodo()) || procedureStatus=='waiting'"
+  [ngStyle]="{'bottom': datamore.btnscollHeight>0 && ismobile ? datamore.btnscollHeight+'px' : 0 }"
+>
+  <ion-textarea
+    (click)="blurInput()"
+    *ngIf="editable && wfHolderObj.isTodo() && wfHolderObj.showOpinionArea()"
+    class="optionContent"
+    placeholder="填写办理意见"
+    [(ngModel)]="opinion_title"
+  ></ion-textarea>
+  <ion-grid class="btnsStyle">
+    <ion-row *ngIf="editable && wfHolderObj.isTodo()">
+      <ion-col *ngFor="let btn of wfHolderObj.btns()">
+        <button
+          (click)="manage(btn ,opinion_title)"
+          [ngClass]="{'color-submit': (btn.type == 'submit' || btn.type =='end'), 
+                'color-back': btn.type == 'rollback'}"
+        >
+          {{ btn.title }}
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

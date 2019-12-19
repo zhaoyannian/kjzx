@@ -1,0 +1,31 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>重置密码</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>重置密码</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <div id="Login">
+    <p>账号：{{username}}</p>
+    <ion-item no-lines class="login_item">
+      <ion-icon item-left class="iconfont icon-shurumima"></ion-icon>
+      <ion-input type="password" placeholder="新密码" #password clearInput></ion-input>
+    </ion-item>
+    <ion-item no-lines class="login_item">
+      <ion-icon item-left class="iconfont icon-shurumima"></ion-icon>
+      <ion-input type="password" placeholder="重复新密码" #passwordRepeat clearInput></ion-input>
+    </ion-item>
+    <button ion-button block color="primary" (click)="next(password,passwordRepeat)">
+      下一步
+    </button>
+  </div>
+
+</ion-content>

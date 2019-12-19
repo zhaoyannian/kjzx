@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-navbar>
+        <!-- <ion-title>选择项目</ion-title> -->
+        <ion-searchbar placeholder="搜索项目"cancelButtonText="取消" showCancelButton="true" (ionInput)="getItems($event)"  (ionCancel)="onCancel($event)"></ion-searchbar>
+    </ion-navbar>
+</ion-header>
+<ion-content class="layout-content">
+    <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+        <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新..."></ion-refresher-content>
+    </ion-refresher>   
+    <!-- <div class="projecttotle">
+        项目名称 
+    </div> -->
+    <ul *ngFor="let item of allList" class="projectcontent">
+        <li (click)="chooseItem(item)" [ngClass]="{'checked':item.checked==true}">
+            {{item.projectName}}
+        </li>
+    </ul>
+    <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+        <ion-infinite-scroll-content>
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng">
+        <ion-grid class="btnsStyle">
+            <ion-row>
+                <ion-col><button [disabled]="!isShow" ion-button full (click)="chooseAll()">保存</button></ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-footer>

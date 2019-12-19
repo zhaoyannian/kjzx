@@ -1,0 +1,139 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>会议室详情</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>会议室详情</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>会议室名称</ion-label>
+      <ion-label class="text-right">{{entry.name}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>会议室地点</ion-label>
+      <ion-label class="text-right">{{entry.address}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>会议室状态</ion-label>
+      <ion-label class="text-right">{{status[entry.state]}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>会服人员</ion-label>
+      <ion-label class="text-right">{{entry.managerName}}</ion-label>
+    </ion-item>
+    <ion-item class="duan" no-lines>
+      <ion-label>可容纳人数</ion-label>
+      <ion-label class="text-right">{{entry.galleryful}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>所属机构</ion-label>
+      <ion-label class="text-right">{{entry.corpOrgName}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>服务员姓名</ion-label>
+      <ion-label class="text-right">{{entry.waiterName}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>服务员电话</ion-label>
+      <ion-label class="text-right">{{entry.waiterPhone}}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>审批管理员</ion-label>
+      <ion-label class="text-right">{{entry.apprManagerName}}</ion-label>
+    </ion-item>
+    <div class="meeting-details" *ngIf="!entry.collspaed2">
+      <h3 (click)="entry.collspaed2=!entry.collspaed2">
+        更多详情
+        <p>
+          <ion-icon class="iconfont icon-arrowdown"></ion-icon>
+        </p>
+      </h3>
+    </div>
+    <div *ngIf="entry.collspaed2">
+      <ion-item class="duan" no-lines>
+        <ion-label>是否私密</ion-label>
+        <ion-label class="text-right">{{entry.privateMeetRoom === 'false'?'否':'是'}}</ion-label>
+        <!-- <ion-toggle value="foo" checked="true" [(ngModel)]="entry.privateMeetRoom" [disabled]="true"></ion-toggle> -->
+      </ion-item>
+      <ion-item>
+        <ion-label>预订提前天数（天）</ion-label>
+        <ion-label class="text-right">{{entry.preScheduledTime}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>取消预订提前天数（天）</ion-label>
+        <ion-label class="text-right">{{entry.cancelScheduledTime}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="roomPhotoIds.length<=1">
+        <ion-label>会议室照片</ion-label>
+        <ion-label class="text-right">
+          <div class="image-style" *ngFor="let item of roomPhotoIds;let i =index">
+            <img src="{{state +'/base/fileinfo/getFileImage?id='+ item}}" *ngIf="!!item">
+            <!-- <img src="assets/imgs/video-img.jpg" *ngIf="!entry.roomPhotoIds"> -->
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item *ngIf="roomPhotoIds.length>1">
+        <ion-label>会议室照片</ion-label>
+      </ion-item>
+      <ion-item *ngIf="roomPhotoIds.length>1">
+        <ion-label class="text-right">
+          <div class="image-style image-style2" *ngFor="let item of roomPhotoIds;let i =index">
+            <img src="{{state +'/base/fileinfo/getFileImage?id='+ item}}" *ngIf="!!item">
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item class="duan" no-lines>
+        <ion-label>会议室说明</ion-label>
+        <ion-label class="text-right">{{entry.meetingInstruction}}</ion-label>
+      </ion-item>
+      <ion-item class="duan" no-lines (click)="entry.collspaed=!entry.collspaed">
+        <ion-label>辅助设备设施</ion-label>
+        <ion-label class="text-right">
+          <ion-icon class="iconfont icon-arrowdown" *ngIf="!!entry.collspaed"></ion-icon>
+          <ion-icon class="iconfont icon-arrowup" *ngIf="!entry.collspaed"></ion-icon>
+        </ion-label>
+      </ion-item>
+      <!-- <div class="sw-toggle-box" *ngIf="!entry.collspaed">
+        <ion-card *ngIf="entry.devices.length > 0">
+          <ion-card-content *ngFor="let item of entry.devices" class="meet-card">
+            <div class="card-text">
+              <p class="border-type"><span>设备名称</span><em>{{item.deviceName}}</em></p>
+              <p class="border-type">
+                <span>设备数量{{!!item.unit ? '（'+item.unit+')' :''}}</span><em>{{item.deviceAmount}}</em></p>
+              <p class="border-type1"><span>负责人</span><em>{{item.headUserName}}</em></p>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div> -->
+      <div class="lc-form-row">
+        <div class="lc-toggle-box" *ngIf="!entry.collspaed">
+          <ion-card *ngFor="let item of entry.devices;let i =index">
+            <ion-card-content>
+              <div class="card-text">
+                <p><span>设备名称</span><em>{{item.deviceName}}</em></p>
+                <p><span>设备数量{{!!item.unit ? '（'+item.unit+')' :''}}</span><em>{{item.deviceAmount}}</em></p>
+                <p><span>负责人</span><em>{{item.headUserName}}</em></p>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </div>
+    </div>
+    <div class="meeting-details" *ngIf="entry.collspaed2">
+      <h3 (click)="entry.collspaed2=!entry.collspaed2">
+        <p>
+          <ion-icon class="iconfont icon-arrowup"></ion-icon>
+        </p>
+        收起
+      </h3>
+    </div>
+  </ion-list>
+</ion-content>

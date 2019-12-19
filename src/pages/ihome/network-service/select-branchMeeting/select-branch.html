@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>选择分会场</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="save()">确定</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content text-center>
+  <!-- <ion-searchbar (ionInput)="getItems($event)" placeholder=""></ion-searchbar> -->
+  <ion-searchbar #searchBar id="search-bar" (ionInput)="getItems(searchBar.value)" (ionClear)="onClearFilter($event)"
+    placeholder="搜索人员" debounce="600"></ion-searchbar>
+  <ion-refresher (ionRefresh)="tabslideRefreshFn($event)" *ngIf="!isFilter">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-list *ngIf="!isFilter">
+    <ion-item *ngFor="let item of data ">
+      <ion-label>
+        <h2>{{item.name}}</h2>
+        <p>{{item.address}}</p>
+        <p>{{item.galleryful}}</p>
+        <p>{{item.affiliatedPark}}</p>
+      </ion-label>
+      <ion-checkbox ([ngModule])="item.checked" [checked]="item.checked" (ionChange)="updateItem(item)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)" *ngIf="!isFilter">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-list>
+    <ion-item *ngFor="let item of heroes$ | async">
+      <ion-label>
+        <h2>{{item.name}}</h2>
+        <p>{{item.address}}</p>
+        <p>{{item.galleryful}}</p>
+        <p>{{item.affiliatedPark}}</p>
+      </ion-label>
+       <ion-checkbox ([ngModule])="item.checked" [checked]="item.checked" (ionChange)="updateItem(item)"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

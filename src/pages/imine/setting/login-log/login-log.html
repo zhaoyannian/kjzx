@@ -1,0 +1,46 @@
+
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>通知设置</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+      <ion-buttons>
+          <button ion-button (click)="goback()">
+          <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+          </button>
+      </ion-buttons>
+      <ion-title>通知设置</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+    <ion-list class="inforList">
+        <ion-item>
+          <ion-label>站内信通知</ion-label>
+          <ion-toggle value="foo" color="secondary"  checked="true" [(ngModel)]="notice.messageNotice" (ionChange)="save()"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>邮件通知</ion-label>
+          <ion-toggle value="foo" color="secondary"  checked="true" [(ngModel)]="notice.mailNotice" (ionChange)="save()"></ion-toggle>
+        </ion-item>
+    </ion-list>
+    <ion-list class="inforList">
+        <ion-item>
+          <ion-label>微信企业号通知</ion-label>
+          <ion-toggle value="foo" color="secondary"  checked="true" [(ngModel)]="notice.weixinNotice" (ionChange)="save()"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>微信公众号通知</ion-label>
+          <ion-toggle value="foo" color="secondary"  checked="true" [(ngModel)]="notice.weixinGzhNotice" (ionChange)="save()"></ion-toggle>
+        </ion-item>
+    </ion-list>
+    <ion-list class="inforList">
+        <ion-item>
+          <ion-label>短信通知</ion-label>
+          <ion-toggle value="foo" color="secondary"  checked="true" [(ngModel)]="notice.duanXinNotice" (ionChange)="save()"></ion-toggle>
+        </ion-item>
+    </ion-list>
+   
+</ion-content>

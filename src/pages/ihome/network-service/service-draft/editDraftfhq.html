@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="dismiss()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>防火墙端口服务明细</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+   <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>源地址</ion-label>
+          <ion-input class="textdirec" type='text' value=""  [(ngModel)]="eEntry.sourceAddress"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>源端口</ion-label>
+          <ion-input class="textdirec" type='text' value=""  [(ngModel)]="eEntry.sourcePort"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>目的地址</ion-label>
+          <ion-input class="textdirec" type='text' value=""  [(ngModel)]="eEntry.destinationAddress"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>目的端口</ion-label>
+          <ion-input class="textdirec" type='text' value=""  [(ngModel)]="eEntry.destinationPort"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label class="textcolor" fixed>用途</ion-label>
+          <ion-input class="textdirec" type='text' value=""  [(ngModel)]="eEntry.purpose"></ion-input>
+        </ion-item>
+      </ion-list>
+
+</ion-content>
+<ion-footer class="footer-btnRowLiucheng">
+  <ion-grid class="btnsStyle">
+    <ion-row>
+      <ion-col><button  ion-button full (click)="saveWorkhoursMxFn(eEntry)">保存</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>

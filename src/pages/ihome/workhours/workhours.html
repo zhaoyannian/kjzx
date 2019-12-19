@@ -1,0 +1,183 @@
+<ion-header animation="no-animation">
+    <ion-toolbar>
+        <ion-buttons>
+            <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+        </ion-buttons>
+        <ion-title *ngIf="aliasMold=='ProjectDaily'">工时填报</ion-title>
+        <ion-title *ngIf="aliasMold.indexOf('SHIJIA')>-1 || aliasMold.indexOf('otherLeave3')>-1 || aliasMold.indexOf('Annual1')>-1">
+            请假管理</ion-title>
+        <ion-title *ngIf="aliasMold.indexOf('SealApply')>-1">印章申请</ion-title>
+        <ion-title *ngIf="aliasMold.indexOf('ICCard')>-1">身份卡管理</ion-title>
+        <ion-title *ngIf="this.aliasMold.indexOf('networkResource') > -1">网络资源申请</ion-title>
+        <ion-title *ngIf="aliasMold=='webService'">网络服务管理</ion-title>
+        <ion-title *ngIf="aliasMold=='goOutFlow'">外出报备</ion-title>
+        <ion-title *ngIf="aliasMold=='ItemFile'">事项文件</ion-title>
+        <ion-title *ngIf="aliasMold=='evection'">出差申请</ion-title>
+        <ion-title *ngIf="aliasMold=='ReserveCarWF'">用车申请</ion-title>
+        <ion-buttons end *ngIf="typeMold == 1">
+            <button ion-button (click)="addWorkhoursFn()">
+        <i class="iconfont icon-xinzeng"></i>新增
+      </button>
+        </ion-buttons>
+    </ion-toolbar>
+    <div class="pageMenuSlides3">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide {{i==0?'bottomLine':''}}" *ngFor="let item of menus;let i=index;" tappable (click)="selectPageMenu($event,i)">{{item}}
+                    <i class="orange-num" *ngIf="!!dbtotalCount && item =='待办'">{{dbtotalCount}}</i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <ion-segment [(ngModel)]="toggle" (ngModelChange)=toggleClick($event)>
+    <ion-segment-button value="awiatData">
+      待办
+      <i class="orange-num" *ngIf="!!dbtotalCount">{{dbtotalCount}}</i>
+    </ion-segment-button>
+    <ion-segment-button value="complateData">
+      已办
+    </ion-segment-button>
+    <ion-segment-button value="AllData">
+      我的申请
+    </ion-segment-button>
+  </ion-segment> -->
+    <!-- 头部搜索框 -->
+    <!-- <ion-searchbar #searchBar mode="ios" placeholder="搜索" debounce="600" [(ngModel)]="address" (ionInput)="getItems($event)"></ion-searchbar> -->
+    <div class="searchBox2">
+        <div class="serhch">
+            <div class="bar" (click)=getItems()> <i></i></div>
+            <input type="text" placeholder="搜索" [(ngModel)]="address" #searchBar (ngModelChange)=inputchange($event) (keyup)="keyUpSearch($event)">
+            <div class="bar2" (click)=clear() *ngIf="address"><em>x</em></div>
+        </div>
+    </div>
+
+    <a href="javascript:void(0);" class="goToday" (click)="addWorkhoursFn()" *ngIf="typeMold == 1">
+        <i class="iconfont icon-xinzeng"></i>
+    </a>
+    <ion-content class="layout-content">
+        <ion-slides #contentSlides (ionSlideDidChange)="slideChanged()" *ngIf="aliasMold && isShow">
+            <ion-slide>
+                <work-tab1 [aliasMold]="aliasMold"></work-tab1>
+            </ion-slide>
+            <ion-slide>
+                <work-tab2 [aliasMold]="aliasMold"></work-tab2>
+            </ion-slide>
+            <ion-slide>
+                <work-tab3 [aliasMold]="aliasMold"></work-tab3>
+            </ion-slide>
+        </ion-slides>
+        <!-- <ion-refresher (ionRefresh)="tabslideRefreshFn($event)">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="toggle == 'AllData' || toggle == 'awiatData' || toggle == 'complateData'" class="workflowlist">
+    <ion-list *ngFor="let item of allList">
+      <div *ngIf="aliasMold!=='networkResource' && aliasMold.indexOf('ICCard')<=-1">
+        <ion-item>
+          <ion-label class="textcolor">申请人</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.userName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.userName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请部门</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.deptName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.deptName}}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="aliasMold.indexOf('ICCard') > -1">
+        <ion-item>
+          <ion-label class="textcolor">经办人</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.userName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.userName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">经办人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.deptName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.deptName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.applyICUsername}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.applyICUsername}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.applyICDeptname}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.applyICDeptname}}</ion-label>
+        </ion-item>
+      </div>
+      <div *ngIf="aliasMold=='networkResource'">
+        <ion-item>
+          <ion-label class="textcolor">经办人</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.operatorName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.operatorName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">经办人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.operatorDeptName}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.operatorDeptName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.applyUsername}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.applyUsername}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor">申请人部门</ion-label>
+          <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.applyDeptname}}</ion-label>
+          <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.applyDeptname}}</ion-label>
+        </ion-item>
+      </div>
+      <ion-item>
+        <ion-label class="textcolor">申请时间</ion-label>
+        <ion-label class="textdirec" *ngIf="toggle == 'AllData'">{{item.createTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+        <ion-label class="textdirec" *ngIf="item.bizData && (toggle == 'awiatData' || toggle == 'complateData')">{{item.bizData.createTime
+          | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf=" toggle == 'AllData'">
+        <ion-label class="textcolor">状态</ion-label>
+        <ion-label class="textdirec">{{item.procedureStatusName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+        <ion-label class="textcolor">流程状态</ion-label>
+        <ion-label class="textdirec">{{wfInstStatuss[item.wfInstStatus]}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+        <ion-label class="textcolor">环节名称</ion-label>
+        <ion-label class="textdirec">{{item.pointName}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+        <ion-label class="textcolor">阅读时间</ion-label>
+        <ion-label class="textdirec">{{item.readTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="toggle == 'awiatData' || toggle == 'complateData'">
+        <ion-label class="textcolor">办理时间</ion-label>
+        <ion-label class="textdirec">{{item.allocateTime | date: 'yyyy-MM-dd HH:mm:ss'}}</ion-label>
+      </ion-item>
+      <ion-grid class="btns">
+        <ion-row>
+          <ion-col (click)="toEditor2(item, 'view')" *ngIf="item.procedureStatus != 'draft' && toggle == 'AllData'"><button
+              type="button">查看</button></ion-col>
+          <ion-col (click)="toCreate(item, 'view')" *ngIf="item.procedureStatus == 'draft'  && toggle == 'AllData'"><button
+              type="button">查看</button></ion-col>
+          <ion-col (click)="toCreate(item, 'update')" *ngIf="item.procedureStatus == 'draft'  && toggle == 'AllData'"><button
+              type="button" class="editColor">编辑</button></ion-col>
+          <ion-col (click)="delete(item)" *ngIf="item.procedureStatus == 'draft'  && toggle == 'AllData'"><button type="button"
+              class="deleteColor">删除</button></ion-col>
+          <ion-col (click)="toEditor(item, 'update')" *ngIf="toggle == 'awiatData'"><button type="button">办理</button></ion-col>
+          <ion-col (click)="toEditor(item, 'view')" *ngIf="toggle == 'complateData'"><button type="button">查看</button></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+    <div class="myorder-item-notdata" *ngIf="allList.length<=0">
+      <img src="assets/imgs/notdata.png" alt="">
+    </div>
+  </div>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content loadingText="正在加载更多...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+    </ion-content>
+</ion-header>

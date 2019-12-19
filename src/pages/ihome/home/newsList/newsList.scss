@@ -1,0 +1,94 @@
+page-newsList{
+    .list-ios{
+        margin: 0;
+    }
+    .newsList-item {
+        position: relative;
+        padding-left: 0;
+        &.item-block:first-child {
+            border: none;
+        }
+        &.item-block:last-child,
+        &.item-block .item-inner {
+            border-color: #ededed;
+            border-bottom: 1px solid #ededed;
+        }
+        .item-inner {
+            padding-right: 0!important;
+        }
+        .label-ios {
+            margin: 10px 12px;
+        } 
+        img {
+            width: 118px;
+            height: 88px;
+        }
+        h2{
+            color: #333;
+            font-size: 1.7rem;
+            line-height: 1.6;
+            white-space: normal;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+        .exitH2 {
+            margin: 10px 0;
+        }
+        .time {
+            margin: 10px 0 8px;
+            font-size: 0.9rem;
+            color: #999;
+        }
+        .icon-time {
+            font-size: 2.8rem;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        ion-thumbnail{
+            margin: 10px!important;
+        }
+    }
+    .content-nodata {
+        text-align: center;
+        margin-top: 15%;
+        .noData-icon {
+            display: inline-block;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            border: 2px solid #ff9000;
+            color: #ff9000;
+            font-weight: bolder;
+            margin-bottom: 15px;
+            line-height: 22px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        em {
+            font-size: 1.6rem;
+        }
+    }
+
+    .newList-item-max {
+        width: 100%;
+        position: relative;
+        margin-bottom: 8px;
+        img {
+            width: 100%;
+            display: block;
+        }
+        .bottom-text {
+            width: 100%;
+            padding: 0.6rem 2rem;
+            background: rgba(0, 0, 0, .13);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            font-size: 1.8rem;
+            color: #fff;
+        }
+    }
+}

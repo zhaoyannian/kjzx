@@ -1,0 +1,30 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>找回密码</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>找回密码</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <div id="Login">
+    <ion-item no-lines class="login_item">
+      <ion-icon item-left class="iconfont icon-yonghu"></ion-icon>
+      <ion-input type="text" placeholder="请输入账号" #username clearInput placeholder="用户名/工作邮箱/手机号"></ion-input>
+    </ion-item>
+    <ion-item no-lines class="login_item_valid">
+      <ion-input type="text" placeholder="请输入验证码" #validcode clearInput></ion-input>
+      <canvas id="ValidCode12" (click)="drawPic('ValidCode12')" width="100" height="45" item-end></canvas>
+    </ion-item>
+    <button ion-button block color="primary" (click)="next(username,validcode)">
+      下一步
+    </button>
+  </div>
+
+</ion-content>

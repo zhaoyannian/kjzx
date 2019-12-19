@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+        选择办理人员
+    </ion-title>
+    <ion-buttons>
+      <button ion-button (click)="dismiss()">关闭</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  text-center>
+    <ion-list>
+      <ion-item *ngFor="let item of result;let i =index" >
+          <ion-label>{{item.userName}}</ion-label>
+          <ion-checkbox ([ngModule]) ="item.checked" ></ion-checkbox>
+      </ion-item>
+    </ion-list>
+    <div padding><button ion-button full (click)="save()">保存</button></div>
+</ion-content>

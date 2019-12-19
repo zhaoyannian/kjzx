@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start class="contactbtn">
+        <button ion-button (click)="goback()">
+            <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+          </button>
+      <button ion-button icon-only (click)="choose()">
+        {{!!title ? title :'群组日程'}}
+        <img src="assets/imgs/sanjiao.png" alt="" class="sanjiao" *ngIf="groupArr.length>1">
+        <!-- <ion-icon class="iconfont icon-arrowdown" item-end *ngIf="groupArr.length>1"></ion-icon> -->
+      </button>
+    </ion-buttons>
+    <ion-title>
+    </ion-title>
+    <ion-buttons end class="contactbtn">
+      <button ion-button icon-only (click)="groupArr.length<1&&isLeader?createRequest():goGroupList()">
+        我的群组
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-list radio-group id="SelectGroup" class="select-box">
+    <ion-item *ngFor="let item of groupArr" (click)="setGroup(item)" 
+    [ngClass]="{'activebg':item.checked ==true}">{{item.title}}</ion-item>
+  </ion-list>
+</ion-header>
+<a href="javascript:void(0);" class="goToday" (click)="initToday()" *ngIf="getShow() && groupArr.length>0">今</a>
+<ion-content class="layout-content">
+  <div class="calendar-short" *ngIf="groupArr.length>0">
+    <div class="calendar-short-head">
+      <ion-icon class="iconfont icon-arrowleft calendar-prev" (click)="updateDateMonthLast(today,-nextMonthDaysLast)"></ion-icon>
+      <h3 class="calendar-ymd">{{today | date:'yyyy年MM月dd日'}}</h3>
+      <ion-icon class="iconfont icon-arrowright calendar-next" (click)="updateDateMonthNext(today,nextMonthDaysNext)"></ion-icon>
+    </div>
+    <div class="calendar-short-content">
+      <ul class="calendar-calHead">
+        <li>日</li>
+        <li>一</li>
+        <li>二</li>
+        <li>三</li>
+        <li>四</li>
+        <li>五</li>
+        <li>六</li>
+      </ul>
+      <ion-slides class="calendar-calBody">
+        <ion-slide class="calendar-calRow" (swipeleft)="updateWeek(today,7)" (swiperight)="updateWeek(today,-7)">
+          <div class="calendar-calTd" *ngFor="let item of thisWeeks;" (click)="queryDateCalendarPage(item.week)">
+            <span [ngClass]="(isToday | date:'yyyy-MM-dd')?'curr':''" *ngIf="(isToday | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')">{{item.week | date:'dd'}}</span>
+            <span [ngClass]="(today | date:'yyyy-MM-dd') === (item.week | date:'yyyy-MM-dd')?'current':''" *ngIf="(isToday | date:'yyyy-MM-dd') !== (item.week | date:'yyyy-MM-dd')">{{item.week | date:'dd'}}</span>
+            <em [ngClass]="(checkClassType(item.week,now))?'orange':'gray'" *ngIf="item.count>0"></em>
+          </div>
+        </ion-slide>
+      </ion-slides>
+    </div>
+  </div>
+  <div class="calendar-list  calendar-nobg">
+    <div class="peerCal-list" *ngIf="groupListDate.length >0">
+      <div class="peerCal-group" *ngFor="let item of groupListDate">
+        <div class="peerCal-left">
+          <span class="peerCal-imgbox">
+            <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photoId}}" *ngIf="!!item.photoId">
+            <img src="assets/imgs/people-head.png" *ngIf="!!!item.photoId">
+          </span>
+          <span>{{item.userName}}</span>
+          <span class="deptName">{{item.deptName}}</span>
+        </div>
+        <div class="peerCal-right">
+          <ion-list>
+            <ion-item class="mycalendar-item" *ngFor="let calendar of item.calendarTos" (click)="showStatus ? viewCal(calendar):''">
+              <div item-start class="time-box">
+                <span *ngIf="calendar.allDay === 'false'">{{calendar.detailBeginTime}}</span>
+                <span *ngIf="calendar.allDay === 'false'" class="endTime">{{calendar.detailEndTime}}</span>
+                <span *ngIf="calendar.allDay === 'true'">全天</span>
+              </div>
+              <p>{{calendar.title}}</p>
+            </ion-item>
+          </ion-list>
+        </div>
+      </div>
+    </div>
+    <div class="listTxt" *ngIf="groupListDate.length > 0 && groupArr.length>0">{{nowTime}}好，抖擞起精神吧</div>
+    <div class="tips-Nodata" *ngIf="groupListDate.length<=0 && groupArr.length>0">暂无日程</div>
+    <div class="tips-Nodata" *ngIf="groupArr.length<=0">
+      <img src="assets/imgs/qunzu_null.png" alt="">
+      <p class="buttoncolor">您目前还没有任何群组</p>
+      <button type="button" class="button btn-creGroup" (click)="createRequest()" *ngIf="!!isLeader">创建群组</button>
+    </div>
+  </div>
+ 
+</ion-content>

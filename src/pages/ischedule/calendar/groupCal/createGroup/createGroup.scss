@@ -1,0 +1,130 @@
+page-createGroup {
+  & .duan {
+    margin-bottom: 5px;
+  }
+
+  & .icon.del{
+    // font-size: 1.8rem; position: absolute; top: 5px; right: 5px;
+    font-size: 1.6rem;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #fff;
+    background: red;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .icon-guanbi{
+        transform: scale(0.6);
+    }
+}
+
+  .people-list {
+    background: #fff;
+    overflow: hidden;
+    padding: 0 6px;
+  }
+
+  
+  button{
+    height: 5.5rem; 
+  }
+  .list-ios>.item-block:first-child {
+    height: 7rem;
+  }
+
+  .item-input ion-input,
+  .item-input ion-textarea {
+    padding-top: 10px;
+  }
+  .choosePeopleList{
+    .label-ios{
+        margin: 0;
+        margin-bottom: 11px;
+    }
+}
+  .people-item {
+    // display: inline-block;
+    float: left;
+    width: 16.6666%;
+    // max-width: 62px;
+    // min-height: 66px;
+    // width: 20%;
+    padding: 12px 4px 0px;
+    text-decoration: none;
+    color: #999;
+    text-align: center;
+    font-size: 1.2rem;
+    position: relative;
+    white-space: normal;
+    min-height: 97px;
+    img {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 100%;
+      vertical-align: top;
+      border: 1px solid #e8eaf4;
+    }
+
+    & .icon.del{
+      // font-size: 1.8rem; position: absolute; top: 5px; right: 5px;
+      font-size: 1.6rem;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      color: #fff;
+      background: red;
+      border-radius: 50%;
+      width: 1.5rem;
+      height: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .icon-guanbi{
+          transform: scale(0.6);
+      }
+  }
+
+    .icon {
+      font-size: 4rem;
+    }
+
+    .icon-reduce1 {
+      font-size: 4.7rem;
+      margin-top: -3px;
+    }
+
+    span {
+      margin-top: 3px;
+      min-height: 18px;
+      // overflow: hidden;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -o-box;
+      display: box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      // -webkit-line-clamp: 2;
+      // -webkit-box-orient: vertical;
+      // white-space: nowrap;
+    }
+  }
+
+  .item-ios [item-end] {
+    margin: 13px;
+  }
+
+  .item-ios {
+    padding-left: 0px;
+  }
+
+  .list-ios .item-block .item-inner {
+    padding-left: 16px;
+    padding-right: 16px;
+    border-color: #e8eaf4;
+  }
+}

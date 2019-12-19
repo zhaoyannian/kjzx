@@ -1,0 +1,34 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>选择人员</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="deleteMembers()">删除</button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>选择人员</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="deleteMembers()">删除</button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of dataList">
+      <ion-avatar item-start>
+        <img src="{{state +'/base/fileinfo/getFileImage?id='+ item.photo}}" *ngIf="!!item.photo">
+        <img src="assets/imgs/people-head.png" *ngIf="!item.photo">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{item.userName}}</h2>
+        <p>{{item.deptName}}</p>
+      </ion-label>
+      <ion-checkbox item-end color="blue" [(ngModel)]="item.checkNed"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+</ion-content>

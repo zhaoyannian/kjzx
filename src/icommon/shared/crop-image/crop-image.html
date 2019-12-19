@@ -1,0 +1,15 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>图片裁剪</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="save()">保存</button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="content-box">
+  <img #image class="hidden" [src]="imageSrc" [ngStyle]="{'visibility': visibility}">
+</ion-content>

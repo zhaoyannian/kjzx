@@ -1,0 +1,104 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>新建日程</ion-title>
+    </ion-navbar>
+  </ion-header>
+  <ion-content>
+      <ion-list class="inforList">
+        <ion-item class="born" >
+          <ion-label class="error-message" fixed><i class="starred">*</i>标题</ion-label>
+          <ion-input type="text" placeholder="请填写" [(ngModel)]="schedule.title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>地点</ion-label>
+          <ion-input type="text"  placeholder="请填写" [(ngModel)]="schedule.location"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed>内容</ion-label>
+          <ion-input type="text"  placeholder="请填写" [(ngModel)]="schedule.cotent"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed class="error-message" fixed><i class="starred"></i>办公状态</ion-label>
+          <ion-select [(ngModel)]="schedule.officeStatus" interface="popover"  placeholder="请选择">
+              <ion-option value="0">请选择</ion-option>
+              <div *ngFor="let item of officeStatusList">
+                <ion-option value="{{item?.optionValue}}">{{item?.optionName}}</ion-option>
+              </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed class="error-message"><i class="starred"></i>提前提示</ion-label>
+          <ion-select [(ngModel)]="schedule.timeRemind" interface="popover"  placeholder="请选择">
+              <ion-option value="0">请选择</ion-option>
+              <div *ngFor="let item of timeRemindList">
+                <ion-option value="{{item?.optionValue}}">{{item?.optionName}}</ion-option>
+              </div>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed class="error-message"><i class="starred"></i>公开</ion-label>
+          <ion-toggle value="foo" checked="true" [(ngModel)]="schedule.open"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label fixed class="error-message"><i class="starred"></i>全天</ion-label>
+          <ion-toggle value="foo" checked="true" [(ngModel)]="schedule.allDay"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="schedule.allDay === 'false' || schedule.allDay === false">
+          <ion-label fixed class="error-message" ><i class="starred"></i>开始日期</ion-label>
+          <ion-label (click)="openCalendar('calendar')">{{schedule.calendar | date:'yyyy-MM-dd'}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="schedule.allDay === 'false' || schedule.allDay === false">
+          <ion-label fixed class="error-message"><i class="starred">*</i>开始时分</ion-label>
+          <ion-datetime displayFormat='HH:mm' pickerFormat='HH:mm' [(ngModel)]="schedule.detailBeginTime" cancelText='取消' doneText='确定'></ion-datetime>
+        </ion-item>
+        <ion-item *ngIf="schedule.allDay === 'false' || schedule.allDay === false">
+          <ion-label fixed class="error-message"><i class="starred">*</i>结束时分</ion-label>
+          <ion-datetime displayFormat='HH:mm' pickerFormat='HH:mm' [(ngModel)]="schedule.detailEndTime" cancelText='取消' doneText='确定'></ion-datetime>
+        </ion-item>
+        <ion-item *ngIf="schedule.allDay === 'false' || schedule.allDay === false">
+          <ion-label fixed class="error-message"><i class="starred"></i>重复频率</ion-label>
+          <ion-select [(ngModel)]="employee3" interface="popover"  placeholder="请选择">
+              <ion-option value="0">请选择</ion-option>
+              <div *ngFor="let employee of employees3">
+                <ion-option value="{{employee?.id}}">{{employee?.name}}</ion-option>
+              </div>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="schedule.allDay === 'false' || schedule.allDay === false">
+          <ion-label fixed class="error-message"><i class="starred"></i>结束日期</ion-label>
+          <!-- <ion-datetime displayFormat='YYYY-MM-DD' pickerFormat='YYYY-MM-DD' [(ngModel)]="schedule.overTime">
+            </ion-datetime> -->
+          <ion-label (click)="openCalendar('overTime')">{{schedule.overTime | date:'yyyy-MM-dd'}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="schedule.allDay === 'true' || schedule.allDay === true">
+            <ion-label fixed class="error-message"><i class="starred"></i>开始日期</ion-label>
+            <!-- <ion-datetime displayFormat='YYYY-MM-DD' pickerFormat='YYYY-MM-DD' [(ngModel)]="schedule.beginTime">
+              </ion-datetime> -->
+            <ion-label (click)="openCalendar('beginTime')">{{schedule.beginTime | date:'yyyy-MM-dd'}}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="schedule.allDay === 'true' || schedule.allDay === true">
+              <ion-label fixed class="error-message"><i class="starred"></i>结束日期</ion-label>
+              <!-- <ion-datetime displayFormat='YYYY-MM-DD' pickerFormat='YYYY-MM-DD' [(ngModel)]="schedule.endTime">
+                </ion-datetime> -->
+              <ion-label (click)="openCalendar('endTime')">{{schedule.endTime | date:'yyyy-MM-dd'}}</ion-label>
+            </ion-item>
+        <ion-item>
+          <ion-label fixed >日程类型</ion-label>
+          <ion-select [(ngModel)]="schedule.calType" disabled interface="popover"  placeholder="请选择">
+              <ion-option value="0">请选择</ion-option>
+              <div *ngFor="let item of calTypeList">
+                <ion-option value="{{item?.optionValue}}">{{item?.optionName}}</ion-option>
+              </div>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+  </ion-content>
+  <ion-footer class="footer-btnRow">
+    <ion-grid>
+        <ion-row>
+          <ion-col col-6> <button ion-button  color="gray" outline type="button"  (click)="cancle()">取消</button></ion-col>
+          <ion-col col-6><button ion-button type="submit" [disabled]="" (click)="save()">保存</button></ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>
+  

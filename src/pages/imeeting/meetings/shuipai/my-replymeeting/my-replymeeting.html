@@ -1,0 +1,62 @@
+<ion-header>
+
+  <!-- <ion-navbar>
+    <ion-title>水牌信息</ion-title>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>我申请的会议</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content">
+  <!-- <ion-refresher (ionRefresh)="tabslideRefreshFn($event)" *ngIf="!isFilter">
+    <ion-refresher-content pullingIcon="pulldown" pullingText="拉下刷新" refreshingSpinner="circles" refreshingText="刷新...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <ion-list *ngFor="let entry of listData">
+    <ion-item>
+      <ion-label>会议名称</ion-label>
+      <span item-end class="textcolor">{{entry.meetingName}}</span>
+    </ion-item>
+    <!-- <ion-item>
+      <ion-label>所属部门</ion-label>
+      <span item-end class="textcolor">{{entry.deptName}}</span>
+    </ion-item> -->
+    <ion-item>
+      <ion-label>地点</ion-label>
+      <span item-end class="textcolor">{{entry.meetingAddress}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>开始日期</ion-label>
+      <span item-end class="textcolor">{{entry.meetingDateBegin | date: 'yyyy-MM-dd HH:mm'}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>结束日期</ion-label>
+      <span item-end class="textcolor">{{entry.meetingDateEnd | date: 'yyyy-MM-dd HH:mm'}}</span>
+    </ion-item>
+    <ion-item>
+      <ion-label>会议状态</ion-label>
+      <span item-end class="textcolor">{{meetingStatuss[entry.meetingStatus]}}</span>
+    </ion-item>
+    <ion-grid class="btns">
+      <ion-row>
+        <ion-col (click)="goView(entry)"><button type="button">查看</button></ion-col>
+        <ion-col (click)="cancle(entry)"
+          *ngIf="entry.meetingStatus =='1' || entry.meetingStatus=='2' || entry.meetingStatus=='6'"><button
+            type="button" class="editColor">取消申请</button></ion-col>
+      </ion-row>
+    </ion-grid>
+    <!-- <ion-item text-center><button ion-button full clear (click)="goView(entry)">查看</button></ion-item>
+    <ion-item text-center><button ion-button full clear (click)="cancle(entry)">取消</button></ion-item> -->
+  </ion-list>
+  <div class="myorder-item-notdata" *ngIf="listData.length<=0">
+    <img src="assets/imgs/notdata.png" alt="">
+  </div>
+  <ion-infinite-scroll (ionInfinite)="tabslideNextRefreshFn($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

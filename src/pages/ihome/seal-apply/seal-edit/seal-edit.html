@@ -1,0 +1,118 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>印章申请详情</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        <ion-icon name="xinzeng"></ion-icon>办理意见
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+      <button ion-button (click)="goback()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+      </button>
+    </ion-buttons>
+    <ion-title>{{!editable ? "查看印章申请":"审核印章申请"}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="layout-content"
+  [ngClass]="{'has-footer': editable && wfHolderObj && wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo(),'has-footer2':editable && wfHolderObj && !wfHolderObj.showOpinionArea()&& wfHolderObj.isTodo()}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list>
+        <textarea [(ngModel)]="editingEntry.applyReason" readonly class="reason"></textarea>
+        <ion-item>
+          <ion-label class="textcolor" fixed>用章选择</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.sealNameCn"></ion-input>
+        </ion-item>
+        <!-- <ion-item *ngIf="!!editable&& entry.pointId==0">
+            <ion-label class="textcolor" fixed>用章选择</ion-label>
+            <ion-select [(ngModel)]="editingEntry.sealName" placeholder="请选择" okText="确定" cancelText="取消" 
+              (ngModelChange)="getWfHolder(editingEntry.sealName)">
+              <ion-option value="Zxz">中心章</ion-option>
+              <ion-option value="Zhbz">综合办章</ion-option>
+              <ion-option value="Wxhtz">外协合同章</ion-option>
+              <ion-option value="Htzsk">合同章（收款）</ion-option>
+            </ion-select>
+          </ion-item> -->
+        <ion-item *ngIf="!!editingEntry.sealNameCn && editingEntry.sealName != 'Zhbz'">
+          <ion-label class="textcolor" fixed>是否选择法人章</ion-label>
+          <ion-toggle class="back_style" value="foo" color="secondary" checked="true" [(ngModel)]="isLegalSeal"
+            disabled></ion-toggle>
+          <!-- <ion-toggle class="back_style" value="foo" color="secondary" checked="true" [(ngModel)]="isLegalSeal"
+             (ionChange)="changeIsLegalSeal()" *ngIf="!!editable&& entry.pointId==0"></ion-toggle> -->
+        </ion-item>
+        <ion-item *ngIf="editingEntry.sealName == 'Zxz'">
+          <ion-label class="textcolor" fixed>是否需要主管部门审批</ion-label>
+          <ion-toggle class="back_style" value="foo" color="secondary" checked="true" [(ngModel)]="isWfJump" disabled>
+          </ion-toggle>
+
+        </ion-item>
+        <ion-item *ngIf="entry.pointId!=0">
+          <ion-label class="textcolor" fixed>联系电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.phone"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="!!editable&& entry.pointId==0">
+          <ion-label class="textcolor" fixed>联系电话</ion-label>
+          <ion-input class="textdirec" type='text' value="" [(ngModel)]="editingEntry.phone"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="editingEntry">
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.applicant"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>所在部门</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.deptName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请编号</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.applyNo"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="entry.pointId!=0">
+        <ion-item>
+          <ion-label>备注</ion-label>
+          <ion-input class="textdirec" type='text' value="" readonly [(ngModel)]="editingEntry.remark"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="!!editable&& entry.pointId==0">
+        <ion-item>
+          <ion-label>备注</ion-label>
+          <ion-input class="textdirec" type='text' value="" [(ngModel)]="editingEntry.remark"></ion-input>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <button class="file" *ngIf="!!editable&& entry.pointId==0">
+          上传附件
+          <input #uploadImg type="file" (change)="uploadFile($event)">
+        </button>
+        <div class="fileText">附件</div>
+        <ul class="fileStyle">
+          <li *ngFor="let item of fileList;let i =index">
+            <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.fileName) == 'excel',
+                'icon-pdf': fileIcon(item.fileName) == 'pdf','icon-ppt': fileIcon(item.fileName) == 'ppt',
+                'icon-word': fileIcon(item.fileName) == 'doc','icon-txt': fileIcon(item.fileName) == 'txt',
+                'icon-tupian': fileIcon(item.fileName) == 'img','icon-qitafujian': fileIcon(item.fileName) == 'file',
+                'icon-rar': fileIcon(item.fileName) == 'zip'}"></ion-icon>
+            <span>{{item.fileName}}</span>
+            <ion-icon class="iconfont icon-del" (click)="removeFile(item,i)" *ngIf="!!editable&& entry.pointId==0">
+            </ion-icon>
+            <a class="iconfont icon-xiazai" href="{{httpurl}}/api/fileinfo/downloadFile/{{item.id}}"></a>
+            <!-- <ion-icon class="iconfont icon-yanjing" *ngIf="fileIcon(item.fileName) == 'pdf'" (click)="showPd(item.id)"></ion-icon> -->
+          </li>
+        </ul>
+      </ion-list>
+    </div>
+  </div>
+  <work-flow [opinionList]="opinionList"></work-flow>
+</ion-content>
+<workflow-button *ngIf="editingEntry && wfHolderObj" [opinion_title]="opinion_title" [editable]="editable"
+  [wfHolderObj]="wfHolderObj" [EditingEntry]="editingEntry" [datamore]="datamore"></workflow-button>

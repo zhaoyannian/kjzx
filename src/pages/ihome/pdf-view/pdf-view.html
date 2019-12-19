@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <ion-icon class="iconfont icon-arrowleft"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>附件</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding style="-webkit-overflow-scrolling:touch!important; overflow: scroll!important;">
+  <iframe id="pdfView" name="pdfView" style="width:100%;
+  height:100%;" [src]="printViewSrc" frameborder="0"></iframe>
+</ion-content>

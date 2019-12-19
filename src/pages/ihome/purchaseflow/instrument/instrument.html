@@ -1,0 +1,360 @@
+<ion-header>
+  <!-- <ion-navbar>
+    <ion-title>{{inittitle}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+  </ion-navbar> -->
+  <ion-toolbar>
+    <ion-buttons>
+        <button ion-button (click)="goback()">
+            <ion-icon class="iconfont icon-arrowleft"></ion-icon>返回
+        </button>
+    </ion-buttons>
+    <ion-title>{{inittitle}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="viewFlow()">
+        办理意见
+      </button>
+    </ion-buttons>
+</ion-toolbar>
+</ion-header>
+<ion-content class="layout-content" [ngClass]="{'has-footer': (editable)}">
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <ion-list *ngIf="editingEntry.bizEntity">
+        <ion-item>
+          <ion-label class="textcolor" fixed>采购申请编号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.paCode}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请部门</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.orgCodeName}}</ion-label>
+          <!-- <ion-label class="textdirec" type="text" value="" readonly *ngIf="entry.title && entry.title.orgCodeName" [(ngModel)]="entry.title.orgCodeName"></ion-label> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请日期</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.applicationDate |date: 'yyyy-MM-dd' }}</ion-label>
+          <!-- <ion-label class="textdirec" type="text" value="" readonly [(ngModel)]="editingEntry.bizEntity.applicationDate "></ion-label> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>采购执行单位</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.operateDepartmentName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>申请人</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.applicantName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>合同编号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.caCode}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <div class="lc-form-row">
+    <div class="lc-toggle-box">
+      <h2 class="lc-toggle-title" (click)="conInfo=!conInfo">
+        合同信息
+        <a href="javascript:void(0);" class="lc-toggle-btn">
+          <ion-icon class="iconfont icon-arrowup" *ngIf="conInfo"></ion-icon>
+          <ion-icon class="iconfont icon-arrowdown" *ngIf="!conInfo"></ion-icon>
+        </a>
+      </h2>
+      <ion-list *ngIf="editingEntry.bizEntity && conInfo" style="margin-top: .5rem;">
+        <ion-item>
+          <ion-label class="textcolor" fixed>合同名称</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.contractName}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>采购方式</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.purchaseWayName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>验收单号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.checkNumber}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>供方合同号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.supplierContractNo}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>对方签署日期</ion-label>
+          <ion-label class="textdirec ml16">{{editingEntry.bizEntity.supplierSignDate| date: 'yyyy-MM-dd'}}</ion-label>
+          <!-- <ion-label class="textdirec"  [(ngModel)]="editingEntry.bizEntity.supplierSignDate "></ion-label> -->
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>原产国</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.productCountry}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>设备名称</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.name}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>品牌</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.brand}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>规格型号</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.specificationMc}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>计量单位</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.measurement}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>数量</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.quantity}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>合同金额（元）</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.contractPrice}}
+          </ion-label>
+        </ion-item>
+        <ion-item
+          *ngIf="(editingEntry.bizEntity.contractPrice  > 50000) && editable &&
+         (!!editingEntry.flowSaveParDto.flowInstName && (editingEntry.flowSaveParDto.flowInstName == '采购主任'))">
+          <ion-label class="textcolor" fixed>主管部门经办人</ion-label>
+          <ion-label style=" text-align: right;" (click)="selectStaffType('cdUserName')">{{cdUserName}}<ion-icon class="iconfont icon-arrowdown item-end"
+              style="padding-left: 1rem;"></ion-icon>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractType === 'outer'">
+          <ion-label class="textcolor" fixed>外贸代理费收取比例</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.agencyfeesProportion}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractType === 'outer'">
+          <ion-label class="textcolor" fixed>无税原币单价</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.price}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>预付款金额（元）</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.prepaymentAmount}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>是否有技术协议</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.technologyAgreementName}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractType === 'outer'">
+          <ion-label class="textcolor" fixed>货币种类</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.currency}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>质保金方式</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.guaranteeWayName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>质保金金额（元）</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.guaranteeAmout}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>质保金返还条件</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.guaranteeReturn}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>履约保证金（元）</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.performanceAmout}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>发票类别</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.billTypeName}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>税率(%)</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.taxRate}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>备注</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.detail.remark}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="editingEntry.bizEntity  && editingEntry.bizEntity.extraInfo">
+    <h2 class="lc-toggle-title" (click)="extraInfo=!extraInfo">
+      额外信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="extraInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!extraInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box">
+      <ion-list *ngIf="  extraInfo ">
+        <ion-item>
+          <ion-label class="textcolor" fixed>额外信息</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.extraInfo}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="payInformations">
+    <h2 class="lc-toggle-title" (click)="payInfo=!payInfo">
+      付款信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="payInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!payInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="payInfo">
+      <ion-card *ngFor="let item of payInformations;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>描述：</span><em>{{item.title}}</em></p>
+            <p><span>付款金额（元）：</span><em>{{item.paymentAmount}}</em></p>
+            <p><span>付款比例（%）：</span><em>{{item.paymentProporl}}</em></p>
+            <p><span>付款时间：</span><em>{{item.paymentDate | date: 'yyyy-MM-dd'}}</em></p>
+            <p><span>备注：</span><em>{{item.remark}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <div class="lc-form-row" *ngIf="dataInformations ">
+    <h2 class="lc-toggle-title" (click)="collspaed=!collspaed">
+      课题分摊
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="collspaed"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!collspaed"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="collspaed">
+      <ion-card *ngFor="let item of dataInformations;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>子课题号：</span><em>{{item.subjectCode}}</em></p>
+            <p><span>子课题名称：</span><em>{{item.subjectName}}</em></p>
+            <p><span>课题资金（元）：</span><em>{{item.amount}}</em></p>
+            <p><span>备注：</span><em>{{item.remark}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="conParInfo=!conParInfo">
+      合同相关方
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="conParInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!conParInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf="conParInfo">
+      <ion-list>
+        <ion-item>
+          <ion-label class="textcolor" fixed>销售渠道</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.channelName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>供应商名称</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.supplierName}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>销售员</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.seller}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>联系电话</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.telephone}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>电子邮箱</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.email}}
+          </ion-label>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractType != 'within'">
+          <ion-label class="textcolor" fixed>进口代理商名称</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.agentSupplierName}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractType != 'within'">
+          <ion-label class="textcolor" fixed>进口代理商销售员</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.agentSeller}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractType != 'within'">
+          <ion-label class="textcolor" fixed>进口代理商联系电话</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.agentTelephone}}</ion-label>
+        </ion-item>
+        <ion-item *ngIf="editingEntry.bizEntity.contractType != 'within'">
+          <ion-label class="textcolor" fixed>进口代理商电子邮箱</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.agentEmail}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>开户银行</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.bankName}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label class="textcolor" fixed>银行账户</ion-label>
+          <ion-label class="textdirec">{{editingEntry.bizEntity.ps.account}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <div class="lc-form-row">
+    <h2 class="lc-toggle-title" (click)="delInfo=!delInfo">
+      交货信息
+      <a href="javascript:void(0);" class="lc-toggle-btn">
+        <ion-icon class="iconfont icon-arrowup" *ngIf="delInfo"></ion-icon>
+        <ion-icon class="iconfont icon-arrowdown" *ngIf="!delInfo"></ion-icon>
+      </a>
+    </h2>
+    <div class="lc-toggle-box" *ngIf=" delInfo">
+      <div class="lc-toggle-box">
+        <ion-list>
+          <ion-item>
+            <ion-label class="textcolor" fixed>交货方式：</ion-label>
+            <ion-label class="textdirec" type="text" value="" readonly
+              [(ngModel)]="editingEntry.bizEntity.deliveryTypeName"></ion-label>
+          </ion-item>
+        </ion-list>
+      </div>
+      <ion-card *ngFor="let item of deliveryPlanInfos;let i =index">
+        <ion-card-content>
+          <div class="card-text">
+            <p><span>交货名称：</span><em>{{item.title}}</em></p>
+            <p><span>交货数量：</span><em>{{item.deliveryAmount}}</em></p>
+            <p><span>交货地点：</span><em>{{item.deliveryPlace}}</em></p>
+            <p><span>预计交货日期：</span><em>{{item.deliveryDate | date: 'yyyy-MM-dd'}}</em></p>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+  <ion-list *ngIf="fileList.length>0" class="lc-form-row">
+    <div class="fileText">附件</div>
+    <ul class="fileStyle">
+      <li *ngFor="let item of fileList;let i =index">
+        <ion-icon class="iconfont" [ngClass]="{'icon-excel': fileIcon(item.name) == 'excel',
+                  'icon-pdf': fileIcon(item.name) == 'pdf','icon-ppt': fileIcon(item.name) == 'ppt',
+                  'icon-word': fileIcon(item.name) == 'doc','icon-txt': fileIcon(item.name) == 'txt',
+                  'icon-tupian': fileIcon(item.name) == 'img','icon-qitafujian': fileIcon(item.name) == 'file',
+                  'icon-rar': fileIcon(item.name) == 'zip'}"></ion-icon>
+        <span>{{item.name}}</span>
+        <a class="iconfont icon-xiazai" href="{{httpurl}}{{item.uri}}"></a>
+      </li>
+    </ul>
+  </ion-list>
+  <purchase-flow [opinionList]="opinionList"></purchase-flow>
+</ion-content>
+<purchase-button *ngIf="editable && buttons && editingEntry" [buttons]="buttons" [OPINION_TITLE]="OPINION_TITLE"
+  [editingEntry]="editingEntry" [hjenty]="hjenty" [currentPoint]="currentPoint" [points]="points" [flowType]="flowType"
+  [currAmounts]="currAmounts" [editable]="editable" [lockfileds]="lockfileds" [point]="point" [toggle]="toggle"></purchase-button>
