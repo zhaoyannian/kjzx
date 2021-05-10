@@ -54,7 +54,7 @@
         "ionicons": "3.0.0",
         "jpush-phonegap-plugin": "^3.7.2",
         "jquery": "^3.3.1",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.21",
         "moment": "^2.22.2",
         "rxjs": "5.5.11",
         "rxjs-compat": "^6.0.0",
